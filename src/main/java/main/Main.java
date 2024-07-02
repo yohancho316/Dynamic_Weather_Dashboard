@@ -3,6 +3,7 @@ package main;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -103,6 +104,9 @@ public class Main extends Application {
         BackgroundFill backgroundFill = new BackgroundFill(rgb, null, null);
         Background background = new Background(backgroundFill);
         borderPane.setBackground(background);
+
+        // Load Image Node
+
 
 ////////////////////////////////////////////////////////////////////////
 
