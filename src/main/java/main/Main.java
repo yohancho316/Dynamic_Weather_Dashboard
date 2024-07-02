@@ -4,11 +4,13 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -17,7 +19,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-//////// HBOX ////////////////////////////////////////////////////
+//////// HBOX //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // HBox Layout Wrapper Enumerations
         Pos HBOX_ALIGNMENT = Pos.CENTER_LEFT;
@@ -52,10 +54,10 @@ public class Main extends Application {
         // Configure Padding of HBox Layout Wrapper
         hbox.setPadding(HBOX_PADDING);
 
-////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-//////// BorderPane ////////////////////////////////////////////////////
+//////// BorderPane ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // BorderPane Layout Wrapper Enumerations
         double BORDER_PANE_MIN_WIDTH = 120;
@@ -105,12 +107,51 @@ public class Main extends Application {
         Background background = new Background(backgroundFill);
         borderPane.setBackground(background);
 
-        // Load Image Node
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-////////////////////////////////////////////////////////////////////////
+
+//////// Image /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Configure Image Size & Position
+        double IMAGE_WIDTH = 75.0;
+        double IMAGE_HEIGHT = 75.0;
+        boolean IMAGE_ORIGINAL_RATIO = false;
+        boolean IMAGE_SMOOTHING_ALGORITHM = true;
+
+        // Instantiate Image Node w/ URL Loading
+        Image image = new Image(getClass().getResourceAsStream("/hurricane_weather_tornado_storm.png"),
+                IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_ORIGINAL_RATIO, IMAGE_SMOOTHING_ALGORITHM);
+
+        // Check for Image Loading Failure
+        if(image.isError()) {
+            throw new IllegalArgumentException("Image URL Loading Failure: Incorrect URL");
+        }
+
+        // Instantiate ImageView Node
+        ImageView imageView = new ImageView(image);
+
+        // Wrap the ImageView in a Pane
+        Pane imagePane = new Pane(imageView);
+        imagePane.setMinWidth(100); // assuming the width of the top region
+        imagePane.setMinHeight(100); // assuming the height of the top region
+
+        // Center the ImageView within the Pane
+        imageView.setLayoutX((imagePane.getMinWidth() - IMAGE_WIDTH) / 2);
+        imageView.setLayoutY((imagePane.getMinHeight() - IMAGE_HEIGHT) / 2);
+
+        // Configure ImageView Width & Height
+        imageView.setFitWidth(IMAGE_WIDTH);
+        imageView.setFitHeight(IMAGE_HEIGHT);
+
+        // Add the ImageView to the Border Pane
+        borderPane.setTop(imagePane);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Add BorderPane Layout Nodes within HBox Layout Wrapper
         hbox.getChildren().add(borderPane);
 
