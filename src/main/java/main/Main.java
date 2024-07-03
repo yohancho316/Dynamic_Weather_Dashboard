@@ -28,7 +28,7 @@ public class Main extends Application {
 //////// HBOX //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // HBox Layout Wrapper Enumerations
-        Pos HBOX_ALIGNMENT = Pos.CENTER_LEFT;
+        Pos HBOX_ALIGNMENT = Pos.CENTER_LEFT; //
         double HBOX_NODE_SPACING = 1.0;
         double HBOX_MIN_WIDTH = 1200;
         double HBOX_MAX_WIDTH = 1200;
