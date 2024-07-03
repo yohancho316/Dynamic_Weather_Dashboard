@@ -1,8 +1,13 @@
 package main;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Scene;
@@ -11,6 +16,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -111,7 +117,7 @@ public class Main extends Application {
 
 
 
-//////// Image /////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////// Image & ImageView /////////////////////////////////////////////////////////////////////////////////////////////
 
         // Configure Image Size & Position
         double IMAGE_WIDTH = 75.0;
@@ -133,7 +139,7 @@ public class Main extends Application {
 
         // Wrap the ImageView in a Pane
         Pane imagePane = new Pane(imageView);
-        imagePane.setMinWidth(100); // assuming the width of the top region
+        imagePane.setMinWidth(120); // assuming the width of the top region
         imagePane.setMinHeight(100); // assuming the height of the top region
 
         // Center the ImageView within the Pane
@@ -148,6 +154,88 @@ public class Main extends Application {
         borderPane.setTop(imagePane);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+//////// Label ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Instantiate LocalTime Node
+        LocalTime currentTime = LocalTime.now();
+
+        // Instantiate LocalDateTime Node
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        // Convert LocalTime & LocalDateTime to Strings
+        String time = new String(String.valueOf(currentTime.getHour()));
+        String dateTime = new String(String.valueOf(currentDateTime.getDayOfMonth()));
+
+        System.out.println("Time: " + time);
+        System.out.println("Date: " + dateTime);
+
+        // Label Font Configurations
+        Font TIME_FONT = Font.font("Arial", 15.0);
+        Font DATE_FONT = Font.font("Arial", 15.0);
+        Color DATE_TIME_FONT_COLOR = Color.WHITE;
+
+        // Instantiate Time Label Node
+        Label timeLabel = new Label(time);
+
+        // Instantiate Date Label Node
+        Label dateLabel = new Label(dateTime);
+
+        // Configure Time & Date Label Font Style
+        timeLabel.setFont(TIME_FONT);
+        dateLabel.setFont(DATE_FONT);
+
+        // Configure Time & Date Label Font Color
+        timeLabel.setTextFill(DATE_TIME_FONT_COLOR);
+        dateLabel.setTextFill(DATE_TIME_FONT_COLOR);
+
+        // Configure Time & Date Label Alignment
+        timeLabel.setAlignment(Pos.CENTER);
+        dateLabel.setAlignment(Pos.CENTER);
+
+        // VBox Configuration Variables
+        Pos VBOX_ALIGNMENT = Pos.CENTER;
+        double VBOX_NODE_SPACING = 10.0;
+        double VBOX_PREF_WIDTH = 120.0;
+        double VBOX_MIN_WIDTH = 120.0;
+        double VBOX_MAX_WIDTH = 120.0;
+        double VBOX_PREF_HEIGHT = 100.0;
+        double VBOX_MIN_HEIGHT = 100.0;
+        double VBOX_MAX_HEIGHT = 100.0;
+        double INSETS_TOP_BOTTOM = 45.0;
+        double INSETS_LEFT_RIGHT = 35.0;
+        Insets VBOX_PADDING = new Insets(INSETS_TOP_BOTTOM, INSETS_LEFT_RIGHT, INSETS_TOP_BOTTOM, INSETS_LEFT_RIGHT);
+
+        // Instantiate VBox Layout Wrapper
+        VBox vbox = new VBox();
+
+        // Configure VBox Layout Wrapper Height
+        vbox.setPrefHeight(VBOX_PREF_HEIGHT);
+        vbox.setMinHeight(VBOX_MIN_HEIGHT);
+        vbox.setMaxHeight(VBOX_MAX_HEIGHT);
+
+        // Configure VBox Layout Wrapper Width
+        vbox.setPrefWidth(VBOX_PREF_WIDTH);
+        vbox.setMinWidth(VBOX_MIN_WIDTH);
+        vbox.setMaxWidth(VBOX_MAX_WIDTH);
+
+        // Configure VBox Spacing
+        vbox.setSpacing(VBOX_NODE_SPACING);
+
+        // Configure VBox Alignment
+        vbox.setAlignment(VBOX_ALIGNMENT);
+
+        // Configure VBox Padding
+        vbox.setPadding(VBOX_PADDING);
+
+        // Add Time Label to VBox
+        vbox.getChildren().addAll(timeLabel, dateLabel);
+
+        // Add VBox Layout Wrapper within BorderPane Layout Wrapper
+        borderPane.setCenter(vbox);
 
 
 
