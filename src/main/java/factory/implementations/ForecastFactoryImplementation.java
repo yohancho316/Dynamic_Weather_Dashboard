@@ -15,7 +15,36 @@ import java.util.List;
 public class ForecastFactoryImplementation implements ForecastFactory {
     @Override
     public HBox createHBox(List<BorderPane> borderPaneList) {
-        return null;
+
+        // Check if BorderPane List is Empty or Null
+        if(borderPaneList.equals(null) || borderPaneList.isEmpty()) throw new IllegalArgumentException("BorderPane List cannot be null or empty");
+
+        // Instantiate HBox Layout Wrapper Node
+        HBox hbox = new HBox();
+
+        // Configure Spacing between Child Nodes to 1.0 Pixels
+        hbox.setSpacing(this.HBOX_NODE_SPACING);
+
+        // Configure Alignment Between Child Nodes to Left Center
+        hbox.setAlignment(this.HBOX_ALIGNMENT);
+
+        // Configure Minimum Width of HBox Layout Wrapper
+        hbox.setMinWidth(this.HBOX_MIN_WIDTH);
+
+        // Configure Maximum Width of HBox Layout Wrapper
+        hbox.setMaxWidth(this.HBOX_MAX_WIDTH);
+
+        // Configure Minimum Height of HBox Layout Wrapper
+        hbox.setMinHeight(this.HBOX_MIN_HEIGHT);
+
+        // Configure Maximum Height of HBox Layout Wrapper
+        hbox.setMaxHeight(this.HBOX_MAX_HEIGHT);
+
+        // Configure Padding of HBox Layout Wrapper
+        hbox.setPadding(this.HBOX_PADDING);
+
+        // Return HBox Wrapper Node
+        return hbox;
     }
 
     @Override
