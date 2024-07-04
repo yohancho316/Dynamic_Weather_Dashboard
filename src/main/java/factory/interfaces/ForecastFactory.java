@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
 
 public interface ForecastFactory {
 
-    // Configuration Properties (Properties are Public, Static and Final)
+    // Configuration Properties (Properties are Implicitly Public, Static and Final)
     int red = 50;
     int green = 50;
     int blue = 50;
