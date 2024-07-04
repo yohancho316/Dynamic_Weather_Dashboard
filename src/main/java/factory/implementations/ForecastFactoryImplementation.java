@@ -5,10 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 import java.time.LocalDateTime;
@@ -23,7 +20,52 @@ public class ForecastFactoryImplementation implements ForecastFactory {
 
     @Override
     public BorderPane createBorderPane(Pane imagePane, VBox vbox) {
-        return null;
+
+        // Check if Image Pane & VBox are Null
+        if(imagePane.equals(null) || vbox.equals(null)) throw new NullPointerException("Image Pane & VBox cannot be null");
+
+        // Instantiate BorderPane Layout Wrapper Node
+        BorderPane borderPane = new BorderPane();
+
+        // Configure Minimum Width of Border Pane Layout Wrapper
+        borderPane.setMinWidth(this.BORDER_PANE_MIN_WIDTH);
+
+        // Configure Maximum Width of BorderPane Layout Wrapper
+        borderPane.setMaxWidth(this.BORDER_PANE_MAX_WIDTH);
+
+        // Configure Preferred Width of BorderPane Layout Wrapper
+        borderPane.setPrefWidth(this.BORDER_PANE_PREF_WIDTH);
+
+        // Configure Minimum Height of BorderPane Layout Wrapper
+        borderPane.setMinHeight(this.BORDER_PANE_MIN_HEIGHT);
+
+        // Configure Maximum Height of BorderPane Layout Wrapper
+        borderPane.setMaxHeight(this.BORDER_PANE_MAX_HEIGHT);
+
+        // Configure Preferred Height of BorderPane Layout Wrapper
+        borderPane.setPrefHeight(this.BORDER_PANE_PREF_HEIGHT);
+
+        // Configure Minimum Height of BorderPane Layout Wrapper
+        borderPane.setMinHeight(this.BORDER_PANE_MIN_HEIGHT);
+
+        // Configure Maximum Height of BorderPane Layout Wrapper
+        borderPane.setMaxHeight(this.BORDER_PANE_MAX_HEIGHT);
+
+        // Configure Padding Height & Width of BorderPane Wrapper
+        borderPane.setPadding(this.BORDER_PANE_INSETS);
+
+        // Set Background for BorderPane Wrapper
+        BackgroundFill backgroundFill = new BackgroundFill(rgb, null, null);
+        Background background = new Background(backgroundFill);
+        borderPane.setBackground(background);
+
+        // Add the ImageView to the Border Pane
+        borderPane.setTop(imagePane);
+
+        // Add VBox Layout Wrapper within BorderPane Layout Wrapper
+        borderPane.setCenter(vbox);
+
+        return borderPane;
     }
 
     @Override
