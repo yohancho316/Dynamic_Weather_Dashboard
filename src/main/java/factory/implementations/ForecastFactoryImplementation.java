@@ -1,6 +1,7 @@
 package factory.implementations;
 
 import factory.interfaces.ForecastFactory;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -30,11 +31,33 @@ public class ForecastFactoryImplementation implements ForecastFactory {
 
     @Override
     public Label createTimeLabel(LocalTime currentTime) {
-        return null;
+
+        // Check if Current Time is Null
+        if(currentTime.equals(null)) throw new NullPointerException("Current Time cannot be null");
+
+        // Get Current Hour as String
+        String time = new String(String.valueOf(currentTime.getHour()));
+
+        // Instantiate Time Label Node
+        Label timeLabel = new Label(time);
+
+        // Configure Time & Date Label Font Style
+        timeLabel.setFont(this.TIME_FONT);
+
+        // Configure Time & Date Label Font Color
+        timeLabel.setTextFill(DATE_TIME_FONT_COLOR);
+
+        // Configure Time & Date Label Alignment
+        timeLabel.setAlignment(Pos.CENTER);
+
+        // Return Time Label node
+        return timeLabel;
     }
 
     @Override
     public Label createDateLabel(LocalDateTime currentDate) {
+
+
         return null;
     }
 
