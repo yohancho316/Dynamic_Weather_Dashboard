@@ -43,7 +43,7 @@ public class ForecastFactoryImplementation implements ForecastFactory {
 
         // Check if Time || Date Label is Null
         if(timeLabel.equals(null) || dateLabel.equals(null)) throw new NullPointerException("Time & Date Label cannot be null");
-        
+
         // Instantiate VBox Layout Wrapper Node
         VBox vbox = new VBox();
 
@@ -69,6 +69,7 @@ public class ForecastFactoryImplementation implements ForecastFactory {
         // Add Time Label to VBox
         vbox.getChildren().addAll(timeLabel, dateLabel);
 
-        return null;
+        // Return VBox Layout Wrapper Node
+        return vbox;
     }
 }
