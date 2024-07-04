@@ -4,6 +4,7 @@ import factory.interfaces.ForecastFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -26,8 +27,45 @@ public class ForecastFactoryImplementation implements ForecastFactory {
     }
 
     @Override
-    public Pane createImagePane(Image weather_icon) {
-        return null;
+    public Pane createImagePane(String weather_icon_path) {
+
+        // Check if Weather Icon URL is Null or Empty
+        if(weather_icon_path.isEmpty() || weather_icon_path.equals(null)) throw new IllegalArgumentException("Weather Icon Path cannot be null or empty");
+
+        // Instantiate Image Node w/ URL Loading
+        Image image = new Image(getClass().getResourceAsStream(weather_icon_path),
+                                this.IMAGE_WIDTH,
+                                this.IMAGE_HEIGHT,
+                                this.IMAGE_ORIGINAL_RATIO,
+                                this.IMAGE_SMOOTHING_ALGORITHM);
+
+        // Check for Image Loading Failure
+        if(image.isError()) {
+            throw new IllegalArgumentException("Image URL Loading Failure: Incorrect URL");
+        }
+
+        // Instantiate ImageView Node
+        ImageView imageView = new ImageView(image);
+
+        // Wrap the ImageView in a Pane
+        Pane imagePane = new Pane(imageView);
+        
+        // Configure Width of Image Pane
+        imagePane.setMinWidth(this.IMAGE_PANE_WIDTH);
+        
+        // Configure Height of Image Pane
+        imagePane.setMinHeight(this.IMAGE_PANE_HEIGHT);
+
+        // Center the ImageView within the Pane
+        imageView.setLayoutX((imagePane.getMinWidth() - this.IMAGE_WIDTH) / 2);
+        imageView.setLayoutY((imagePane.getMinHeight() - this.IMAGE_HEIGHT) / 2);
+
+        // Configure ImageView Width & Height
+        imageView.setFitWidth(this.IMAGE_WIDTH);
+        imageView.setFitHeight(this.IMAGE_HEIGHT);
+
+        // Return Image Pane Node
+        return imagePane;
     }
 
     @Override

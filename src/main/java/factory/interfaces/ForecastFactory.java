@@ -22,17 +22,20 @@ public interface ForecastFactory {
     int blue = 50;
 
     double HBOX_NODE_SPACING = 1.0;
-    double HBOX_MIN_WIDTH = 1200;
-    double HBOX_MAX_WIDTH = 1200;
-    double HBOX_MIN_HEIGHT = 200;
-    double HBOX_MAX_HEIGHT = 200;
+    double HBOX_MIN_WIDTH = 1200.0;
+    double HBOX_MAX_WIDTH = 1200.0;
+    double HBOX_MIN_HEIGHT = 200.0;
+    double HBOX_MAX_HEIGHT = 200.0;
 
-    double BORDER_PANE_MIN_WIDTH = 120;
-    double BORDER_PANE_MAX_WIDTH = 120;
-    double BORDER_PANE_PREF_WIDTH = 120;
-    double BORDER_PANE_MIN_HEIGHT = 200;
-    double BORDER_PANE_MAX_HEIGHT = 200;
-    double BORDER_PANE_PREF_HEIGHT = 200;
+    double BORDER_PANE_MIN_WIDTH = 120.0;
+    double BORDER_PANE_MAX_WIDTH = 120.0;
+    double BORDER_PANE_PREF_WIDTH = 120.0;
+    double BORDER_PANE_MIN_HEIGHT = 200.0;
+    double BORDER_PANE_MAX_HEIGHT = 200.0;
+    double BORDER_PANE_PREF_HEIGHT = 200.0;
+
+    double IMAGE_PANE_WIDTH = 120.0;
+    double IMAGE_PANE_HEIGHT = 100.0;
 
     double VBOX_NODE_SPACING = 10.0;
     double VBOX_PREF_WIDTH = 120.0;
@@ -72,7 +75,7 @@ public interface ForecastFactory {
     BorderPane createBorderPane(Pane imagePane, VBox vbox);
 
     // Image Pane Object Factory Method
-    Pane createImagePane(Image weather_icon);
+    Pane createImagePane(String weather_icon_url);
 
     // Time Label Object Factory Method
     Label createTimeLabel(LocalTime currentTime);
