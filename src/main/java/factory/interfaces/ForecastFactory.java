@@ -51,6 +51,8 @@ public interface ForecastFactory {
 
     Pos HBOX_ALIGNMENT = Pos.CENTER_LEFT;
     Pos VBOX_ALIGNMENT = Pos.CENTER;
+    Pos TIME_LABEL_ALIGNMENT = Pos.CENTER;
+    Pos DATE_LABEL_ALIGNMENT = Pos.CENTER;
 
     double IMAGE_WIDTH = 75.0;
     double IMAGE_HEIGHT = 75.0;

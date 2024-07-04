@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -41,24 +42,42 @@ public class ForecastFactoryImplementation implements ForecastFactory {
         // Instantiate Time Label Node
         Label timeLabel = new Label(time);
 
-        // Configure Time & Date Label Font Style
+        // Configure Time Label Font Style
         timeLabel.setFont(this.TIME_FONT);
 
-        // Configure Time & Date Label Font Color
+        // Configure Time Label Font Color
         timeLabel.setTextFill(DATE_TIME_FONT_COLOR);
 
-        // Configure Time & Date Label Alignment
-        timeLabel.setAlignment(Pos.CENTER);
+        // Configure Time Label Alignment
+        timeLabel.setAlignment(this.TIME_LABEL_ALIGNMENT);
 
-        // Return Time Label node
+        // Return Time Label Node
         return timeLabel;
     }
 
     @Override
-    public Label createDateLabel(LocalDateTime currentDate) {
+    public Label createDateLabel(LocalDateTime currentDateTime) {
 
+        // Check if Current Time is Null
+        if(currentDateTime.equals(null)) throw new NullPointerException("Current Date cannot be null");
 
-        return null;
+        // Get Current Date as String
+        String dateTime = new String(String.valueOf(currentDateTime.getDayOfMonth()));
+
+        // Instantiate Date Label Node
+        Label dateLabel = new Label(dateTime);
+
+        // Configure Date Label Font Style
+        dateLabel.setFont(this.DATE_FONT);
+
+        // Configure Date Label Font Color
+        dateLabel.setTextFill(this.DATE_TIME_FONT_COLOR);
+
+        // Configure Date Label Alignment
+        dateLabel.setAlignment(this.DATE_LABEL_ALIGNMENT);
+
+        // Return Date Label Node
+        return dateLabel;
     }
 
     @Override
