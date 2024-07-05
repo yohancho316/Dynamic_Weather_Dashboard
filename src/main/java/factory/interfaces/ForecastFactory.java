@@ -6,7 +6,6 @@ import java.time.LocalTime;
 import javafx.scene.control.Label;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -57,6 +56,7 @@ public interface ForecastFactory {
     Pos TIME_LABEL_ALIGNMENT = Pos.CENTER;
     Pos DATE_LABEL_ALIGNMENT = Pos.CENTER;
 
+    // Forecast Icon Properties
     double IMAGE_WIDTH = 75.0;
     double IMAGE_HEIGHT = 75.0;
     boolean IMAGE_ORIGINAL_RATIO = false;
