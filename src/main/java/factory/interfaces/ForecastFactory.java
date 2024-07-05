@@ -56,7 +56,6 @@ public interface ForecastFactory {
     Pos TIME_LABEL_ALIGNMENT = Pos.CENTER;
     Pos DATE_LABEL_ALIGNMENT = Pos.CENTER;
 
-    // Forecast Icon Properties
     double IMAGE_WIDTH = 75.0;
     double IMAGE_HEIGHT = 75.0;
     boolean IMAGE_ORIGINAL_RATIO = false;
