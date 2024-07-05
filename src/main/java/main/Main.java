@@ -28,7 +28,7 @@ public class Main extends Application {
 //////// HBOX //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // HBox Layout Wrapper Enumerations
-        Pos HBOX_ALIGNMENT = Pos.CENTER_LEFT;
+        Pos HBOX_ALIGNMENT = Pos.CENTER_LEFT; //
         double HBOX_NODE_SPACING = 1.0;
         double HBOX_MIN_WIDTH = 1200;
         double HBOX_MAX_WIDTH = 1200;
@@ -158,7 +158,7 @@ public class Main extends Application {
 
 
 
-//////// Label ////////////////////////////////////////////////////////////////////////////////////////////////////
+//////// Label /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // Instantiate LocalTime Node
         LocalTime currentTime = LocalTime.now();
@@ -243,18 +243,70 @@ public class Main extends Application {
         // Add BorderPane Layout Nodes within HBox Layout Wrapper
         hbox.getChildren().add(borderPane);
 
+//////// Current Weather Icon //////////////////////////////////////////////////////////////////////////////////////////
 
+        // Current Weather Icon Properties
+        int CURRENT_WEATHER_ICON_RED = 44;
+        int CURRENT_WEATHER_ICON_GREEN = 103;
+        int CURRENT_WEATHER_ICON_BLUE = 108;
+        double CURRENT_WEATHER_ICON_WIDTH = 230.0;
+        double CURRENT_WEATHER_IMAGE_PANE_WIDTH = 230.0;
+        double CURRENT_WEATHER_ICON_HEIGHT = 200.0;
+        double CURRENT_WEATHER_IMAGE_PANE_HEIGHT = 200.0;
+        boolean CURRENT_WEATHER_ICON_ORIGINAL_RATIO = false;
+        boolean CURRENT_WEATHER_IMAGE_SMOOTHING_ALGORITHM = true;
+        String current_weather_icon_path ="/1530377_moon_night_weather_foggy_fog.png";
 
+        // Instantiate Current Weather Icon Image Node
+        Image current_weather_image = new Image(getClass().getResourceAsStream(current_weather_icon_path),
+                CURRENT_WEATHER_ICON_WIDTH,
+                CURRENT_WEATHER_ICON_HEIGHT,
+                CURRENT_WEATHER_ICON_ORIGINAL_RATIO,
+                CURRENT_WEATHER_IMAGE_SMOOTHING_ALGORITHM);
 
+        // Check for Current Weather Image Loading Failure
+        if(current_weather_image.isError()) {
+            throw new IllegalArgumentException("Current Weather Image URL Loading Failure: Incorrect URL");
+        }
 
+        // Instantiate ImageView Node
+        ImageView currentWeatherImageView = new ImageView(current_weather_image);
 
+        // Wrap the ImageView in a Pane
+        Pane currentWeatherImagePane = new Pane(currentWeatherImageView);
 
+        // Configure ImageView Width & Height
+        currentWeatherImageView.setFitWidth(CURRENT_WEATHER_ICON_WIDTH);
+        currentWeatherImageView.setFitHeight(CURRENT_WEATHER_ICON_HEIGHT);
 
+        // Configure Width of Current Weather Image Pane
+        currentWeatherImagePane.setMinWidth(CURRENT_WEATHER_IMAGE_PANE_WIDTH);
+        currentWeatherImagePane.setMaxWidth(CURRENT_WEATHER_IMAGE_PANE_WIDTH);
+        currentWeatherImagePane.setPrefWidth(CURRENT_WEATHER_IMAGE_PANE_WIDTH);
 
+        // Configure Height of Current Weather Image Pane
+        currentWeatherImagePane.setMinHeight(CURRENT_WEATHER_IMAGE_PANE_HEIGHT);
+        currentWeatherImagePane.setMaxHeight(CURRENT_WEATHER_IMAGE_PANE_WIDTH);
+        currentWeatherImagePane.setPrefHeight(CURRENT_WEATHER_IMAGE_PANE_HEIGHT);
 
+        // Configure Padding of Current Weather Image Pane
+        currentWeatherImagePane.setPadding(Insets.EMPTY);
 
+        // Center the ImageView within the Pane
+        currentWeatherImagePane.setLayoutX((currentWeatherImagePane.getMinWidth() - currentWeatherImageView.getFitWidth()) / 2.0);
+        currentWeatherImagePane.setLayoutY((currentWeatherImagePane.getMinHeight() - currentWeatherImageView.getFitHeight()) / 2.0);
 
-        primaryStage.setScene(new Scene(hbox));
+        // Instantiate RGB Color for Current Weather Image Pane Background
+        Color currentWeatherRGB = Color.rgb(CURRENT_WEATHER_ICON_RED, CURRENT_WEATHER_ICON_GREEN, CURRENT_WEATHER_ICON_BLUE);
+
+        // Configure Background of ImageView
+        BackgroundFill currentWeatherBackgroundFill = new BackgroundFill(currentWeatherRGB, null, null);
+        Background currentWeatherBackground = new Background(currentWeatherBackgroundFill);
+        currentWeatherImagePane.setBackground(currentWeatherBackground);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Scene scene = new Scene(currentWeatherImagePane);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
