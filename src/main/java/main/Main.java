@@ -308,7 +308,7 @@ public class Main extends Application {
 
 
 
-//////// Current Weather Temperature Label //////////////////////////////////////////////////////////////////////////////////////////
+//////// Current Weather Temperature & Status Label ////////////////////////////////////////////////////////////////////
 
         // Current Weather Temperature VBox Layout Properties
         double TEMP_VBOX_WIDTH = 485.0;
@@ -382,6 +382,145 @@ public class Main extends Application {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+//////// Sunrise & Sunset Label ////////////////////////////////////////////////////////////////////////////////////////
+
+        //////// Sunrise & Sunset VBox /////////////////////////////////////////////////////////////////////////////////
+
+        // Sunrise & Sunset VBox Layout Properties
+        int SUN_VBOX_RED = 44;
+        int SUN_VBOX_GREEN = 44;
+        int SUN_VBOX_BLUE =  44;
+        double SUN_VBOX_WIDTH = 485.0;
+        double SUN_VBOX_HEIGHT = 200.0;
+        Pos SUN_VBOX_POS = Pos.CENTER;
+
+        // Instantiate Sunrise & Sunset VBox Layout Wrapper
+        VBox sunVBox = new VBox();
+
+        // Configure Sunrise & Sunset VBox Width
+        sunVBox.setMinWidth(SUN_VBOX_WIDTH);
+        sunVBox.setMaxWidth(SUN_VBOX_WIDTH);
+        sunVBox.setPrefWidth(SUN_VBOX_WIDTH);
+
+        // Configure Sunrise & Sunset VBox Height
+        sunVBox.setMinHeight(SUN_VBOX_HEIGHT);
+        sunVBox.setMaxHeight(SUN_VBOX_HEIGHT);
+        sunVBox.setPrefHeight(SUN_VBOX_HEIGHT);
+
+        // Configure Sunrise & Sunset VBox Alignment
+        sunVBox.setAlignment(SUN_VBOX_POS);
+
+        // Configure Sunrise & Sunset VBox Background
+        Color sunRGB = Color.rgb(SUN_VBOX_RED, SUN_VBOX_GREEN, SUN_VBOX_BLUE);
+        BackgroundFill sunBackgroundFill = new BackgroundFill(sunRGB, null, null);
+        Background sunBackground = new Background(sunBackgroundFill);
+        sunVBox.setBackground(sunBackground);
+
+        //////// Sunrise & Sunset HBox /////////////////////////////////////////////////////////////////////////////////
+
+        // Sunrise & Sunset HBox Layout Properties
+        int SUN_HBOX_RED = 44;
+        int SUN_HBOX_GREEN = 44;
+        int SUN_HBOX_BLUE =  44;
+        double SUN_HBOX_WIDTH = 485.0;
+        double SUN_HBOX_HEIGHT = 50.0;
+        Pos SUN_HBOX_POS = Pos.CENTER;
+
+        // Instantiate Sunrise & Sunset HBox Layout Wrapper
+        HBox sunHBox = new HBox();
+
+        // Configure Sunrise & Sunrise HBox Width
+        sunHBox.setMinWidth(SUN_HBOX_WIDTH);
+        sunHBox.setMaxWidth(SUN_HBOX_WIDTH);
+        sunHBox.setPrefWidth(SUN_HBOX_WIDTH);
+
+        // Configure Sunrise & Sunset HBox Height
+        sunHBox.setMinHeight(SUN_HBOX_HEIGHT);
+        sunHBox.setMaxHeight(SUN_HBOX_HEIGHT);
+        sunHBox.setPrefHeight(SUN_HBOX_HEIGHT);
+
+        // Configure Sunrise & Sunset HBox Alignment
+        sunHBox.setAlignment(SUN_HBOX_POS);
+
+        // Configure Sunrise & Sunset HBox Background
+        Color sunriseRGB = Color.rgb(SUN_HBOX_RED, SUN_HBOX_GREEN, SUN_HBOX_BLUE);
+        BackgroundFill sunHBoxBackgroundFill = new BackgroundFill(sunriseRGB, null, null);
+        Background sunHBoxBackground = new Background(sunHBoxBackgroundFill);
+        sunHBox.setBackground(sunHBoxBackground);
+
+        //////// Sunrise & Sunset Icon /////////////////////////////////////////////////////////////////////////////////
+
+        // 
+
+
+        //////// Sunrise & Sunset Label ////////////////////////////////////////////////////////////////////////////////
+
+        // Sunrise & Sunset Label Properties
+        double RISE_LABEL_WIDTH = 485.0;
+        double RISE_LABEL_HEIGHT = 100.0;
+        double SET_LABEL_WIDTH = 485.0;
+        double SET_LABEL_HEIGHT = 100.0;
+
+        Font RISE_FONT = Font.font("Arial", 15.0);
+        Color RISE_FONT_COLOR = Color.WHITE;
+
+        Font SET_FONT = Font.font("Arial", 15.0);
+        Color SET_FONT_COLOR = Color.WHITE;
+
+        Pos RISE_POS = Pos.CENTER_LEFT;
+        Pos SET_POS = Pos.CENTER_LEFT;
+
+        String RISE_STR = "6:12 AM";
+        String SET_STR = "8:34 PM";
+
+        // Instantiate Sunrise Label Node
+        Label riseLabel = new Label(RISE_STR);
+
+        // Configure Sunrise Label Node
+        riseLabel.setFont(RISE_FONT);
+        riseLabel.setTextFill(RISE_FONT_COLOR);
+        riseLabel.setAlignment(RISE_POS);
+
+        // Configure Sunrise Label Width
+        riseLabel.setPrefWidth(RISE_LABEL_WIDTH);
+        riseLabel.setMinWidth(RISE_LABEL_WIDTH);
+        riseLabel.setMaxWidth(RISE_LABEL_WIDTH);
+
+        // Configure Sunrise Label Height
+        riseLabel.setPrefHeight(RISE_LABEL_HEIGHT);
+        riseLabel.setMinHeight(RISE_LABEL_HEIGHT);
+        riseLabel.setMaxHeight(RISE_LABEL_HEIGHT);
+
+        // Instantiate Set Label Node
+        Label setLabel = new Label(SET_STR);
+
+        // Configure Set Label Node
+        setLabel.setFont(SET_FONT);
+        setLabel.setTextFill(SET_FONT_COLOR);
+        setLabel.setAlignment(SET_POS);
+
+        // Configure Sunset Label Width
+        setLabel.setPrefWidth(SET_LABEL_WIDTH);
+        setLabel.setMinWidth(SET_LABEL_WIDTH);
+        setLabel.setMaxWidth(SET_LABEL_WIDTH);
+
+        // Configure Sunset Label Height
+        setLabel.setPrefHeight(SET_LABEL_HEIGHT);
+        setLabel.setMinHeight(SET_LABEL_HEIGHT);
+        setLabel.setMaxHeight(SET_LABEL_HEIGHT);
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         Scene scene = new Scene(tempVBox);
         primaryStage.setScene(scene);
