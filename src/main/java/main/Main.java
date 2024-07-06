@@ -460,18 +460,18 @@ public class Main extends Application {
         Background sunHBoxBackground = new Background(sunHBoxBackgroundFill);
         sunHBox.setBackground(sunHBoxBackground);
 
-        //////// Sunrise & Sunset Icon /////////////////////////////////////////////////////////////////////////////////
+        //////// Sunrise Icon //////////////////////////////////////////////////////////////////////////////////////////
 
-        // Sunrise & Sunset Icon Properties
+        // Sunrise Icon Properties
 
-        double SUN_IMAGE_WIDTH = 15;
-        double SUN_IMAGE_HEIGHT = 15.0;
-        boolean SUN_IMAGE_ORIGINAL_RATIO = false;
-        boolean SUN_IMAGE_SMOOTHING_ALGORITHM = true;
+        double RISE_IMAGE_WIDTH = 15;
+        double RISE_IMAGE_HEIGHT = 15.0;
+        boolean RISE_IMAGE_ORIGINAL_RATIO = false;
+        boolean RISE_IMAGE_SMOOTHING_ALGORITHM = true;
 
         // Instantiate Image Node w/ URL Loading
         Image sunriseIcon = new Image(getClass().getResourceAsStream("/icons8-sunrise-24.png"),
-                IMAGE_WIDTH, IMAGE_HEIGHT, SUN_IMAGE_ORIGINAL_RATIO, SUN_IMAGE_SMOOTHING_ALGORITHM);
+                RISE_IMAGE_WIDTH, RISE_IMAGE_HEIGHT, RISE_IMAGE_ORIGINAL_RATIO, RISE_IMAGE_SMOOTHING_ALGORITHM);
 
         // Check for Image Loading Failure
         if(sunriseIcon.isError()) {
@@ -479,17 +479,49 @@ public class Main extends Application {
         }
 
         // Instantiate ImageView Node
-        ImageView sunImageView = new ImageView(sunriseIcon);
+        ImageView riseImageView = new ImageView(sunriseIcon);
 
         // Configure Width & Height of ImageView
-        sunImageView.setFitWidth(SUN_IMAGE_WIDTH);
-        sunImageView.setFitHeight(SUN_IMAGE_HEIGHT);
+        riseImageView.setFitWidth(RISE_IMAGE_WIDTH);
+        riseImageView.setFitHeight(RISE_IMAGE_HEIGHT);
 
         // Wrap the ImageView in a Pane
-        StackPane sunImagePane = new StackPane(sunImageView);
+        StackPane riseImagePane = new StackPane(riseImageView);
 
-        // Configure Sun Image Pane Height & Width
-        sunImagePane.setPrefSize(SUN_IMAGE_WIDTH, SUN_IMAGE_HEIGHT);
+        // Configure Sunrise Image Pane Height & Width
+        riseImagePane.setPrefSize(RISE_IMAGE_WIDTH, RISE_IMAGE_HEIGHT);
+
+        //////// Sunset Icon ///////////////////////////////////////////////////////////////////////////////////////////
+
+        // Sunset Icon Properties
+        double SET_IMAGE_WIDTH = 15;
+        double SET_IMAGE_HEIGHT = 15.0;
+        boolean SET_IMAGE_ORIGINAL_RATIO = false;
+        boolean SET_IMAGE_SMOOTHING_ALGORITHM = true;
+
+        // Instantiate Image Node w/ URL Loading
+        Image sunsetIcon = new Image(getClass().getResourceAsStream("/icons8-sunset-24.png"),
+                SET_IMAGE_WIDTH, SET_IMAGE_HEIGHT, SET_IMAGE_ORIGINAL_RATIO, SET_IMAGE_SMOOTHING_ALGORITHM);
+
+        // Check for Image Loading Failure
+        if(sunsetIcon.isError()) {
+            throw new IllegalArgumentException("Image URL Loading Failure: Incorrect URL");
+        }
+
+        // Instantiate ImageView Node
+        ImageView setImageView = new ImageView(sunsetIcon);
+
+        // Configure Width & Height of ImageView
+        setImageView.setFitWidth(SET_IMAGE_WIDTH);
+        setImageView.setFitHeight(SET_IMAGE_HEIGHT);
+
+        // Wrap the ImageView in a Pane
+        StackPane setImagePane = new StackPane(setImageView);
+
+        // Configure Sunset Image Pane Height & Width
+        setImagePane.setPrefSize(SET_IMAGE_WIDTH, SET_IMAGE_HEIGHT);
+
+
 
         //////// Sunrise & Sunset Label ////////////////////////////////////////////////////////////////////////////////
 
@@ -548,7 +580,8 @@ public class Main extends Application {
         setLabel.setMaxHeight(SET_LABEL_HEIGHT);
 
         //////// ADD TO HBOX ////////////////////////////////////////////////////////////////////////////////
-        sunHBox.getChildren().addAll(sunImagePane, riseLabel);
+        //sunHBox.getChildren().addAll(riseImagePane, riseLabel);
+        sunHBox.getChildren().addAll(setImagePane, setLabel);
 
         //////// ADD TO VBOX ////////////////////////////////////////////////////////////////////////////////
         sunVBox.getChildren().addAll(sunHBox);
