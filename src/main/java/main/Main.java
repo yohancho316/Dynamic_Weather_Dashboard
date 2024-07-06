@@ -305,7 +305,85 @@ public class Main extends Application {
         currentWeatherImagePane.setBackground(currentWeatherBackground);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Scene scene = new Scene(currentWeatherImagePane);
+
+
+
+//////// Current Weather Temperature Label //////////////////////////////////////////////////////////////////////////////////////////
+
+        // Current Weather Temperature VBox Layout Properties
+        double TEMP_VBOX_WIDTH = 485.0;
+        double TEMP_VBOX_HEIGHT = 200.0;
+
+        // Current Weather Label Properties
+        // double CURRENT_WEATHER_TEMPERATURE_LABEL_WIDTH  = 970.0;
+        int CURRENT_RED = 44;
+        int CURRENT_GREEN = 44;
+        int CURRENT_BLUE = 44;
+        double TEMP_LABEL_WIDTH = 485.0;
+        double TEMP_LABEL_HEIGHT = 100.0;
+        Font TEMP_LABEL_FONT = Font.font("Arial", 15.0);
+        Font TEMP_STATUS_FONT = Font.font("Arial", 15.0);
+        Color TEMP_FONT_COLOR = Color.WHITE;
+        Color TEMP_STATUS_FONT_COLOR = Color.WHITE;
+        String TEMP_STR = "113 °F";
+        String TEMP_STATUS_STR = "scorching hot";
+
+        // Instantiate RGB Color for Current Weather Image Pane Background
+        Color currentTempRGB = Color.rgb(CURRENT_RED, CURRENT_GREEN, CURRENT_BLUE);
+
+        // Configure Background of ImageView
+        BackgroundFill tempBackgroundFill = new BackgroundFill(currentTempRGB, null, null);
+        Background tempBackground = new Background(tempBackgroundFill);
+
+        // Instantiate VBox Layout Wrapper
+        VBox tempVBox = new VBox();
+        tempVBox.setPrefSize(TEMP_VBOX_WIDTH, TEMP_VBOX_HEIGHT);
+        tempVBox.setBackground(tempBackground);
+        tempVBox.setAlignment(Pos.CENTER);
+
+        // Instantiate Temperature Label Node
+        Label tempLabel = new Label(TEMP_STR);
+
+        // Configure Temperature Label Node Style
+        tempLabel.setFont(TEMP_LABEL_FONT);
+        tempLabel.setTextFill(TEMP_FONT_COLOR);
+        tempLabel.setAlignment(Pos.TOP_LEFT);
+
+        // Configure Temperature Label Width
+        tempLabel.setPrefWidth(TEMP_LABEL_HEIGHT);
+        tempLabel.setMinWidth(TEMP_LABEL_WIDTH);
+        tempLabel.setMaxWidth(TEMP_LABEL_WIDTH);
+
+        // Configure Temperature Label Height
+        tempLabel.setPrefHeight(TEMP_LABEL_WIDTH);
+        tempLabel.setMinHeight(TEMP_LABEL_HEIGHT);
+        tempLabel.setMaxHeight(TEMP_LABEL_HEIGHT);
+
+        // Instantiate Current Weather Status Label Node
+        Label tempStatusLabel = new Label(TEMP_STATUS_STR);
+
+        // Configure Temperature Status Label
+        tempStatusLabel.setFont(TEMP_STATUS_FONT);
+        tempStatusLabel.setTextFill(TEMP_STATUS_FONT_COLOR);
+        tempStatusLabel.setAlignment(Pos.TOP_LEFT);
+
+        // Configure Temperature Status Width
+        tempStatusLabel.setPrefWidth(TEMP_LABEL_HEIGHT);
+        tempStatusLabel.setMinWidth(TEMP_LABEL_WIDTH);
+        tempStatusLabel.setMaxWidth(TEMP_LABEL_WIDTH);
+
+        // Configure Temperature Status Height
+        tempStatusLabel.setPrefHeight(TEMP_LABEL_WIDTH);
+        tempStatusLabel.setMinHeight(TEMP_LABEL_HEIGHT);
+        tempStatusLabel.setMaxHeight(TEMP_LABEL_HEIGHT);
+
+        // Add Temp & Status Label Nodes in Temp VBox
+        tempVBox.getChildren().addAll(tempStatusLabel, tempLabel);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        Scene scene = new Scene(tempVBox);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
