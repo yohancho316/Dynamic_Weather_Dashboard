@@ -16,6 +16,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -426,6 +427,11 @@ public class Main extends Application {
         int SUN_HBOX_BLUE =  44;
         double SUN_HBOX_WIDTH = 485.0;
         double SUN_HBOX_HEIGHT = 50.0;
+        double SUN_HBOX_PADDING_TOP = 0.0;
+        double SUN_HBOX_PADDING_RIGHT = 0.0;
+        double SUN_HBOX_PADDING_BOTTOM = 0.0;
+        double SUN_HBOX_PADDING_LEFT = 50.0;
+        double SUN_HBOX_SPACING = 10.0;
         Pos SUN_HBOX_POS = Pos.CENTER;
 
         // Instantiate Sunrise & Sunset HBox Layout Wrapper
@@ -444,6 +450,10 @@ public class Main extends Application {
         // Configure Sunrise & Sunset HBox Alignment
         sunHBox.setAlignment(SUN_HBOX_POS);
 
+        // Configure Sunrise & Sunset HBox Padding & Spacing
+        sunHBox.setPadding(new Insets(SUN_HBOX_PADDING_TOP,SUN_HBOX_PADDING_RIGHT,SUN_HBOX_PADDING_BOTTOM,SUN_HBOX_PADDING_LEFT));
+        sunHBox.setSpacing(SUN_HBOX_SPACING);
+
         // Configure Sunrise & Sunset HBox Background
         Color sunriseRGB = Color.rgb(SUN_HBOX_RED, SUN_HBOX_GREEN, SUN_HBOX_BLUE);
         BackgroundFill sunHBoxBackgroundFill = new BackgroundFill(sunriseRGB, null, null);
@@ -452,8 +462,34 @@ public class Main extends Application {
 
         //////// Sunrise & Sunset Icon /////////////////////////////////////////////////////////////////////////////////
 
-        // 
+        // Sunrise & Sunset Icon Properties
 
+        double SUN_IMAGE_WIDTH = 15;
+        double SUN_IMAGE_HEIGHT = 15.0;
+        boolean SUN_IMAGE_ORIGINAL_RATIO = false;
+        boolean SUN_IMAGE_SMOOTHING_ALGORITHM = true;
+
+        // Instantiate Image Node w/ URL Loading
+        Image sunriseIcon = new Image(getClass().getResourceAsStream("/icons8-sunrise-24.png"),
+                IMAGE_WIDTH, IMAGE_HEIGHT, SUN_IMAGE_ORIGINAL_RATIO, SUN_IMAGE_SMOOTHING_ALGORITHM);
+
+        // Check for Image Loading Failure
+        if(sunriseIcon.isError()) {
+            throw new IllegalArgumentException("Image URL Loading Failure: Incorrect URL");
+        }
+
+        // Instantiate ImageView Node
+        ImageView sunImageView = new ImageView(sunriseIcon);
+
+        // Configure Width & Height of ImageView
+        sunImageView.setFitWidth(SUN_IMAGE_WIDTH);
+        sunImageView.setFitHeight(SUN_IMAGE_HEIGHT);
+
+        // Wrap the ImageView in a Pane
+        StackPane sunImagePane = new StackPane(sunImageView);
+
+        // Configure Sun Image Pane Height & Width
+        sunImagePane.setPrefSize(SUN_IMAGE_WIDTH, SUN_IMAGE_HEIGHT);
 
         //////// Sunrise & Sunset Label ////////////////////////////////////////////////////////////////////////////////
 
@@ -511,9 +547,11 @@ public class Main extends Application {
         setLabel.setMinHeight(SET_LABEL_HEIGHT);
         setLabel.setMaxHeight(SET_LABEL_HEIGHT);
 
+        //////// ADD TO HBOX ////////////////////////////////////////////////////////////////////////////////
+        sunHBox.getChildren().addAll(sunImagePane, riseLabel);
 
-
-
+        //////// ADD TO VBOX ////////////////////////////////////////////////////////////////////////////////
+        sunVBox.getChildren().addAll(sunHBox);
 
 
 
@@ -522,7 +560,7 @@ public class Main extends Application {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Scene scene = new Scene(tempVBox);
+        Scene scene = new Scene(sunVBox);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
