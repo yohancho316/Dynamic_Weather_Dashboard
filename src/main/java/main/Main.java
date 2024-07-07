@@ -16,6 +16,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -305,7 +306,289 @@ public class Main extends Application {
         currentWeatherImagePane.setBackground(currentWeatherBackground);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Scene scene = new Scene(currentWeatherImagePane);
+
+
+
+//////// Current Weather Temperature & Status Label ////////////////////////////////////////////////////////////////////
+
+        // Current Weather Temperature VBox Layout Properties
+        double TEMP_VBOX_WIDTH = 485.0;
+        double TEMP_VBOX_HEIGHT = 200.0;
+
+        // Current Weather Label Properties
+        // double CURRENT_WEATHER_TEMPERATURE_LABEL_WIDTH  = 970.0;
+        int CURRENT_RED = 44;
+        int CURRENT_GREEN = 44;
+        int CURRENT_BLUE = 44;
+        double TEMP_LABEL_WIDTH = 485.0;
+        double TEMP_LABEL_HEIGHT = 100.0;
+        Font TEMP_LABEL_FONT = Font.font("Arial", 15.0);
+        Font TEMP_STATUS_FONT = Font.font("Arial", 15.0);
+        Color TEMP_FONT_COLOR = Color.WHITE;
+        Color TEMP_STATUS_FONT_COLOR = Color.WHITE;
+        String TEMP_STR = "113 °F";
+        String TEMP_STATUS_STR = "scorching hot";
+
+        // Instantiate RGB Color for Current Weather Image Pane Background
+        Color currentTempRGB = Color.rgb(CURRENT_RED, CURRENT_GREEN, CURRENT_BLUE);
+
+        // Configure Background of ImageView
+        BackgroundFill tempBackgroundFill = new BackgroundFill(currentTempRGB, null, null);
+        Background tempBackground = new Background(tempBackgroundFill);
+
+        // Instantiate VBox Layout Wrapper
+        VBox tempVBox = new VBox();
+        tempVBox.setPrefSize(TEMP_VBOX_WIDTH, TEMP_VBOX_HEIGHT);
+        tempVBox.setBackground(tempBackground);
+        tempVBox.setAlignment(Pos.CENTER);
+
+        // Instantiate Temperature Label Node
+        Label tempLabel = new Label(TEMP_STR);
+
+        // Configure Temperature Label Node Style
+        tempLabel.setFont(TEMP_LABEL_FONT);
+        tempLabel.setTextFill(TEMP_FONT_COLOR);
+        tempLabel.setAlignment(Pos.TOP_LEFT);
+
+        // Configure Temperature Label Width
+        tempLabel.setPrefWidth(TEMP_LABEL_WIDTH);
+        tempLabel.setMinWidth(TEMP_LABEL_WIDTH);
+        tempLabel.setMaxWidth(TEMP_LABEL_WIDTH);
+
+        // Configure Temperature Label Height
+        tempLabel.setPrefHeight(TEMP_LABEL_HEIGHT);
+        tempLabel.setMinHeight(TEMP_LABEL_HEIGHT);
+        tempLabel.setMaxHeight(TEMP_LABEL_HEIGHT);
+
+        // Instantiate Current Weather Status Label Node
+        Label tempStatusLabel = new Label(TEMP_STATUS_STR);
+
+        // Configure Temperature Status Label
+        tempStatusLabel.setFont(TEMP_STATUS_FONT);
+        tempStatusLabel.setTextFill(TEMP_STATUS_FONT_COLOR);
+        tempStatusLabel.setAlignment(Pos.TOP_LEFT);
+
+        // Configure Temperature Status Width
+        tempStatusLabel.setPrefWidth(TEMP_LABEL_HEIGHT);
+        tempStatusLabel.setMinWidth(TEMP_LABEL_WIDTH);
+        tempStatusLabel.setMaxWidth(TEMP_LABEL_WIDTH);
+
+        // Configure Temperature Status Height
+        tempStatusLabel.setPrefHeight(TEMP_LABEL_WIDTH);
+        tempStatusLabel.setMinHeight(TEMP_LABEL_HEIGHT);
+        tempStatusLabel.setMaxHeight(TEMP_LABEL_HEIGHT);
+
+        // Add Temp & Status Label Nodes in Temp VBox
+        tempVBox.getChildren().addAll(tempStatusLabel, tempLabel);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////// Sunrise & Sunset Label ////////////////////////////////////////////////////////////////////////////////////////
+
+        //////// Sunrise & Sunset VBox /////////////////////////////////////////////////////////////////////////////////
+
+        // Sunrise & Sunset VBox Layout Properties
+        int SUN_VBOX_RED = 44;
+        int SUN_VBOX_GREEN = 44;
+        int SUN_VBOX_BLUE =  44;
+        double SUN_VBOX_WIDTH = 485.0;
+        double SUN_VBOX_HEIGHT = 200.0;
+        Pos SUN_VBOX_POS = Pos.CENTER;
+
+        // Instantiate Sunrise & Sunset VBox Layout Wrapper
+        VBox sunVBox = new VBox();
+
+        // Configure Sunrise & Sunset VBox Width
+        sunVBox.setMinWidth(SUN_VBOX_WIDTH);
+        sunVBox.setMaxWidth(SUN_VBOX_WIDTH);
+        sunVBox.setPrefWidth(SUN_VBOX_WIDTH);
+
+        // Configure Sunrise & Sunset VBox Height
+        sunVBox.setMinHeight(SUN_VBOX_HEIGHT);
+        sunVBox.setMaxHeight(SUN_VBOX_HEIGHT);
+        sunVBox.setPrefHeight(SUN_VBOX_HEIGHT);
+
+        // Configure Sunrise & Sunset VBox Alignment
+        sunVBox.setAlignment(SUN_VBOX_POS);
+
+        // Configure Sunrise & Sunset VBox Background
+        Color sunRGB = Color.rgb(SUN_VBOX_RED, SUN_VBOX_GREEN, SUN_VBOX_BLUE);
+        BackgroundFill sunBackgroundFill = new BackgroundFill(sunRGB, null, null);
+        Background sunBackground = new Background(sunBackgroundFill);
+        sunVBox.setBackground(sunBackground);
+
+        //////// Sunrise & Sunset HBox /////////////////////////////////////////////////////////////////////////////////
+
+        // Sunrise & Sunset HBox Layout Properties
+        int SUN_HBOX_RED = 44;
+        int SUN_HBOX_GREEN = 44;
+        int SUN_HBOX_BLUE =  44;
+        double SUN_HBOX_WIDTH = 485.0;
+        double SUN_HBOX_HEIGHT = 50.0;
+        double SUN_HBOX_PADDING_TOP = 0.0;
+        double SUN_HBOX_PADDING_RIGHT = 0.0;
+        double SUN_HBOX_PADDING_BOTTOM = 0.0;
+        double SUN_HBOX_PADDING_LEFT = 50.0;
+        double SUN_HBOX_SPACING = 10.0;
+        Pos SUN_HBOX_POS = Pos.CENTER;
+
+        // Instantiate Sunrise & Sunset HBox Layout Wrapper
+        HBox sunHBox = new HBox();
+
+        // Configure Sunrise & Sunrise HBox Width
+        sunHBox.setMinWidth(SUN_HBOX_WIDTH);
+        sunHBox.setMaxWidth(SUN_HBOX_WIDTH);
+        sunHBox.setPrefWidth(SUN_HBOX_WIDTH);
+
+        // Configure Sunrise & Sunset HBox Height
+        sunHBox.setMinHeight(SUN_HBOX_HEIGHT);
+        sunHBox.setMaxHeight(SUN_HBOX_HEIGHT);
+        sunHBox.setPrefHeight(SUN_HBOX_HEIGHT);
+
+        // Configure Sunrise & Sunset HBox Alignment
+        sunHBox.setAlignment(SUN_HBOX_POS);
+
+        // Configure Sunrise & Sunset HBox Padding & Spacing
+        sunHBox.setPadding(new Insets(SUN_HBOX_PADDING_TOP,SUN_HBOX_PADDING_RIGHT,SUN_HBOX_PADDING_BOTTOM,SUN_HBOX_PADDING_LEFT));
+        sunHBox.setSpacing(SUN_HBOX_SPACING);
+
+        // Configure Sunrise & Sunset HBox Background
+        Color sunriseRGB = Color.rgb(SUN_HBOX_RED, SUN_HBOX_GREEN, SUN_HBOX_BLUE);
+        BackgroundFill sunHBoxBackgroundFill = new BackgroundFill(sunriseRGB, null, null);
+        Background sunHBoxBackground = new Background(sunHBoxBackgroundFill);
+        sunHBox.setBackground(sunHBoxBackground);
+
+        //////// Sunrise Icon //////////////////////////////////////////////////////////////////////////////////////////
+
+        // Sunrise Icon Properties
+
+        double RISE_IMAGE_WIDTH = 15;
+        double RISE_IMAGE_HEIGHT = 15.0;
+        boolean RISE_IMAGE_ORIGINAL_RATIO = false;
+        boolean RISE_IMAGE_SMOOTHING_ALGORITHM = true;
+
+        // Instantiate Image Node w/ URL Loading
+        Image sunriseIcon = new Image(getClass().getResourceAsStream("/icons8-sunrise-24.png"),
+                RISE_IMAGE_WIDTH, RISE_IMAGE_HEIGHT, RISE_IMAGE_ORIGINAL_RATIO, RISE_IMAGE_SMOOTHING_ALGORITHM);
+
+        // Check for Image Loading Failure
+        if(sunriseIcon.isError()) {
+            throw new IllegalArgumentException("Image URL Loading Failure: Incorrect URL");
+        }
+
+        // Instantiate ImageView Node
+        ImageView riseImageView = new ImageView(sunriseIcon);
+
+        // Configure Width & Height of ImageView
+        riseImageView.setFitWidth(RISE_IMAGE_WIDTH);
+        riseImageView.setFitHeight(RISE_IMAGE_HEIGHT);
+
+        // Wrap the ImageView in a Pane
+        StackPane riseImagePane = new StackPane(riseImageView);
+
+        // Configure Sunrise Image Pane Height & Width
+        riseImagePane.setPrefSize(RISE_IMAGE_WIDTH, RISE_IMAGE_HEIGHT);
+
+        //////// Sunset Icon ///////////////////////////////////////////////////////////////////////////////////////////
+
+        // Sunset Icon Properties
+        double SET_IMAGE_WIDTH = 15;
+        double SET_IMAGE_HEIGHT = 15.0;
+        boolean SET_IMAGE_ORIGINAL_RATIO = false;
+        boolean SET_IMAGE_SMOOTHING_ALGORITHM = true;
+
+        // Instantiate Image Node w/ URL Loading
+        Image sunsetIcon = new Image(getClass().getResourceAsStream("/icons8-sunset-24.png"),
+                SET_IMAGE_WIDTH, SET_IMAGE_HEIGHT, SET_IMAGE_ORIGINAL_RATIO, SET_IMAGE_SMOOTHING_ALGORITHM);
+
+        // Check for Image Loading Failure
+        if(sunsetIcon.isError()) {
+            throw new IllegalArgumentException("Image URL Loading Failure: Incorrect URL");
+        }
+
+        // Instantiate ImageView Node
+        ImageView setImageView = new ImageView(sunsetIcon);
+
+        // Configure Width & Height of ImageView
+        setImageView.setFitWidth(SET_IMAGE_WIDTH);
+        setImageView.setFitHeight(SET_IMAGE_HEIGHT);
+
+        // Wrap the ImageView in a Pane
+        StackPane setImagePane = new StackPane(setImageView);
+
+        // Configure Sunset Image Pane Height & Width
+        setImagePane.setPrefSize(SET_IMAGE_WIDTH, SET_IMAGE_HEIGHT);
+
+
+
+        //////// Sunrise & Sunset Label ////////////////////////////////////////////////////////////////////////////////
+
+        // Sunrise & Sunset Label Properties
+        double RISE_LABEL_WIDTH = 485.0;
+        double RISE_LABEL_HEIGHT = 100.0;
+        double SET_LABEL_WIDTH = 485.0;
+        double SET_LABEL_HEIGHT = 100.0;
+
+        Font RISE_FONT = Font.font("Arial", 15.0);
+        Color RISE_FONT_COLOR = Color.WHITE;
+
+        Font SET_FONT = Font.font("Arial", 15.0);
+        Color SET_FONT_COLOR = Color.WHITE;
+
+        Pos RISE_POS = Pos.CENTER_LEFT;
+        Pos SET_POS = Pos.CENTER_LEFT;
+
+        String RISE_STR = "6:12 AM";
+        String SET_STR = "8:34 PM";
+
+        // Instantiate Sunrise Label Node
+        Label riseLabel = new Label(RISE_STR);
+
+        // Configure Sunrise Label Node
+        riseLabel.setFont(RISE_FONT);
+        riseLabel.setTextFill(RISE_FONT_COLOR);
+        riseLabel.setAlignment(RISE_POS);
+
+        // Configure Sunrise Label Width
+        riseLabel.setPrefWidth(RISE_LABEL_WIDTH);
+        riseLabel.setMinWidth(RISE_LABEL_WIDTH);
+        riseLabel.setMaxWidth(RISE_LABEL_WIDTH);
+
+        // Configure Sunrise Label Height
+        riseLabel.setPrefHeight(RISE_LABEL_HEIGHT);
+        riseLabel.setMinHeight(RISE_LABEL_HEIGHT);
+        riseLabel.setMaxHeight(RISE_LABEL_HEIGHT);
+
+        // Instantiate Set Label Node
+        Label setLabel = new Label(SET_STR);
+
+        // Configure Set Label Node
+        setLabel.setFont(SET_FONT);
+        setLabel.setTextFill(SET_FONT_COLOR);
+        setLabel.setAlignment(SET_POS);
+
+        // Configure Sunset Label Width
+        setLabel.setPrefWidth(SET_LABEL_WIDTH);
+        setLabel.setMinWidth(SET_LABEL_WIDTH);
+        setLabel.setMaxWidth(SET_LABEL_WIDTH);
+
+        // Configure Sunset Label Height
+        setLabel.setPrefHeight(SET_LABEL_HEIGHT);
+        setLabel.setMinHeight(SET_LABEL_HEIGHT);
+        setLabel.setMaxHeight(SET_LABEL_HEIGHT);
+
+        //////// ADD TO HBOX ////////////////////////////////////////////////////////////////////////////////
+        //sunHBox.getChildren().addAll(riseImagePane, riseLabel);
+        sunHBox.getChildren().addAll(setImagePane, setLabel);
+
+        //////// ADD TO VBOX ////////////////////////////////////////////////////////////////////////////////
+        sunVBox.getChildren().addAll(sunHBox);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        Scene scene = new Scene(sunVBox);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
