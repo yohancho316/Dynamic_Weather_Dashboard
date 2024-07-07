@@ -116,6 +116,53 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     }
 
     @Override
+    public HBox createSunriseHBox(StackPane sunrisePane, Label sunriseLabel) {
+
+        // Check if Sunrise Pane || Sunrise Label is Null
+        if(sunrisePane.equals(null) || sunriseLabel.equals(null)) throw new NullPointerException("Sunrise Pane & Sunrise Label cannot be null");
+
+        // Instantiate Sunrise VBox Background
+        Color hboxRGB = Color.rgb(this.SUN_HBOX_RED, this.SUN_HBOX_GREEN, this.SUN_HBOX_BLUE);
+
+        // Instantiate Background & BackgroundFill Nodes
+        BackgroundFill sunriseBackgroundFill = new BackgroundFill(hboxRGB, null, null);
+        Background sunriseBackground = new Background(sunriseBackgroundFill);
+
+        // Instantiate Sunrise HBox Layout Wrapper
+        HBox sunriseHBox = new HBox();
+
+        // Configure Sunset HBox Width
+        sunriseHBox.setMinWidth(this.SUN_HBOX_WIDTH);
+        sunriseHBox.setMaxWidth(this.SUN_HBOX_WIDTH);
+        sunriseHBox.setPrefWidth(this.SUN_HBOX_WIDTH);
+
+        // Configure Sunset HBox Height
+        sunriseHBox.setMinHeight(this.SUN_HBOX_HEIGHT);
+        sunriseHBox.setMaxHeight(this.SUN_HBOX_HEIGHT);
+        sunriseHBox.setPrefHeight(this.SUN_HBOX_HEIGHT);
+
+        // Configure Sunrise HBox Alignment
+        sunriseHBox.setAlignment(this.SUN_HBOX_POS);
+
+        // Configure Sunrise HBox Padding & Spacing
+        sunriseHBox.setPadding(new Insets(
+                this.SUN_HBOX_PADDING_TOP,
+                this.SUN_HBOX_PADDING_RIGHT,
+                this.SUN_HBOX_PADDING_BOTTOM,
+                this.SUN_HBOX_PADDING_LEFT));
+        sunriseHBox.setSpacing(SUN_HBOX_SPACING);
+
+        // Configure Background Color
+        sunriseHBox.setBackground(sunriseBackground);
+
+        // Add Sunrise StackPane & Sunrise Label within HBox Wrapper
+        sunriseHBox.getChildren().addAll(sunrisePane, sunriseLabel);
+
+        // Return Sunrise HBox Layout Wrapper Node
+        return sunriseHBox;
+    }
+
+    @Override
     public VBox createCurrentWeatherVBox(Label temperatureLabel, Label statusLabel) {
 
         // Check if Temperature || Status Label is Null
