@@ -24,6 +24,8 @@ public interface CurrentForecastFactory {
     double TEMP_VBOX_HEIGHT = 200.0;
     double TEMP_LABEL_WIDTH = 485.0;
     double TEMP_LABEL_HEIGHT = 100.0;
+    double STATUS_LABEL_WIDTH = 485.0;
+    double STATUS_LABEL_HEIGHT = 100.0;
     boolean CURRENT_WEATHER_ICON_ORIGINAL_RATIO = false;
     boolean CURRENT_WEATHER_IMAGE_SMOOTHING_ALGORITHM = true;
     String TEMP_NOTATION = " °F";
@@ -32,6 +34,7 @@ public interface CurrentForecastFactory {
     Color TEMP_FONT_COLOR = Color.WHITE;
     Color STATUS_FONT_COLOR = Color.WHITE;
     Pos TEMP_ALIGNMENT = Pos.TOP_LEFT;
+    Pos STATUS_ALIGNMENT = Pos.TOP_LEFT);
 
 
     // Pane Layout Wrapper Object Factory Method
@@ -41,6 +44,9 @@ public interface CurrentForecastFactory {
     VBox createCurrentWeatherVBox(Label temperatureLabel, Label statusLabel);
 
     // Weather Temperature Label Object Factory Method
-    Label createWeatherLabel(String temperature_str);
+    Label createTempLabel(String temperature_str);
+
+    // Weather Status Label Object Factory Method
+    Label createStatusLabel(String status_str);
 
 }

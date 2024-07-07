@@ -96,7 +96,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     }
 
     @Override
-    public Label createWeatherLabel(String temperature_str) {
+    public Label createTempLabel(String temperature_str) {
 
         // Check if Temperature String is Empty
         if(temperature_str.isEmpty()) throw new IllegalArgumentException("Temperature String cannot be empty");
@@ -122,6 +122,35 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         // Return Temperature Label Node
         return temperatureLabel;
     }
+
+    // Weather Status Label Object Factory Method
+    public Label createStatusLabel(String status_str) {
+
+        // Check if Status String is Empty
+        if(status_str.isEmpty()) throw new IllegalArgumentException("Status string cannot be empty");
+
+        // Instantiate Status Label Node
+        Label statusLabel = new Label(status_str);
+
+        // Configure Temperature Status Label
+        statusLabel.setFont(this.STATUS_FONT);
+        statusLabel.setTextFill(this.STATUS_FONT_COLOR);
+        statusLabel.setAlignment(this.STATUS_ALIGNMENT);
+
+        // Configure Temperature Status Width
+        statusLabel.setPrefWidth(this.STATUS_LABEL_WIDTH);
+        statusLabel.setMinWidth(this.STATUS_LABEL_WIDTH);
+        statusLabel.setMaxWidth(this.STATUS_LABEL_WIDTH);
+
+        // Configure Temperature Status Height
+        statusLabel.setPrefHeight(this.STATUS_LABEL_HEIGHT);
+        statusLabel.setMinHeight(this.STATUS_LABEL_HEIGHT);
+        statusLabel.setMaxHeight(this.STATUS_LABEL_HEIGHT);
+
+        // Return Status Label Node
+        return statusLabel;
+    };
+
 
 
 }
