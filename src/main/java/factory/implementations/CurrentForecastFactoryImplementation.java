@@ -2,11 +2,14 @@ package factory.implementations;
 
 import factory.interfaces.CurrentForecastFactory;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class CurrentForecastFactoryImplementation implements CurrentForecastFactory {
@@ -67,4 +70,30 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         // Return the Current Weather Image Pane with the Current Weather Icon Image
         return currentWeatherImagePane;
     }
+
+    @Override
+    public VBox createCurrentWeatherVBox(Label temperatureLabel, Label statusLabel) {
+
+        // Check if Temperature || Status Label is Null
+        if(temperatureLabel.equals(null) || statusLabel.equals(null)) throw new NullPointerException("Temperature & Status Label cannot be null");
+
+        // Configure Wrapper Background
+        Color tempRGB = Color.rgb(this.TEMP_VBOX_RED, this.TEMP_VBOX_GREEN, this.TEMP_VBOX_BLUE);
+        BackgroundFill tempBackgroundFill = new BackgroundFill(tempRGB, null, null);
+        Background tempBackground = new Background(tempBackgroundFill);
+
+        // Instantiate VBox Layout Wrapper Node
+        VBox tempVBox = new VBox();
+        tempVBox.setPrefSize(this.TEMP_VBOX_WIDTH, this.TEMP_VBOX_HEIGHT);
+        tempVBox.setBackground(tempBackground);
+        tempVBox.setAlignment(Pos.CENTER);
+
+        // Add Labels within Wrapper
+        tempVBox.getChildren().addAll(statusLabel, temperatureLabel);
+
+        // Return VBox Wrapper Node
+        return tempVBox;
+    }
+
+
 }
