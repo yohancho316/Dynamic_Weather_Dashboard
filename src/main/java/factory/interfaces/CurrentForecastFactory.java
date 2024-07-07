@@ -74,6 +74,6 @@ public interface CurrentForecastFactory {
     VBox createCurrentWeatherVBox(Label temperatureLabel, Label statusLabel);
 
     // Sunrise & Sunset VBox Object Factory Method Signature
-    VBox createSunVBox(HBox sunHbox);
+    VBox createSunVBox(HBox sunsetHBox, HBox sunriseHBox);
 
 }

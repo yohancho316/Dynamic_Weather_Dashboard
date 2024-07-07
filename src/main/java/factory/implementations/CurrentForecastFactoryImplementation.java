@@ -243,10 +243,10 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     };
 
     @Override
-    public VBox createSunVBox(HBox sunHBox) {
+    public VBox createSunVBox(HBox sunsetHBox, HBox sunriseHBox) {
 
-        // Check if Sun HBox is Null
-        if(sunHBox.equals(null)) throw new NullPointerException("Sun HBox cannot be null");
+        // Check if Sunset HBox || Sunrise HBox is Null
+        if(sunsetHBox.equals(null) || sunriseHBox.equals(null)) throw new NullPointerException("Sunset HBox & Sunrise HBox cannot be null");
 
         // Instantiate Sunrise & Sunset VBox Background
         Color sunRGB = Color.rgb(this.SUN_VBOX_RED, this.SUN_VBOX_GREEN, this.SUN_VBOX_BLUE);
@@ -275,7 +275,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         sunVBox.setBackground(sunBackground);
 
         // Add Sun HBox within Wrapper
-        sunVBox.getChildren().addAll(sunHBox);
+        sunVBox.getChildren().addAll(sunsetHBox, sunriseHBox);
 
         // Return VBox Layout Wrapper Node
         return sunVBox;
