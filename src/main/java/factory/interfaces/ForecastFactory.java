@@ -67,22 +67,22 @@ public interface ForecastFactory {
     Color DATE_TIME_FONT_COLOR = Color.WHITE;
     Color rgb = Color.rgb(red, green, blue);
 
-    // HBox Layout Wrapper Object Factory Method
+    // HBox Layout Wrapper Object Factory Method Signature
     HBox createHBox(List<BorderPane> borderPaneList);
 
-    // Border Pane Object Factory Method
+    // Border Pane Object Factory Method Signature
     BorderPane createBorderPane(Pane imagePane, VBox vbox);
 
-    // Image Pane Object Factory Method
+    // Image Pane Object Factory Method Signature
     Pane createImagePane(String weather_icon_url);
 
-    // Time Label Object Factory Method
+    // Time Label Object Factory Method Signature
     Label createTimeLabel(LocalTime currentTime);
 
-    // Date Label Object Factory Method
+    // Date Label Object Factory Method Signature
     Label createDateLabel(LocalDateTime currentDate);
 
-    // VBox Layout Wrapper Object Factory Method
+    // VBox Layout Wrapper Object Factory Method Signature
     VBox createVBoxLayout(Label timeLabel, Label dateLabel);
 
 }

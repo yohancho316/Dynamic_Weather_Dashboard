@@ -6,10 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 public class CurrentForecastFactoryImplementation implements CurrentForecastFactory {
@@ -151,6 +148,45 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         return statusLabel;
     };
 
+    @Override
+    public VBox createSunVBox(HBox sunHBox) {
 
+        // Check if Sun HBox is Null
+        if(sunHBox.equals(null)) throw new NullPointerException("Sun HBox cannot be null");
 
+        // Instantiate Sunrise & Sunshine VBox Background
+        Color sunRGB = Color.rgb(this.SUN_VBOX_RED, this.SUN_VBOX_GREEN, this.SUN_VBOX_BLUE);
+
+        // Configure Background of ImageView
+        BackgroundFill sunBackgroundFill = new BackgroundFill(sunRGB, null, null);
+        Background sunBackground = new Background(sunBackgroundFill);
+
+        // Instantiate Sun HBox Layout Wrapper Node
+        VBox sunVBox = new VBox();
+
+        // Configure Sunrise & Sunset VBox Width
+        sunVBox.setMinWidth(this.SUN_VBOX_WIDTH);
+        sunVBox.setMaxWidth(this.SUN_VBOX_WIDTH);
+        sunVBox.setPrefWidth(this.SUN_VBOX_WIDTH);
+
+        // Configure Sunrise & Sunset VBox Height
+        sunVBox.setMinHeight(this.SUN_VBOX_HEIGHT);
+        sunVBox.setMaxHeight(this.SUN_VBOX_HEIGHT);
+        sunVBox.setPrefHeight(this.SUN_VBOX_HEIGHT);
+
+        // Configure Sunrise & Sunset VBox Alignment
+        sunVBox.setAlignment(this.SUN_VBOX_ALIGNMENT);
+
+        // Configure Sunrise & Sunset VBox Background
+        sunVBox.setBackground(sunBackground);
+
+        // Add Sun HBox within Wrapper
+        sunVBox.getChildren().addAll(sunHBox);
+
+        // Return Sunrise & Sunset VBox Wrapper Node
+        return sunVBox;
+
+        // Return VBox Layout Wrapper Node
+        return sunVBox;
+    }
 }
