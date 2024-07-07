@@ -351,12 +351,12 @@ public class Main extends Application {
         tempLabel.setAlignment(Pos.TOP_LEFT);
 
         // Configure Temperature Label Width
-        tempLabel.setPrefWidth(TEMP_LABEL_HEIGHT);
+        tempLabel.setPrefWidth(TEMP_LABEL_WIDTH);
         tempLabel.setMinWidth(TEMP_LABEL_WIDTH);
         tempLabel.setMaxWidth(TEMP_LABEL_WIDTH);
 
         // Configure Temperature Label Height
-        tempLabel.setPrefHeight(TEMP_LABEL_WIDTH);
+        tempLabel.setPrefHeight(TEMP_LABEL_HEIGHT);
         tempLabel.setMinHeight(TEMP_LABEL_HEIGHT);
         tempLabel.setMaxHeight(TEMP_LABEL_HEIGHT);
 

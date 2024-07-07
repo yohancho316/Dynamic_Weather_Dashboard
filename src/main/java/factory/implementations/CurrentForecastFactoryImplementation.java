@@ -95,5 +95,33 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         return tempVBox;
     }
 
+    @Override
+    public Label createWeatherLabel(String temperature_str) {
+
+        // Check if Temperature String is Empty
+        if(temperature_str.isEmpty()) throw new IllegalArgumentException("Temperature String cannot be empty");
+
+        // Instantiate Temperature Label Node
+        Label temperatureLabel = new Label(temperature_str + this.TEMP_NOTATION);
+
+        // Configure Temperature Label Style
+        temperatureLabel.setFont(this.TEMP_FONT);
+        temperatureLabel.setTextFill(this.TEMP_FONT_COLOR);
+        temperatureLabel.setAlignment(this.TEMP_ALIGNMENT);
+
+        // Configure Temperature Label Width
+        temperatureLabel.setPrefWidth(this.TEMP_LABEL_WIDTH);
+        temperatureLabel.setMinWidth(this.TEMP_LABEL_WIDTH);
+        temperatureLabel.setMaxWidth(this.TEMP_LABEL_WIDTH);
+
+        // Configure Temperature Label Height
+        temperatureLabel.setPrefHeight(this.TEMP_LABEL_HEIGHT);
+        temperatureLabel.setMinHeight(this.TEMP_LABEL_HEIGHT);
+        temperatureLabel.setMaxHeight(this.TEMP_LABEL_HEIGHT);
+
+        // Return Temperature Label Node
+        return temperatureLabel;
+    }
+
 
 }
