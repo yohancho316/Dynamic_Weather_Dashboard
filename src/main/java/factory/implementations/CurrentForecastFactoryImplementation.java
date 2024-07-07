@@ -69,6 +69,53 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     }
 
     @Override
+    public HBox createSunsetHBox(StackPane sunsetPane, Label sunsetLabel) {
+
+        // Check if Sunset Pane || Sunset Label is Null
+        if(sunsetPane.equals(null) || sunsetLabel.equals(null)) throw new NullPointerException("Sunset Pane & Sunset Label cannot be null");
+
+        // Instantiate Sunrise & Sunshine VBox Background
+        Color hboxRGB = Color.rgb(this.SUN_HBOX_RED, this.SUN_HBOX_GREEN, this.SUN_HBOX_BLUE);
+
+        // Instantiate Background & BackgroundFill Nodes
+        BackgroundFill sunsetBackgroundFill = new BackgroundFill(hboxRGB, null, null);
+        Background sunsetBackground = new Background(sunsetBackgroundFill);
+
+        // Instantiate Sunset HBox Layout Wrapper
+        HBox sunsetHBox = new HBox();
+
+        // Configure Sunset HBox Width
+        sunsetHBox.setMinWidth(this.SUN_HBOX_WIDTH);
+        sunsetHBox.setMaxWidth(this.SUN_HBOX_WIDTH);
+        sunsetHBox.setPrefWidth(this.SUN_HBOX_WIDTH);
+
+        // Configure Sunset HBox Height
+        sunsetHBox.setMinHeight(this.SUN_HBOX_HEIGHT);
+        sunsetHBox.setMaxHeight(this.SUN_HBOX_HEIGHT);
+        sunsetHBox.setPrefHeight(this.SUN_HBOX_HEIGHT);
+
+        // Configure Sunset HBox Alignment
+        sunsetHBox.setAlignment(this.SUN_HBOX_POS);
+
+        // Configure Sunset HBox Padding & Spacing
+        sunsetHBox.setPadding(new Insets(
+                this.SUN_HBOX_PADDING_TOP,
+                this.SUN_HBOX_PADDING_RIGHT,
+                this.SUN_HBOX_PADDING_BOTTOM,
+                this.SUN_HBOX_PADDING_LEFT));
+        sunsetHBox.setSpacing(SUN_HBOX_SPACING);
+
+        // Configure Background Color
+        sunsetHBox.setBackground(sunsetBackground);
+
+        // Add Sunset StackPane & Sunset Label within HBox Wrapper
+        sunsetHBox.getChildren().addAll(sunsetPane, sunsetLabel);
+
+        // Return Sun HBox Layout Wrapper Node
+        return sunsetHBox;
+    }
+
+    @Override
     public VBox createCurrentWeatherVBox(Label temperatureLabel, Label statusLabel) {
 
         // Check if Temperature || Status Label is Null
@@ -154,7 +201,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         // Check if Sun HBox is Null
         if(sunHBox.equals(null)) throw new NullPointerException("Sun HBox cannot be null");
 
-        // Instantiate Sunrise & Sunshine VBox Background
+        // Instantiate Sunrise & Sunset VBox Background
         Color sunRGB = Color.rgb(this.SUN_VBOX_RED, this.SUN_VBOX_GREEN, this.SUN_VBOX_BLUE);
 
         // Configure Background of ImageView
@@ -183,10 +230,9 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         // Add Sun HBox within Wrapper
         sunVBox.getChildren().addAll(sunHBox);
 
-        // Return Sunrise & Sunset VBox Wrapper Node
-        return sunVBox;
-
         // Return VBox Layout Wrapper Node
         return sunVBox;
     }
+
+
 }
