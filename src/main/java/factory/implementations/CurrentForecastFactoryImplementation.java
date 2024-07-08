@@ -242,6 +242,36 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         return statusLabel;
     };
 
+    // Sunrise Label Object Factory Concrete Method
+    public Label createSunriseLabel(String sunriseStr) {
+
+        // Check if Sunrise String is Empty
+        if(sunriseStr.isEmpty()) throw new IllegalArgumentException("Sunrise String cannot be empty");
+        // CHeck if Sunrise String is Null
+        else if(sunriseStr.equals(null)) throw new NullPointerException("Sunrise String cannot be null");
+
+        // Instantiate Sunrise Label
+        Label riseLabel = new Label(sunriseStr);
+
+        // Configure Sunrise Label Node
+        riseLabel.setFont(this.SUNRISE_FONT);
+        riseLabel.setTextFill(this.SUNRISE_FONT_COLOR);
+        riseLabel.setAlignment(this.SUNRISE_LABEL_POS);
+
+        // Configure Sunrise Label Width
+        riseLabel.setPrefWidth(this.RISE_LABEL_HEIGHT);
+        riseLabel.setMinWidth(this.RISE_LABEL_HEIGHT);
+        riseLabel.setMaxWidth(this.RISE_LABEL_HEIGHT);
+
+        // Configure Sunrise Label Height
+        riseLabel.setPrefHeight(this.RISE_LABEL_HEIGHT);
+        riseLabel.setMinHeight(this.RISE_LABEL_HEIGHT);
+        riseLabel.setMaxHeight(this.RISE_LABEL_HEIGHT);
+
+        // Return Sunrise Label Node
+        return riseLabel;
+    }
+
     @Override
     public VBox createSunVBox(HBox sunsetHBox, HBox sunriseHBox) {
 

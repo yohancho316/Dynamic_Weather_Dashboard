@@ -43,17 +43,24 @@ public interface CurrentForecastFactory {
     double SUN_HBOX_PADDING_BOTTOM = 0.0;
     double SUN_HBOX_PADDING_LEFT = 50.0;
     double SUN_HBOX_SPACING = 10.0;
+    double RISE_LABEL_WIDTH = 485.0;
+    double RISE_LABEL_HEIGHT = 100.0;
+    double SET_LABEL_WIDTH = 485.0;
+    double SET_LABEL_HEIGHT = 100.0;
     boolean CURRENT_WEATHER_ICON_ORIGINAL_RATIO = false;
     boolean CURRENT_WEATHER_IMAGE_SMOOTHING_ALGORITHM = true;
     String TEMP_NOTATION = " °F";
     Font TEMP_FONT = Font.font("Arial", 15.0);
     Font STATUS_FONT = Font.font("Arial", 15.0);
+    Font SUNRISE_FONT = Font.font("Arial", 15.0);
     Color TEMP_FONT_COLOR = Color.WHITE;
     Color STATUS_FONT_COLOR = Color.WHITE;
+    Color SUNRISE_FONT_COLOR = Color.WHITE;
     Pos TEMP_ALIGNMENT = Pos.TOP_LEFT;
     Pos STATUS_ALIGNMENT = Pos.TOP_LEFT;
     Pos SUN_VBOX_ALIGNMENT = Pos.CENTER;
     Pos SUN_HBOX_POS = Pos.CENTER;
+    Pos SUNRISE_LABEL_POS = Pos.CENTER_LEFT;
 
     // Weather Temperature Label Object Factory Method Signature
     Label createTempLabel(String temperature_str);
@@ -61,8 +68,18 @@ public interface CurrentForecastFactory {
     // Weather Status Label Object Factory Method Signature
     Label createStatusLabel(String status_str);
 
+    // Sunset Label Object Factory Method Signature
+    Label createSunsetLabel(String sunset_str);
+
+    // Sunrise Label Object Factory Method Signature
+    Label createSunriseLabel(String sunrise_str);
+
     // Pane Layout Wrapper Object Factory Method Signature
     Pane createCurrentImagePane(String current_image_path);
+
+    // Sunset StackPane Object Factory Method Signature
+
+    // Sunrise StackPane Object Factory Method Signature
 
     // Sunset HBox Object Factory Method Signature
     HBox createSunsetHBox(StackPane sunsetPane, Label sunsetLabel);
