@@ -47,8 +47,16 @@ public interface CurrentForecastFactory {
     double RISE_LABEL_HEIGHT = 100.0;
     double SET_LABEL_WIDTH = 485.0;
     double SET_LABEL_HEIGHT = 100.0;
+    double SET_IMAGE_WIDTH = 15.0;
+    double SET_IMAGE_HEIGHT = 15.0;
+    double RISE_IMAGE_WIDTH = 15.0;
+    double RISE_IMAGE_HEIGHT = 15.0;
     boolean CURRENT_WEATHER_ICON_ORIGINAL_RATIO = false;
     boolean CURRENT_WEATHER_IMAGE_SMOOTHING_ALGORITHM = true;
+    boolean SET_IMAGE_ORIGINAL_RATIO = false;
+    boolean SET_IMAGE_SMOOTHING_ALGORITHM = true;
+    boolean RISE_IMAGE_ORIGINAL_RATIO = false;
+    boolean RISE_IMAGE_SMOOTHING_ALGORITHM = true;
     String TEMP_NOTATION = " °F";
     Font TEMP_FONT = Font.font("Arial", 15.0);
     Font STATUS_FONT = Font.font("Arial", 15.0);
@@ -81,8 +89,10 @@ public interface CurrentForecastFactory {
     Pane createCurrentImagePane(String current_image_path);
 
     // Sunset StackPane Object Factory Method Signature
+    StackPane createSunsetStackPane(String sunset_image_path);
 
     // Sunrise StackPane Object Factory Method Signature
+    StackPane createSunriseStackPane(String sunrise_image_path);
 
     // Sunset HBox Object Factory Method Signature
     HBox createSunsetHBox(StackPane sunsetPane, Label sunsetLabel);

@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 
 public class CurrentForecastFactoryImplementation implements CurrentForecastFactory {
 
+    // Current Weather Icon Image Pane Wrapper Object Factory Concrete Definition
     @Override
     public Pane createCurrentImagePane(String current_image_path) {
 
@@ -68,6 +69,79 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         return currentWeatherImagePane;
     }
 
+
+    // Sunset Icon StackPane Object Factory Concrete Definition
+    @Override
+    public StackPane createSunsetStackPane(String sunset_image_path) {
+
+        // Check if Sunset Image Path is Null or Empty
+        if(sunset_image_path.isEmpty() || sunset_image_path.equals(null)) throw new IllegalArgumentException("Sunset Image Path cannot be empty or Null");
+
+        // Instantiate Image Node w/ URL Loading
+        Image sunsetIcon = new Image(getClass().getResourceAsStream(sunset_image_path),
+                this.SET_IMAGE_WIDTH, 
+                this.SET_IMAGE_HEIGHT, 
+                this.SET_IMAGE_ORIGINAL_RATIO, 
+                this.SET_IMAGE_SMOOTHING_ALGORITHM);
+
+        // Check for Image Loading Failure
+        if(sunsetIcon.isError()) {
+            throw new IllegalArgumentException("Image URL Loading Failure: Incorrect URL");
+        }
+
+        // Instantiate ImageView Node
+        ImageView setImageView = new ImageView(sunsetIcon);
+
+        // Configure Width & Height of ImageView
+        setImageView.setFitWidth(this.SET_IMAGE_WIDTH);
+        setImageView.setFitHeight(this.SET_IMAGE_HEIGHT);
+
+        // Wrap the ImageView in a Pane
+        StackPane setImagePane = new StackPane(setImageView);
+
+        // Configure Sunset Image Pane Height & Width
+        setImagePane.setPrefSize(this.SET_IMAGE_WIDTH, this.SET_IMAGE_HEIGHT);
+
+        // Return Sunset Icon Stack Pane Node
+        return setImagePane;
+    }
+
+    // Sunrise Icon StackPane Object Factory Concrete Definition
+    public StackPane createSunriseStackPane(String sunrise_image_path) {
+
+        // Check if Sunrise Image Path is Null or Empty
+        if(sunrise_image_path.isEmpty() || sunrise_image_path.equals(null)) throw new IllegalArgumentException("Sunrise Image Path cannot be empty or Null");
+
+        // Instantiate Image Node w/ URL Loading
+        Image sunriseIcon = new Image(getClass().getResourceAsStream(sunrise_image_path),
+                this.RISE_IMAGE_WIDTH,
+                this.RISE_IMAGE_HEIGHT,
+                this.RISE_IMAGE_ORIGINAL_RATIO,
+                this.RISE_IMAGE_SMOOTHING_ALGORITHM);
+
+        // Check for Image Loading Failure
+        if(sunriseIcon.isError()) {
+            throw new IllegalArgumentException("Image URL Loading Failure: Incorrect URL");
+        }
+
+        // Instantiate ImageView Node
+        ImageView riseImageView = new ImageView(sunriseIcon);
+
+        // Configure Width & Height of ImageView
+        riseImageView.setFitWidth(this.RISE_IMAGE_WIDTH);
+        riseImageView.setFitHeight(this.RISE_IMAGE_HEIGHT);
+
+        // Wrap the ImageView in a Pane
+        StackPane riseImagePane = new StackPane(riseImageView);
+
+        // Configure Sunrise Image Pane Height & Width
+        riseImagePane.setPrefSize(this.RISE_IMAGE_WIDTH, this.RISE_IMAGE_HEIGHT);
+
+        // Return Sunrise Image Pane Node
+        return riseImagePane;
+    }
+
+    // Sunset HBox Wrapper Object Factory Concrete Definition
     @Override
     public HBox createSunsetHBox(StackPane sunsetPane, Label sunsetLabel) {
 
@@ -162,6 +236,8 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         return sunriseHBox;
     }
 
+
+    // Current Weather VBox Layout Object Factory Concrete Definition
     @Override
     public VBox createCurrentWeatherVBox(Label temperatureLabel, Label statusLabel) {
 
@@ -186,122 +262,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         return tempVBox;
     }
 
-    @Override
-    public Label createTempLabel(String temperature_str) {
-
-        // Check if Temperature String is Empty
-        if(temperature_str.isEmpty()) throw new IllegalArgumentException("Temperature String cannot be empty");
-
-        // Instantiate Temperature Label Node
-        Label temperatureLabel = new Label(temperature_str + this.TEMP_NOTATION);
-
-        // Configure Temperature Label Style
-        temperatureLabel.setFont(this.TEMP_FONT);
-        temperatureLabel.setTextFill(this.TEMP_FONT_COLOR);
-        temperatureLabel.setAlignment(this.TEMP_ALIGNMENT);
-
-        // Configure Temperature Label Width
-        temperatureLabel.setPrefWidth(this.TEMP_LABEL_WIDTH);
-        temperatureLabel.setMinWidth(this.TEMP_LABEL_WIDTH);
-        temperatureLabel.setMaxWidth(this.TEMP_LABEL_WIDTH);
-
-        // Configure Temperature Label Height
-        temperatureLabel.setPrefHeight(this.TEMP_LABEL_HEIGHT);
-        temperatureLabel.setMinHeight(this.TEMP_LABEL_HEIGHT);
-        temperatureLabel.setMaxHeight(this.TEMP_LABEL_HEIGHT);
-
-        // Return Temperature Label Node
-        return temperatureLabel;
-    }
-
-    // Weather Status Label Object Factory Method
-    public Label createStatusLabel(String status_str) {
-
-        // Check if Status String is Empty
-        if(status_str.isEmpty()) throw new IllegalArgumentException("Status string cannot be empty");
-
-        // Instantiate Status Label Node
-        Label statusLabel = new Label(status_str);
-
-        // Configure Temperature Status Label
-        statusLabel.setFont(this.STATUS_FONT);
-        statusLabel.setTextFill(this.STATUS_FONT_COLOR);
-        statusLabel.setAlignment(this.STATUS_ALIGNMENT);
-
-        // Configure Temperature Status Width
-        statusLabel.setPrefWidth(this.STATUS_LABEL_WIDTH);
-        statusLabel.setMinWidth(this.STATUS_LABEL_WIDTH);
-        statusLabel.setMaxWidth(this.STATUS_LABEL_WIDTH);
-
-        // Configure Temperature Status Height
-        statusLabel.setPrefHeight(this.STATUS_LABEL_HEIGHT);
-        statusLabel.setMinHeight(this.STATUS_LABEL_HEIGHT);
-        statusLabel.setMaxHeight(this.STATUS_LABEL_HEIGHT);
-
-        // Return Status Label Node
-        return statusLabel;
-    };
-
-    // Sunrise Label Object Factory Concrete Method
-    public Label createSunriseLabel(String sunriseStr) {
-
-        // Check if Sunrise String is Empty
-        if(sunriseStr.isEmpty()) throw new IllegalArgumentException("Sunrise String cannot be empty");
-        // Check if Sunrise String is Null
-        else if(sunriseStr.equals(null)) throw new NullPointerException("Sunrise String cannot be null");
-
-        // Instantiate Sunrise Label
-        Label riseLabel = new Label(sunriseStr);
-
-        // Configure Sunrise Label Node
-        riseLabel.setFont(this.SUNRISE_FONT);
-        riseLabel.setTextFill(this.SUNRISE_FONT_COLOR);
-        riseLabel.setAlignment(this.SUNRISE_LABEL_POS);
-
-        // Configure Sunrise Label Width
-        riseLabel.setPrefWidth(this.RISE_LABEL_HEIGHT);
-        riseLabel.setMinWidth(this.RISE_LABEL_HEIGHT);
-        riseLabel.setMaxWidth(this.RISE_LABEL_HEIGHT);
-
-        // Configure Sunrise Label Height
-        riseLabel.setPrefHeight(this.RISE_LABEL_HEIGHT);
-        riseLabel.setMinHeight(this.RISE_LABEL_HEIGHT);
-        riseLabel.setMaxHeight(this.RISE_LABEL_HEIGHT);
-
-        // Return Sunrise Label Node
-        return riseLabel;
-    }
-    
-    @Override
-    public Label createSunsetLabel(String sunsetStr) {
-
-        // Check if Sunset String is Empty
-        if(sunsetStr.isEmpty()) throw new IllegalArgumentException("Sunset String cannot be empty");
-        // CHeck if Sunset String is Null
-        else if(sunsetStr.equals(null)) throw new NullPointerException("Sunset String cannot be null");
-
-        // Instantiate Set Label Node
-        Label sunsetLabel = new Label(sunsetStr);
-
-        // Configure Set Label Node
-        sunsetLabel.setFont(this.SUNSET_FONT);
-        sunsetLabel.setTextFill(this.SUNSET_FONT_COLOR);
-        sunsetLabel.setAlignment(this.SUNSET_LABEL_POS);
-
-        // Configure Sunset Label Width
-        sunsetLabel.setPrefWidth(this.SET_LABEL_WIDTH);
-        sunsetLabel.setMinWidth(this.SET_LABEL_WIDTH);
-        sunsetLabel.setMaxWidth(this.SET_LABEL_WIDTH);
-
-        // Configure Sunset Label Height
-        sunsetLabel.setPrefHeight(this.SET_LABEL_HEIGHT);
-        sunsetLabel.setMinHeight(this.SET_LABEL_HEIGHT);
-        sunsetLabel.setMaxHeight(this.SET_LABEL_HEIGHT);
-
-        // Return Sunset Label Node
-        return sunsetLabel;
-    }
-
+    // Sunset & Sunrise VBox Object Factory Concrete Definition
     @Override
     public VBox createSunVBox(HBox sunsetHBox, HBox sunriseHBox) {
 
@@ -341,5 +302,122 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         return sunVBox;
     }
 
+    // Temperature Label Object Factory Concrete Definition
+    @Override
+    public Label createTempLabel(String temperature_str) {
+
+        // Check if Temperature String is Empty
+        if(temperature_str.isEmpty()) throw new IllegalArgumentException("Temperature String cannot be empty");
+
+        // Instantiate Temperature Label Node
+        Label temperatureLabel = new Label(temperature_str + this.TEMP_NOTATION);
+
+        // Configure Temperature Label Style
+        temperatureLabel.setFont(this.TEMP_FONT);
+        temperatureLabel.setTextFill(this.TEMP_FONT_COLOR);
+        temperatureLabel.setAlignment(this.TEMP_ALIGNMENT);
+
+        // Configure Temperature Label Width
+        temperatureLabel.setPrefWidth(this.TEMP_LABEL_WIDTH);
+        temperatureLabel.setMinWidth(this.TEMP_LABEL_WIDTH);
+        temperatureLabel.setMaxWidth(this.TEMP_LABEL_WIDTH);
+
+        // Configure Temperature Label Height
+        temperatureLabel.setPrefHeight(this.TEMP_LABEL_HEIGHT);
+        temperatureLabel.setMinHeight(this.TEMP_LABEL_HEIGHT);
+        temperatureLabel.setMaxHeight(this.TEMP_LABEL_HEIGHT);
+
+        // Return Temperature Label Node
+        return temperatureLabel;
+    }
+
+    // Weather Status Label Object Factory Concrete Definition
+    public Label createStatusLabel(String status_str) {
+
+        // Check if Status String is Empty
+        if(status_str.isEmpty()) throw new IllegalArgumentException("Status string cannot be empty");
+
+        // Instantiate Status Label Node
+        Label statusLabel = new Label(status_str);
+
+        // Configure Temperature Status Label
+        statusLabel.setFont(this.STATUS_FONT);
+        statusLabel.setTextFill(this.STATUS_FONT_COLOR);
+        statusLabel.setAlignment(this.STATUS_ALIGNMENT);
+
+        // Configure Temperature Status Width
+        statusLabel.setPrefWidth(this.STATUS_LABEL_WIDTH);
+        statusLabel.setMinWidth(this.STATUS_LABEL_WIDTH);
+        statusLabel.setMaxWidth(this.STATUS_LABEL_WIDTH);
+
+        // Configure Temperature Status Height
+        statusLabel.setPrefHeight(this.STATUS_LABEL_HEIGHT);
+        statusLabel.setMinHeight(this.STATUS_LABEL_HEIGHT);
+        statusLabel.setMaxHeight(this.STATUS_LABEL_HEIGHT);
+
+        // Return Status Label Node
+        return statusLabel;
+    };
+
+    // Sunrise Label Object Factory Concrete Definition
+    public Label createSunriseLabel(String sunriseStr) {
+
+        // Check if Sunrise String is Empty
+        if(sunriseStr.isEmpty()) throw new IllegalArgumentException("Sunrise String cannot be empty");
+        // Check if Sunrise String is Null
+        else if(sunriseStr.equals(null)) throw new NullPointerException("Sunrise String cannot be null");
+
+        // Instantiate Sunrise Label
+        Label riseLabel = new Label(sunriseStr);
+
+        // Configure Sunrise Label Node
+        riseLabel.setFont(this.SUNRISE_FONT);
+        riseLabel.setTextFill(this.SUNRISE_FONT_COLOR);
+        riseLabel.setAlignment(this.SUNRISE_LABEL_POS);
+
+        // Configure Sunrise Label Width
+        riseLabel.setPrefWidth(this.RISE_LABEL_HEIGHT);
+        riseLabel.setMinWidth(this.RISE_LABEL_HEIGHT);
+        riseLabel.setMaxWidth(this.RISE_LABEL_HEIGHT);
+
+        // Configure Sunrise Label Height
+        riseLabel.setPrefHeight(this.RISE_LABEL_HEIGHT);
+        riseLabel.setMinHeight(this.RISE_LABEL_HEIGHT);
+        riseLabel.setMaxHeight(this.RISE_LABEL_HEIGHT);
+
+        // Return Sunrise Label Node
+        return riseLabel;
+    }
+
+    // Sunset Label Object Factory Concrete Definition
+    @Override
+    public Label createSunsetLabel(String sunsetStr) {
+
+        // Check if Sunset String is Empty
+        if(sunsetStr.isEmpty()) throw new IllegalArgumentException("Sunset String cannot be empty");
+        // CHeck if Sunset String is Null
+        else if(sunsetStr.equals(null)) throw new NullPointerException("Sunset String cannot be null");
+
+        // Instantiate Set Label Node
+        Label sunsetLabel = new Label(sunsetStr);
+
+        // Configure Set Label Node
+        sunsetLabel.setFont(this.SUNSET_FONT);
+        sunsetLabel.setTextFill(this.SUNSET_FONT_COLOR);
+        sunsetLabel.setAlignment(this.SUNSET_LABEL_POS);
+
+        // Configure Sunset Label Width
+        sunsetLabel.setPrefWidth(this.SET_LABEL_WIDTH);
+        sunsetLabel.setMinWidth(this.SET_LABEL_WIDTH);
+        sunsetLabel.setMaxWidth(this.SET_LABEL_WIDTH);
+
+        // Configure Sunset Label Height
+        sunsetLabel.setPrefHeight(this.SET_LABEL_HEIGHT);
+        sunsetLabel.setMinHeight(this.SET_LABEL_HEIGHT);
+        sunsetLabel.setMaxHeight(this.SET_LABEL_HEIGHT);
+
+        // Return Sunset Label Node
+        return sunsetLabel;
+    }
 
 }
