@@ -247,7 +247,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
 
         // Check if Sunrise String is Empty
         if(sunriseStr.isEmpty()) throw new IllegalArgumentException("Sunrise String cannot be empty");
-        // CHeck if Sunrise String is Null
+        // Check if Sunrise String is Null
         else if(sunriseStr.equals(null)) throw new NullPointerException("Sunrise String cannot be null");
 
         // Instantiate Sunrise Label
@@ -270,6 +270,36 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
 
         // Return Sunrise Label Node
         return riseLabel;
+    }
+    
+    @Override
+    public Label createSunsetLabel(String sunsetStr) {
+
+        // Check if Sunset String is Empty
+        if(sunsetStr.isEmpty()) throw new IllegalArgumentException("Sunset String cannot be empty");
+        // CHeck if Sunset String is Null
+        else if(sunsetStr.equals(null)) throw new NullPointerException("Sunset String cannot be null");
+
+        // Instantiate Set Label Node
+        Label sunsetLabel = new Label(sunsetStr);
+
+        // Configure Set Label Node
+        sunsetLabel.setFont(this.SUNSET_FONT);
+        sunsetLabel.setTextFill(this.SUNSET_FONT_COLOR);
+        sunsetLabel.setAlignment(this.SUNSET_LABEL_POS);
+
+        // Configure Sunset Label Width
+        sunsetLabel.setPrefWidth(this.SET_LABEL_WIDTH);
+        sunsetLabel.setMinWidth(this.SET_LABEL_WIDTH);
+        sunsetLabel.setMaxWidth(this.SET_LABEL_WIDTH);
+
+        // Configure Sunset Label Height
+        sunsetLabel.setPrefHeight(this.SET_LABEL_HEIGHT);
+        sunsetLabel.setMinHeight(this.SET_LABEL_HEIGHT);
+        sunsetLabel.setMaxHeight(this.SET_LABEL_HEIGHT);
+
+        // Return Sunset Label Node
+        return sunsetLabel;
     }
 
     @Override

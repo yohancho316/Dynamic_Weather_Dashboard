@@ -53,14 +53,17 @@ public interface CurrentForecastFactory {
     Font TEMP_FONT = Font.font("Arial", 15.0);
     Font STATUS_FONT = Font.font("Arial", 15.0);
     Font SUNRISE_FONT = Font.font("Arial", 15.0);
+    Font SUNSET_FONT = Font.font("Arial", 15.0);
     Color TEMP_FONT_COLOR = Color.WHITE;
     Color STATUS_FONT_COLOR = Color.WHITE;
     Color SUNRISE_FONT_COLOR = Color.WHITE;
+    Color SUNSET_FONT_COLOR = Color.WHITE;
     Pos TEMP_ALIGNMENT = Pos.TOP_LEFT;
     Pos STATUS_ALIGNMENT = Pos.TOP_LEFT;
     Pos SUN_VBOX_ALIGNMENT = Pos.CENTER;
     Pos SUN_HBOX_POS = Pos.CENTER;
     Pos SUNRISE_LABEL_POS = Pos.CENTER_LEFT;
+    Pos SUNSET_LABEL_POS = Pos.CENTER_LEFT;
 
     // Weather Temperature Label Object Factory Method Signature
     Label createTempLabel(String temperature_str);
