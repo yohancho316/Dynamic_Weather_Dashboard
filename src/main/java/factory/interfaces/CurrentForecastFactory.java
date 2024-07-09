@@ -1,5 +1,6 @@
 package factory.interfaces;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
@@ -24,6 +25,9 @@ public interface CurrentForecastFactory {
     int SUN_HBOX_RED = 44;
     int SUN_HBOX_GREEN = 44;
     int SUN_HBOX_BLUE = 44;
+    int FORECAST_RED = 44;
+    int FORECAST_GREEN = 44;
+    int FORECAST_BLUE = 44;
     double CURRENT_WEATHER_ICON_WIDTH = 230.0;
     double CURRENT_WEATHER_IMAGE_PANE_WIDTH = 230.0;
     double CURRENT_WEATHER_ICON_HEIGHT = 200.0;
@@ -51,6 +55,8 @@ public interface CurrentForecastFactory {
     double SET_IMAGE_HEIGHT = 15.0;
     double RISE_IMAGE_WIDTH = 15.0;
     double RISE_IMAGE_HEIGHT = 15.0;
+    double FORECAST_WIDTH = 1200.0;
+    double FORECAST_HEIGHT = 200.0;
     boolean CURRENT_WEATHER_ICON_ORIGINAL_RATIO = false;
     boolean CURRENT_WEATHER_IMAGE_SMOOTHING_ALGORITHM = true;
     boolean SET_IMAGE_ORIGINAL_RATIO = false;
@@ -58,6 +64,8 @@ public interface CurrentForecastFactory {
     boolean RISE_IMAGE_ORIGINAL_RATIO = false;
     boolean RISE_IMAGE_SMOOTHING_ALGORITHM = true;
     String TEMP_NOTATION = " °F";
+    String RISE_NOTATION = " am";
+    String SET_NOTATION = " pm";
     Font TEMP_FONT = Font.font("Arial", 15.0);
     Font STATUS_FONT = Font.font("Arial", 15.0);
     Font SUNRISE_FONT = Font.font("Arial", 15.0);
@@ -72,6 +80,9 @@ public interface CurrentForecastFactory {
     Pos SUN_HBOX_POS = Pos.CENTER;
     Pos SUNRISE_LABEL_POS = Pos.CENTER_LEFT;
     Pos SUNSET_LABEL_POS = Pos.CENTER_LEFT;
+    Pos FORECAST_POS = Pos.CENTER;
+    Insets CURRENT_TEMP_PADDING = new Insets(10,0,0,10);
+    Insets CURRENT_STATUS_PADDING = new Insets(10,0,0,10);
 
     // Weather Temperature Label Object Factory Method Signature
     Label createTempLabel(String temperature_str);
@@ -99,6 +110,11 @@ public interface CurrentForecastFactory {
 
     // Sunrise HBox Object Factory Method Signature
     HBox createSunriseHBox(StackPane sunrisePane, Label sunriseLabel);
+
+    // Weather Icon + Temp + Status + Sunrise + Sunset Outer HBox Object Factory Method Signature
+    HBox createCurrentUIHBox(Pane temp_icon_pane,
+                             VBox temp_status_vbox,
+                             VBox sunrise_sunset_vbox);
 
     // Weather Temperature & Status VBox Object Factory Method Signature
     VBox createCurrentWeatherVBox(Label temperatureLabel, Label statusLabel);

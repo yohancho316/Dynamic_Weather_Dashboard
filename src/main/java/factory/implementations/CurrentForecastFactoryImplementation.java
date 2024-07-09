@@ -69,7 +69,6 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         return currentWeatherImagePane;
     }
 
-
     // Sunset Icon StackPane Object Factory Concrete Definition
     @Override
     public StackPane createSunsetStackPane(String sunset_image_path) {
@@ -101,6 +100,9 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
 
         // Configure Sunset Image Pane Height & Width
         setImagePane.setPrefSize(this.SET_IMAGE_WIDTH, this.SET_IMAGE_HEIGHT);
+
+        // temp temp temp
+        setImagePane.setAlignment(Pos.CENTER_LEFT);
 
         // Return Sunset Icon Stack Pane Node
         return setImagePane;
@@ -236,6 +238,46 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         return sunriseHBox;
     }
 
+    // Icon + Temp + Status + Sunrise + Sunset HBox Object Factory Concrete Definition
+    @Override
+    public HBox createCurrentUIHBox(Pane tempIconPane, VBox tempStatusVbox, VBox sunriseSunsetVbox) {
+
+        // Check if Temperature Icon || Status || Sunrise/Sunset VBox is Null
+        if (tempIconPane.equals(null) || tempStatusVbox.equals(null) || sunriseSunsetVbox.equals(null))
+            throw new NullPointerException("Temperature Icon, Status, and Sunrise/Sunset VBox cannot be null");
+
+        // Instantiate Sunrise VBox Background
+        Color hboxRGB = Color.rgb(this.FORECAST_RED, this.FORECAST_BLUE, this.FORECAST_GREEN);
+
+        // Instantiate Background & BackgroundFill Nodes
+        BackgroundFill forecastBackgroundFill = new BackgroundFill(hboxRGB, null, null);
+        Background forecastBackground = new Background(forecastBackgroundFill);
+
+        // Instantiate Forecast HBox Layout Wrapper
+        HBox forecastHBox = new HBox();
+
+        // Configure Forecast HBox Width
+        forecastHBox.setMinWidth(this.FORECAST_WIDTH);
+        forecastHBox.setMaxWidth(this.FORECAST_WIDTH);
+        forecastHBox.setPrefWidth(this.FORECAST_WIDTH);
+
+        // Configure Forecast HBox Height
+        forecastHBox.setMinHeight(this.FORECAST_HEIGHT);
+        forecastHBox.setMaxHeight(this.FORECAST_HEIGHT);
+        forecastHBox.setPrefHeight(this.FORECAST_HEIGHT);
+
+        // Configure Forecast HBox Alignment
+        forecastHBox.setAlignment(this.FORECAST_POS);
+
+        // Configure Background Color
+        forecastHBox.setBackground(forecastBackground);
+
+        // Add Temperature Icon Pane, Status, Sunrise/Sunset VBox within HBox Wrapper
+        forecastHBox.getChildren().addAll(tempIconPane, tempStatusVbox, sunriseSunsetVbox);
+
+        // Return Forecast HBox Wrapper Node
+        return forecastHBox;
+    }
 
     // Current Weather VBox Layout Object Factory Concrete Definition
     @Override
@@ -327,6 +369,9 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         temperatureLabel.setMinHeight(this.TEMP_LABEL_HEIGHT);
         temperatureLabel.setMaxHeight(this.TEMP_LABEL_HEIGHT);
 
+        // CONFIGURE PADDING
+        temperatureLabel.setPadding(this.CURRENT_STATUS_PADDING);
+
         // Return Temperature Label Node
         return temperatureLabel;
     }
@@ -355,6 +400,9 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         statusLabel.setMinHeight(this.STATUS_LABEL_HEIGHT);
         statusLabel.setMaxHeight(this.STATUS_LABEL_HEIGHT);
 
+        // Configure Padding
+        statusLabel.setPadding(this.CURRENT_TEMP_PADDING);
+
         // Return Status Label Node
         return statusLabel;
     };
@@ -368,7 +416,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         else if(sunriseStr.equals(null)) throw new NullPointerException("Sunrise String cannot be null");
 
         // Instantiate Sunrise Label
-        Label riseLabel = new Label(sunriseStr);
+        Label riseLabel = new Label(sunriseStr + this.RISE_NOTATION);
 
         // Configure Sunrise Label Node
         riseLabel.setFont(this.SUNRISE_FONT);
@@ -376,9 +424,9 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         riseLabel.setAlignment(this.SUNRISE_LABEL_POS);
 
         // Configure Sunrise Label Width
-        riseLabel.setPrefWidth(this.RISE_LABEL_HEIGHT);
-        riseLabel.setMinWidth(this.RISE_LABEL_HEIGHT);
-        riseLabel.setMaxWidth(this.RISE_LABEL_HEIGHT);
+        riseLabel.setPrefWidth(this.RISE_LABEL_WIDTH);
+        riseLabel.setMinWidth(this.RISE_LABEL_WIDTH);
+        riseLabel.setMaxWidth(this.RISE_LABEL_WIDTH);
 
         // Configure Sunrise Label Height
         riseLabel.setPrefHeight(this.RISE_LABEL_HEIGHT);
@@ -399,7 +447,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         else if(sunsetStr.equals(null)) throw new NullPointerException("Sunset String cannot be null");
 
         // Instantiate Set Label Node
-        Label sunsetLabel = new Label(sunsetStr);
+        Label sunsetLabel = new Label(sunsetStr + this.SET_NOTATION);
 
         // Configure Set Label Node
         sunsetLabel.setFont(this.SUNSET_FONT);
