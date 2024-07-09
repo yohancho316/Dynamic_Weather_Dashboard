@@ -1,8 +1,15 @@
 package main;
 
+import factory.implementations.ForecastFactoryImplementation;
+import factory.implementations.CurrentForecastFactoryImplementation;
+import factory.implementations.WrapperFactoryImplementation;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import factory.interfaces.WrapperFactory;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -588,7 +595,129 @@ public class Main extends Application {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Scene scene = new Scene(sunVBox);
+
+
+//////// Future Forecast UI Elements ///////////////////////////////////////////////////////////////////////////////////
+
+        // Instantiate Forecast Object Factory Node
+        ForecastFactoryImplementation forecastFactory = new ForecastFactoryImplementation();
+
+        // Instantiate Forecast BorderPane ArrayList Collection
+        List<BorderPane> forecastCollection = new ArrayList<BorderPane>();
+
+        // Instantiate 10 BorderPane Nodes
+        for(int i = 0; i < 10; i++) {
+            
+            // Determine Forecast Indication Icon Type
+            String path = "/hurricane_weather_tornado_storm.png";
+            
+            // Instantiate Forecast Image Pane
+            Pane image_pane_node = forecastFactory.createImagePane(path);
+
+            // Instantiate Forecast Time Label
+            Label forecast_time_label = forecastFactory.createTimeLabel(LocalTime.now());
+
+            // Instantiate Forecast Date Label
+            Label forecast_date_label = forecastFactory.createDateLabel(LocalDateTime.now());
+
+            // Instantiate Forecast VBox Layout Wrapper Node
+            VBox forecast_vbox_wrapper = forecastFactory.createVBoxLayout(forecast_time_label,
+                                                                          forecast_date_label);
+            // Instantiate Forecast Border Pane Node
+            BorderPane border_pane_node = forecastFactory.createBorderPane(image_pane_node,forecast_vbox_wrapper);
+
+            // Add Border Pane Node within Forecast ArrayList Collection
+            forecastCollection.add(border_pane_node);
+        }
+
+        // Instantiate Forecast HBox Layout Wrapper Node
+        HBox future_forecast_HBox = forecastFactory.createHBox(forecastCollection);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////// Current Forecast UI Elements //////////////////////////////////////////////////////////////////////////////////
+
+        // Icon Pagination
+
+        // Instantiate Current Forecast Object Factory Node
+        CurrentForecastFactoryImplementation currentFactory = new CurrentForecastFactoryImplementation();
+
+        // Configure Current Forecast Image Path
+        String path = "/hurricane_weather_tornado_storm.png";
+
+        // Instantiate Current Forecast Icon Pane Node
+        Pane current_icon_pane = currentFactory.createCurrentImagePane(path);
+
+        // Current Forecast Temp Reading
+        String temperature = "68";
+
+        // Instantiate Current Forecast Temp Label Node
+        Label current_temp_label = currentFactory.createTempLabel(temperature);
+
+        // Current Forecast Status Reading
+        String status = "overcast clouds";
+        
+        // Instantiate Current Forecast Status Label Node
+        Label current_status_label = currentFactory.createStatusLabel(status);
+
+        // Instantiate Current Weather Temp & Status VBox Wrapper Node
+        VBox current_temp_status_vbox = currentFactory.createCurrentWeatherVBox(current_status_label, current_temp_label);
+
+        // Label Pagination
+
+        // Sunrise Time Property
+        String sunrise_time = "6:12";
+
+        // Instantiate Sunrise Label Node
+        Label current_sunrise_label = currentFactory.createSunriseLabel(sunrise_time);
+
+        // Sunset Time Property
+        String sunset_time = "8:34";
+
+        // Instantiate Sunset Label Node
+        Label current_sunset_label = currentFactory.createSunsetLabel(sunset_time);
+
+        // Sunrise Icon Path Property
+        String sunrise_path = "/icons8-sunrise-24.png";
+
+        // Sunset Icon Path Property
+        String sunset_path = "/icons8-sunset-24.png";
+        
+        // Instantiate Sunrise Stack Pane Wrapper Node
+        StackPane sunrise_icon_stackpane = currentFactory.createSunriseStackPane(sunrise_path);
+        
+        // Instantiate Sunset Stack Pane Wrapper Node
+        StackPane sunset_icon_stackpane = currentFactory.createSunsetStackPane(sunset_path);
+
+        // Instantiate Sunrise HBox Wrapper Node
+        HBox sunrise_hbox = currentFactory.createSunriseHBox(sunrise_icon_stackpane, current_sunrise_label);
+
+        // Instantiate Sunset HBox Wrapper Node
+        HBox sunset_hbox = currentFactory.createSunsetHBox(sunset_icon_stackpane, current_sunset_label);
+        
+        // Instantiate Sunrise & Sunset VBox Wrapper Node
+        VBox sunrise_sunset_vbox = currentFactory.createSunVBox(sunrise_hbox, sunset_hbox);
+
+        // Outer HBox Wrapper Pagination
+        
+        // Instantiate Current UI HBox Wrapper Node (Icon + Temp + Status + Sunrise/Sunset Nodes)
+        HBox current_forecast_hbox = currentFactory.createCurrentUIHBox(current_icon_pane, current_temp_status_vbox, sunrise_sunset_vbox);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////// Outer UI Wrapper //////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Instantiate Wrapper Factory Node
+        WrapperFactoryImplementation wrapperFactory = new WrapperFactoryImplementation();
+
+        // Instantiate VBox UI Wrapper Node
+        VBox current_ui_vbox = wrapperFactory.createUIVBox(current_forecast_hbox, future_forecast_HBox);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        Scene scene = new Scene(current_ui_vbox);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

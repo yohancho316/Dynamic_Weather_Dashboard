@@ -42,6 +42,16 @@ public class ForecastFactoryImplementation implements ForecastFactory {
         // Configure Padding of HBox Layout Wrapper
         hbox.setPadding(this.HBOX_PADDING);
 
+        // Add BorderPanes within HBox Layout Wrapper
+        for(BorderPane pane : borderPaneList) {
+
+            // Check if Pane is Null
+            if(pane.equals(null)) throw new NullPointerException("BorderPane cannot be null");
+
+            hbox.getChildren().add(pane);
+
+        }
+
         // Return HBox Wrapper Node
         return hbox;
     }
