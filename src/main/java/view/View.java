@@ -15,15 +15,42 @@ import javafx.scene.layout.VBox;
 
 public class View {
 
-    // Layout Wrapper Nodes
-    private HBox forecastHBox;
+    // Private & Static & Final Members
 
-    // Forecast BorderPane Collection
+
+    // View Class Members
+    private HBox forecastHBox;
+    private Label currentTempLabel;
+    private Label currentStatusLabel;
+    private Label sunriseLabel;
+    private Label sunsetLabel;
     private List<BorderPane> forecastPaneCollection;
+    private Pane currentIconPane;
+    private VBox sunriseSunsetVBox;
 
     // Forecast HBox Getter
     public HBox getForecastHBox() {
         return this.forecastHBox;
+    }
+
+    // Current Weather Temperature Label Getter
+    public Label getCurrentTempLabel() {
+        return this.currentTempLabel;
+    }
+
+    // Current Weather Status Label Getter
+    public Label getCurrentStatusLabel() {
+        return this.currentStatusLabel;
+    }
+
+    // Sunrise Label Getter
+    public Label getSunriseLabel() {
+        return this.sunriseLabel;
+    }
+
+    // Sunset Label Getter
+    public Label getSunsetLabel() {
+        return this.sunsetLabel;
     }
 
     // Forecast BorderPane Collection Getter
@@ -31,16 +58,62 @@ public class View {
         return this.forecastPaneCollection;
     }
 
-    // Forecast HBox Setter
+    // Current Weather Icon Pane Getter
+    public Pane getCurrentIconPane() {
+        return this.currentIconPane;
+    }
+
+    // Sunrise Sunset VBox Wrapper Getter
+    public VBox getSunriseSunsetVBox() {
+        return this.sunriseSunsetVBox;
+    }
+
+    // Forecast HBox Wrapper Setter
     public void setForecastHBox(HBox forecastHBox) {
         if(forecastHBox.equals(null)) throw new NullPointerException("Forecast HBox cannot be null");
         this.forecastHBox = forecastHBox;
     }
 
-    // Forecast BOrderPane Collection Setter
+    // Current Weather Temperature Label Setter
+    public void setCurrentTempLabel(Label currentTempLabel) {
+        if(currentTempLabel.equals(null)) throw new NullPointerException("Current Temp Label cannot be null");
+        this.currentTempLabel = currentTempLabel;
+    }
+
+    // Current Weather Status Label Setter
+    public void setCurrentStatusLabel(Label currentStatusLabel) {
+        if(currentStatusLabel.equals(null)) throw new NullPointerException("Current Status Label cannot be null");
+        this.currentStatusLabel = currentStatusLabel;
+    }
+
+    // Sunrise Label Setter
+    public void setSunriseLabel(Label sunriseLabel) {
+        if(sunriseLabel.equals(null)) throw new NullPointerException("Sunrise Label cannot be null");
+        this.sunriseLabel = sunriseLabel;
+    }
+
+    // Sunset Label Setter
+    public void setSunsetLabel(Label sunsetLabel) {
+        if(sunsetLabel.equals(null)) throw new NullPointerException("sunset Label cannot be null");
+        this.sunsetLabel = sunsetLabel;
+    }
+
+    // Forecast BorderPane Collection Setter
     public void setForecastPaneCollection(List<BorderPane> forecastPaneCollection) {
         if(forecastPaneCollection.equals(null) || forecastPaneCollection.isEmpty()) throw new NullPointerException("Forecast BorderPane Collection cannot be null");
         this.forecastPaneCollection = forecastPaneCollection;
+    }
+
+    // Current Weather Icon Pane Setter
+    public void setCurrentIconPane(Pane currentIconPane) {
+        if(currentIconPane.equals(null)) throw new NullPointerException("Current Icon Pane cannot be null");
+        this.currentIconPane = currentIconPane;
+    }
+
+    // Sunrise Sunset VBox Wrapper Setter
+    public void setSunriseSunsetVBox(VBox sunriseSunsetVBox) {
+        if(sunriseSunsetVBox.equals(null)) throw new NullPointerException("Sunrise Sunset VBox cannot be null");
+        this.sunriseSunsetVBox = sunriseSunsetVBox;
     }
 
 
@@ -50,7 +123,12 @@ public class View {
                 WrapperFactoryImplementation wrapperFactory,
                 LocalTime currentTime,
                 LocalDateTime currentDateTime,
-                List<String> forecastIconsCollection) {
+                List<String> forecastIconsCollection,
+                String currentForecastIconPath,
+                String currentTemp,
+                String currentStatus,
+                String sunriseTime,
+                String sunsetTime) {
 
         // Instantiate Forecast Pane ArrayList Collection
         for(int i = 0; i < 10; i++) {
@@ -78,9 +156,26 @@ public class View {
         }
 
         // Instantiate Forecast HBox Layout Wrapper Node
-        HBox forecastHBox = forecastFactory.createHBox(this.getForecastPaneCollection());
+        this.setForecastHBox(forecastFactory.createHBox(this.getForecastPaneCollection()));
 
+        // Instantiate Current Forecast Icon Pane Wrapper
+        this.setCurrentIconPane(currentFactory.createCurrentImagePane(currentForecastIconPath));
 
+        // Instantiate Current Forecast Temperature Label
+        this.setCurrentTempLabel(currentFactory.createTempLabel(currentTemp));
+
+        // Instantiate Current Forecast Status Label
+        this.setCurrentStatusLabel(currentFactory.createStatusLabel(currentStatus));
+
+        // Instantiate Sunrise Time Label
+        this.setSunriseLabel(currentFactory.createSunriseLabel(sunriseTime));
+
+        // Instantiate Sunset Time Label
+        this.setSunsetLabel(currentFactory.createSunsetLabel(sunsetTime));
+
+        // Instantiate Sunrise StackPane Wrapper
+
+        // Instantiate Sunset StackPane Wrapper
 
     }
 
