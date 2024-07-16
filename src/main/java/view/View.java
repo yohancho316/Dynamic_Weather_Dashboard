@@ -45,9 +45,21 @@ public class View {
         return this.future_factory;
     }
 
+    // Future Factory Setter Method
+    public void setFutureFactory(ForecastFactoryImplementation future_factory) {
+        if(future_factory == null) throw new NullPointerException("Future Factory cannot be null");
+        this.future_factory = future_factory;
+    }
+
     // Current Factory Getter Method
     public CurrentForecastFactoryImplementation getCurrentFactory() {
         return this.current_factory;
+    }
+
+    // Current Factory Setter Method
+    public void setCurrentFactory(CurrentForecastFactoryImplementation current_factory) {
+        if(current_factory == null) throw new NullPointerException("Current Factory cannot be null");
+        this.current_factory = current_factory;
     }
 
     // Wrapper Factory Getter Method
@@ -55,9 +67,22 @@ public class View {
         return this.wrapper_factory;
     }
 
+    // Wrapper Factory Setter Method
+    public void setWrapperFactory(WrapperFactoryImplementation wrapper_factory) {
+        if(wrapper_factory == null) throw new NullPointerException("Wrapper Factory cannot be null");
+        this.wrapper_factory = wrapper_factory;
+    }
+
     // BorderPane Collection Getter Method
     public List<BorderPane> getBorderPaneList() {
         return this.borderPaneList;
+    }
+
+    // BorderPane Collection Setter Method
+    public void setBorderPaneList(List<BorderPane> borderPaneList) {
+        if(borderPaneList == null) throw new NullPointerException("Border Pane List cannot be null");
+        else if(borderPaneList.isEmpty()) throw new IllegalArgumentException("Border Pane List cannot be empty");
+        this.borderPaneList = borderPaneList;
     }
 
     // Border Pane HBox Getter Method
@@ -65,9 +90,21 @@ public class View {
         return this.pane_hbox;
     }
 
+    // Border Pane HBox Setter Method
+    public void setBorderPaneHBox(HBox pane_Hbox) {
+        if(pane_hbox == null) throw new NullPointerException("Pane HBox cannot be null");
+        this.pane_hbox = pane_hbox;
+    }
+
     // Main Image Pane Getter Method
     public Pane getMainImagePane() {
         return this.main_image_pane;
+    }
+
+    // Main IMage Pane Setter Method
+    public void setMainImagePane(Pane main_image_pane) {
+        if(main_image_pane == null) throw new NullPointerException("Main Image Pane cannot be null");
+        this.main_image_pane = main_image_pane;
     }
 
     // Current Temperature Label Getter Method
@@ -75,9 +112,23 @@ public class View {
         return this.temperature_label;
     }
 
+    // Current Temperature Label Setter Method
+    public void setTemperatureLabel(Label temperature_label) {
+        if(temperature_label == null) throw new NullPointerException("Temperature Label cannot be null");
+        else if(temperature_label.getText().isEmpty()) throw new IllegalArgumentException("Temperature Label cannot be empty");
+        this.temperature_label = temperature_label;
+    }
+
     // Current Status Label Getter Method
     public Label getStatusLabel() {
         return this.status_label;
+    }
+
+    // Current Status Label Setter Method
+    public void setStatusLabel(Label status_label) {
+        if(status_label == null) throw new NullPointerException("Status Label cannot be null");
+        else if(status_label.getText().isEmpty()) throw new IllegalArgumentException("Status Label cannot be empty");
+        this.status_label = status_label;
     }
 
     // Temperature & Status VBox Getter Method
@@ -85,34 +136,90 @@ public class View {
         return this.main_temp_status_vbox;
     }
 
+    // Temperature & Status VBox Setter Method
+    public void setTempStatusVBox(VBox main_temp_status_vbox) {
+        if(main_temp_status_vbox == null) throw new NullPointerException("Main Temp Status VBox cannot be null");
+        this.main_temp_status_vbox = main_temp_status_vbox;
+    }
+
     // Sunrise StackPane Getter Method
     public StackPane getSunriseStackPane() {
         return this.sunrise_stackpane;
     }
 
+    // Sunrise StackPane Setter Method
+    public void setSunriseStackPane(StackPane sunrise_stackpane) {
+        if(sunrise_stackpane == null) throw new NullPointerException("Sunrise StackPane cannot be null");
+        this.sunrise_stackpane = sunrise_stackpane;
+    }
+
     // Sunset StackPane Getter Method
     public StackPane getSunsetStackPane() { return this.sunset_stackpane; }
+
+    // Sunset StackPane Setter Method
+    public void setSunsetStackPane(StackPane sunset_stackpane) {
+        if(sunset_stackpane == null) throw new NullPointerException("Sunset StackPane cannot be null");
+        this.sunset_stackpane = sunset_stackpane;
+    }
 
     // Sunrise Label Getter Method
     public Label getSunriseLabel() { return this.sunrise_label; }
 
+    // Sunrise Label Setter Method
+    public void setSunriseLabel(Label sunrise_label) {
+        if(sunrise_label == null) throw new NullPointerException("Sunrise Label cannot be null");
+        else if(sunrise_label.getText().isEmpty()) throw new IllegalArgumentException("Sunrise Label cannot be empty");
+        this.sunrise_label = sunrise_label;
+    }
+
     // Sunset Label Getter Method
     public Label getSunsetLabel() { return this.sunset_label; }
+
+    // Sunset Label Setter Method
+    public void setSunsetLabel(Label sunset_label) {
+        if(sunset_label == null) throw new NullPointerException("Sunset Label cannot be null");
+        else if(sunset_label.getText().isEmpty()) throw new IllegalArgumentException("Sunset Label cannot be empty");
+        this.sunset_label = sunset_label;
+    }
 
     // Sunrise HBox Getter Method
     public HBox getSunriseHBox() { return this.sunrise_hbox; }
 
+    // Sunrise HBox Setter Method
+    public void setSunriseHBox(HBox sunrise_hbox) {
+        if(sunrise_hbox == null) throw new NullPointerException("Sunrise HBox cannot be null");
+        this.sunrise_hbox = sunrise_hbox;
+    }
+
     // Sunset HBox Getter Method
     public HBox getSunsetHBox() { return this.sunset_hbox; }
+
+    // Sunset HBox Setter Method
+    public void setSunsetHBox(HBox sunset_hbox) {
+        if(sunset_hbox == null) throw new NullPointerException("Sunset HBox cannot be null");
+        this.sunset_hbox = sunset_hbox;
+    }
 
     // Sunrise & Sunset VBox Getter Method
     public VBox getSunriseSunsetVBox() {
         return this.sunrise_sunset_vbox;
     }
 
+    // Sunrise & Sunset VBox Setter Method
+    public void setSunriseSunsetVBox(VBox sunrise_sunset_vbox) {
+        if(sunrise_sunset_vbox == null) throw new NullPointerException("Sunrise Sunset VBox cannot be null");
+        this.sunrise_sunset_vbox = sunrise_sunset_vbox;
+    }
+
     // Weather UI VBox Getter Method
     public VBox getWeatherUIVBox() {
         return this.weather_ui_vbox;
+    }
+
+    // Weather UI VBox Setter Method
+    public void setWeatherUIVBox(VBox weather_ui_vbox) {
+        if(weather_ui_vbox == null) throw new NullPointerException("Weather UI VBox cannot be null");
+        this.weather_ui_vbox = weather_ui_vbox;
     }
 
 
