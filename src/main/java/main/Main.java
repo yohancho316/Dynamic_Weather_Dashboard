@@ -4,12 +4,12 @@ import factory.implementations.ForecastFactoryImplementation;
 import factory.implementations.CurrentForecastFactoryImplementation;
 import factory.implementations.WrapperFactoryImplementation;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import factory.interfaces.WrapperFactory;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,11 +27,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import view.View;
 
-public class Main extends Application {
+public class Main extends Application  {
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
 
 //////// HBOX //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -717,7 +718,42 @@ public class Main extends Application {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Scene scene = new Scene(current_ui_vbox);
+        LocalDateTime current_date = LocalDateTime.now();
+        LocalTime current_time = LocalTime.now();
+
+        List<String> pane_image_collection = new ArrayList<String>();
+        List<LocalDateTime> pane_date_collection = new ArrayList<LocalDateTime>();
+        List<LocalTime> pane_time_collection = new ArrayList<LocalTime>();
+
+        String image_path = "/hurricane_weather_tornado_storm.png";
+        String main_temp = "58";
+        String main_status = "overcast clouds";
+
+        for(int i = 0; i < 10; i++) {
+            pane_image_collection.add(image_path);
+            pane_date_collection.add(current_date);
+            pane_time_collection.add(current_time);
+            current_date = current_date.plusHours(2);
+            current_time = current_time.plusHours(2);
+        }
+
+        ForecastFactoryImplementation future_factory = new ForecastFactoryImplementation();
+        CurrentForecastFactoryImplementation current_factory = new CurrentForecastFactoryImplementation();
+        WrapperFactoryImplementation wrapper_factory = new WrapperFactoryImplementation();
+
+        View view = new View(future_factory,
+                             current_factory,
+                             wrapper_factory,
+                             pane_image_collection,
+                             pane_date_collection,
+                             pane_time_collection,
+                             image_path,
+                             main_temp,
+                             main_status,
+                             sunrise_time,
+                             sunset_time);
+
+        Scene scene = new Scene(view.get_weather_ui_vbox());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
