@@ -21,24 +21,100 @@ public class View {
     // View Class Members
     private static final String SUNRISE_IMAGE_PATH = "/icons8-sunrise-24.png";
     private static final String SUNSET_IMAGE_PATH = "/icons8-sunset-24.png";
-    private ForecastFactoryImplementation future_factory;
-    private CurrentForecastFactoryImplementation current_factory;
-    private WrapperFactoryImplementation wrapper_factory;
-    private List<BorderPane> borderPaneList;
-    private HBox pane_hbox;
-    private Pane main_image_pane;
-    private Label temperature_label;
-    private Label status_label;
-    private VBox main_temp_status_vbox;
-    private StackPane sunrise_stackpane;
-    private StackPane sunset_stackpane;
-    private Label sunrise_label;
-    private Label sunset_label;
-    private HBox sunrise_hbox;
-    private HBox sunset_hbox;
+    private ForecastFactoryImplementation future_factory; //
+    private CurrentForecastFactoryImplementation current_factory; //
+    private WrapperFactoryImplementation wrapper_factory; //
+    private List<BorderPane> borderPaneList; //
+    private HBox pane_hbox; //
+    private Pane main_image_pane; //
+    private Label temperature_label; //
+    private Label status_label; //
+    private VBox main_temp_status_vbox; //
+    private StackPane sunrise_stackpane; //
+    private StackPane sunset_stackpane; //
+    private Label sunrise_label; //
+    private Label sunset_label; //
+    private HBox sunrise_hbox; //
+    private HBox sunset_hbox; //
     private VBox sunrise_sunset_vbox;
     private HBox current_weather_hbox;
     private VBox weather_ui_vbox;
+
+    // Future Factory Getter Method
+    public ForecastFactoryImplementation getFutureFactory() {
+        return this.future_factory;
+    }
+
+    // Current Factory Getter Method
+    public CurrentForecastFactoryImplementation getCurrentFactory() {
+        return this.current_factory;
+    }
+
+    // Wrapper Factory Getter Method
+    public WrapperFactoryImplementation getWrapperFactory() {
+        return this.wrapper_factory;
+    }
+
+    // BorderPane Collection Getter Method
+    public List<BorderPane> getBorderPaneList() {
+        return this.borderPaneList;
+    }
+
+    // Border Pane HBox Getter Method
+    public HBox getBorderPaneHBox() {
+        return this.pane_hbox;
+    }
+
+    // Main Image Pane Getter Method
+    public Pane getMainImagePane() {
+        return this.main_image_pane;
+    }
+
+    // Current Temperature Label Getter Method
+    public Label getTemperatureLabel() {
+        return this.temperature_label;
+    }
+
+    // Current Status Label Getter Method
+    public Label getStatusLabel() {
+        return this.status_label;
+    }
+
+    // Temperature & Status VBox Getter Method
+    public VBox getTempStatusVBox() {
+        return this.main_temp_status_vbox;
+    }
+
+    // Sunrise StackPane Getter Method
+    public StackPane getSunriseStackPane() {
+        return this.sunrise_stackpane;
+    }
+
+    // Sunset StackPane Getter Method
+    public StackPane getSunsetStackPane() { return this.sunset_stackpane; }
+
+    // Sunrise Label Getter Method
+    public Label getSunriseLabel() { return this.sunrise_label; }
+
+    // Sunset Label Getter Method
+    public Label getSunsetLabel() { return this.sunset_label; }
+
+    // Sunrise HBox Getter Method
+    public HBox getSunriseHBox() { return this.sunrise_hbox; }
+
+    // Sunset HBox Getter Method
+    public HBox getSunsetHBox() { return this.sunset_hbox; }
+
+    // Sunrise & Sunset VBox Getter Method
+    public VBox getSunriseSunsetVBox() {
+        return this.sunrise_sunset_vbox;
+    }
+
+    // Weather UI VBox Getter Method
+    public VBox getWeatherUIVBox() {
+        return this.weather_ui_vbox;
+    }
+
 
     public View(ForecastFactoryImplementation future_factory,
                 CurrentForecastFactoryImplementation current_factory,
@@ -289,14 +365,4 @@ public class View {
         this.weather_ui_vbox = this.wrapper_factory.createUIVBox(this.current_weather_hbox, this.pane_hbox);
     }
 
-
-    // Pane HBox Getter Method
-    public HBox get_pane_hbox() {
-        return this.pane_hbox;
-    }
-
-    // Weather UI VBox Getter Method
-    public VBox get_weather_ui_vbox() {
-        return this.weather_ui_vbox;
-    }
 }
