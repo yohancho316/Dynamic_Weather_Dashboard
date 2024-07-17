@@ -95,13 +95,13 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         setImageView.setFitWidth(this.SET_IMAGE_WIDTH);
         setImageView.setFitHeight(this.SET_IMAGE_HEIGHT);
 
-        // Wrap the ImageView in a Pane
+        // Wrap the ImageView in a StackPane
         StackPane setImagePane = new StackPane(setImageView);
 
         // Configure Sunset Image Pane Height & Width
         setImagePane.setPrefSize(this.SET_IMAGE_WIDTH, this.SET_IMAGE_HEIGHT);
 
-        // temp temp temp
+        // Set Image Pane Alignment
         setImagePane.setAlignment(Pos.CENTER_LEFT);
 
         // Return Sunset Icon Stack Pane Node
