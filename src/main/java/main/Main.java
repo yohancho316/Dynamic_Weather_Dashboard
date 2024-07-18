@@ -18,6 +18,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -97,9 +98,9 @@ public class Main extends Application {
         int MENU_BLUE = 119;
         double MENU_WIDTH = 1200.0;
         double MENU_HEIGHT = 100.0;
-        double MENU_SPACING = 0.0;
+        double MENU_SPACING = 10.0;
         Pos MENU_ALIGNMENT_POSITION = Pos.CENTER_LEFT;
-        Insets MENU_PADDING = new Insets(0.0);
+        Insets MENU_PADDING = new Insets(0.0, 0.0, 0.0, 25.0);
 
         // Instantiate Menu HBox Wrapper
         HBox menu_hbox = new HBox();
@@ -133,7 +134,7 @@ public class Main extends Application {
 ///////// MENU ICON STACK PANE  ////////////////////////////////////////////////////////////////////////////////////////
 
         // Menu Icon Properties
-        double MENU_ICON_WIDTH = 15;
+        double MENU_ICON_WIDTH = 30;
         double MENU_ICON_HEIGHT = 30;
         boolean MENU_ICON_RATIO = false;
         boolean MENU_ICON_SMOOTHING = true;
@@ -172,7 +173,6 @@ public class Main extends Application {
         // Configure Menu Icon StackPane Background
         menuStackPane.setBackground(menuBackground);
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -182,9 +182,9 @@ public class Main extends Application {
         int SEARCH_RED = 255;
         int SEARCH_GREEN = 255;
         int SEARCH_BLUE = 255;
-        double SEARCH_WIDTH = 330;
-        double SEARCH_HEIGHT = 100.0;
-        double SEARCH_SPACING = 0.0;
+        double SEARCH_WIDTH = 320.0;
+        double SEARCH_HEIGHT = 40.0;
+        double SEARCH_SPACING = 55.0;
         Pos SEARCH_ALIGNMENT_POSITION = Pos.CENTER;
         Insets SEARCH_PADDING = new Insets(0.0);
 
@@ -220,38 +220,181 @@ public class Main extends Application {
 ///////// SEARCH TEXT FIELD NODE  //////////////////////////////////////////////////////////////////////////////////////
 
         // Search Text Field Properties
-        String FIELD_PROMPT = "Type City Name";
-        boolean FIELD_EDITABLE = true;
-        Pos FIELD_ALIGNMENT = Pos.CENTER;
-        
+        int TEXT_FIELD_RED = 255;
+        int TEXT_FIELD_GREEN = 255;
+        int TEXT_FIELD_BLUE = 255;
+        double TEXT_FIELD_WIDTH = 280.0;
+        double TEXT_FIELD_HEIGHT = 40.0;
+        String TEXT_FIELD_PROMPT = "Type City Name";
+        boolean TEXT_FIELD_EDITABLE = true;
+        Pos TEXT_FIELD_ALIGNMENT = Pos.CENTER;
+        Insets TEXT_FIELD_PADDING = new Insets(0.0);
+
         // Instantiate TextField Control Node
         TextField searchField = new TextField();
 
         // Prompt User to Enter Name of City
-        searchField.setPromptText(FIELD_PROMPT);
+        searchField.setPromptText(TEXT_FIELD_PROMPT);
+
+        // Configure Text Field Width
+        searchField.setMinWidth(TEXT_FIELD_WIDTH);
+        searchField.setMaxWidth(TEXT_FIELD_WIDTH);
+        searchField.setPrefWidth(TEXT_FIELD_WIDTH);
+
+        // Configure Text Field Height
+        searchField.setMinHeight(TEXT_FIELD_HEIGHT);
+        searchField.setMaxHeight(TEXT_FIELD_HEIGHT);
+        searchField.setPrefHeight(TEXT_FIELD_HEIGHT);
 
         // Configure City Text Field Node
-        searchField.setAlignment(FIELD_ALIGNMENT);
-        searchField.setEditable(FIELD_EDITABLE);
+        searchField.setAlignment(TEXT_FIELD_ALIGNMENT);
+        searchField.setEditable(TEXT_FIELD_EDITABLE);
+        searchField.setPadding(TEXT_FIELD_PADDING);
+
+        // Instantiate RGB Color for Search TextField Background
+        Color textFieldRGB = Color.rgb(TEXT_FIELD_RED, TEXT_FIELD_GREEN, TEXT_FIELD_BLUE);
+
+        // Configure Background of Search HBox
+        BackgroundFill textFieldBackgroundFill = new BackgroundFill(textFieldRGB, null, null);
+        Background textFieldBackground = new Background(textFieldBackgroundFill);
+        searchField.setBackground(textFieldBackground);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+///////// MAGNIFY ICON STACK PANE   ////////////////////////////////////////////////////////////////////////////////////
+
+        // Menu Icon Properties
+        int MAGNIFY_RED = 2;
+        int MAGNIFY_GREEN = 100;
+        int MAGNIFY_BLUE = 230;
+        double MAGNIFY_ICON_WIDTH = 40.0;
+        double MAGNIFY_ICON_HEIGHT = 40.0;
+        boolean MAGNIFY_ICON_RATIO = true;
+        boolean MAGNIFY_ICON_SMOOTHING = true;
+        Insets MAGNIFY_ICON_PADDING = new Insets(0.0);
+        Pos MAGNIFY_ICON_ALIGNMENT_POSITION = Pos.CENTER;
+
+        String magnify_image_path = "/icons8-search-480.png";
+
+        // Instantiate Menu Icon Image Node
+        Image magnify_image = new Image(getClass().getResourceAsStream(magnify_image_path),
+                MAGNIFY_ICON_WIDTH,
+                MAGNIFY_ICON_HEIGHT,
+                MAGNIFY_ICON_RATIO,
+                MAGNIFY_ICON_SMOOTHING);
+
+        // Check for Menu Icon Loading Failure
+        if(magnify_image.isError()) {
+            throw new IllegalArgumentException("Magnify Image URL Loading Failure: Incorrect URL");
+        }
+
+        // Instantiate ImageView Node
+        ImageView magnifyImageView = new ImageView(magnify_image);
+
+        // Configure ImageView Node
+        magnifyImageView.setFitWidth(MAGNIFY_ICON_WIDTH);
+        magnifyImageView.setFitHeight(MAGNIFY_ICON_HEIGHT);
+
+        // Wrap the ImageView in a StackPane
+        StackPane magnifyStackPane = new StackPane(magnifyImageView);
+
+        // Configure Menu Stack Pane
+        magnifyStackPane.setPrefSize(MAGNIFY_ICON_WIDTH, MAGNIFY_ICON_HEIGHT);
+        magnifyStackPane.setPadding(MAGNIFY_ICON_PADDING);
+        magnifyStackPane.setAlignment(MAGNIFY_ICON_ALIGNMENT_POSITION);
+
+        // Instantiate RGB Color for Search TextField Background
+        Color magnifyRGB = Color.rgb(MAGNIFY_RED, MAGNIFY_GREEN, MAGNIFY_BLUE);
+
+        // Configure Background of Search HBox
+        BackgroundFill magnifyBackgroundFill = new BackgroundFill(magnifyRGB, null, null);
+        Background magnifyBackground = new Background(magnifyBackgroundFill);
+        magnifyStackPane.setBackground(magnifyBackground);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+///////// CITY SEARCH LABELS  //////////////////////////////////////////////////////////////////////////////////////////
+
+        // City Label Properties
+        int CITY_LABEL_RED = 255;
+        int CITY_LABEL_GREEN = 255;
+        int CITY_LABEL_BLUE = 255;
+        double CITY_LABEL_WIDTH = 320.0;
+        double CITY_LABEL_HEIGHT = 40.0;
+        String CITY_STR = "Los Angeles";
+        Pos CITY_LABEL_ALIGNMENT_POSITION = Pos.CENTER_LEFT;
+        Insets CITY_LABEL_PADDING = new Insets(0.0, 0.0, 0.0, 10.0);
+
+        // Instantiate City Label
+        Label city_label = new Label();
+
+        // Pass Text to City Label
+        city_label.setText(CITY_STR);
+
+        // Configure Width of City Label
+        city_label.setMinWidth(CITY_LABEL_WIDTH);
+        city_label.setMaxWidth(CITY_LABEL_WIDTH);
+        city_label.setPrefWidth(CITY_LABEL_WIDTH);
+
+        // Configure Height of City Label
+        city_label.setMinHeight(CITY_LABEL_HEIGHT);
+        city_label.setMaxHeight(CITY_LABEL_HEIGHT);
+        city_label.setPrefHeight(CITY_LABEL_HEIGHT);
+
+        // Configure City Label
+        city_label.setAlignment(CITY_LABEL_ALIGNMENT_POSITION);
+        city_label.setPadding(CITY_LABEL_PADDING);
+
+        // Instantiate RGB Color for City Field Background
+        Color cityFieldRGB = Color.rgb(CITY_LABEL_RED, CITY_LABEL_GREEN, CITY_LABEL_BLUE);
+
+        // Configure Background of Search HBox
+        BackgroundFill cityFieldBackgroundFill = new BackgroundFill(cityFieldRGB, null, null);
+        Background cityFieldBackground = new Background(cityFieldBackgroundFill);
+        city_label.setBackground(cityFieldBackground);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////// ADD NODES TO CITY SEARCH HBOX  ///////////////////////////////////////////////////////////////////////////////
+
+        search_hbox.getChildren().addAll(searchField, magnifyStackPane);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////// COMBO BOX  ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // Instantiate Menu ComboBox Node
+        // Combo Box Properties
+        double COMBOBOX_WIDTH = 320.0;
+        double COMBOBOX_HEIGHT = 40.0;
+
+        // Instantiate Generics Menu ComboBox Node
         ComboBox<Object> menuComboBox = new ComboBox<Object>();
 
         // Configure the Menu ComboBox Prompt
         menuComboBox.setPromptText("Search for a City");
 
+        // Instantiate Generics ObservableList Collection
+        ObservableList<Object> menu_items = FXCollections.observableArrayList();
+        menu_items.addAll(search_hbox, city_label);
 
+        menuComboBox.setItems(menu_items);
 
+        // Configure Width of ComboBox
+        menuComboBox.setMinWidth(COMBOBOX_WIDTH);
+        menuComboBox.setMaxWidth(COMBOBOX_WIDTH);
+        menuComboBox.setPrefWidth(COMBOBOX_WIDTH);
+
+        // Configure Height of ComboBox
+        menuComboBox.setMinHeight(COMBOBOX_HEIGHT);
+        menuComboBox.setMaxHeight(COMBOBOX_HEIGHT);
+        menuComboBox.setPrefHeight(COMBOBOX_HEIGHT);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+        menu_hbox.getChildren().addAll(menuStackPane, menuComboBox);
 
 
         // Instantiate ObservableSet FX Collection
@@ -260,11 +403,8 @@ public class Main extends Application {
         // Add Los Angeles to ObservableList
         cities.add("Los Angeles");
 
-        // Instantiate ComboBox Node
-        ComboBox<Object> comboBox = new ComboBox<Object>();
 
-
-        Scene scene = new Scene(null);
+        Scene scene = new Scene(menu_hbox);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
