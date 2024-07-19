@@ -1,5 +1,6 @@
 package factory.interfaces;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
@@ -41,12 +42,14 @@ public interface MenuFactory {
     double MENU_WIDTH = 1200.0;
     double MENU_HEIGHT = 100.0;
     double MENU_SPACING = 10.0;
+    double COMBOBOX_WIDTH = 320.0;
+    double COMBOBOX_HEIGHT = 40.0;
     boolean MAGNIFY_ICON_RATIO = true;
     boolean MAGNIFY_ICON_SMOOTHING = true;
     boolean TEXT_FIELD_EDITABLE = true;
     boolean MENU_ICON_RATIO = false;
     boolean MENU_ICON_SMOOTHING = true;
-    String menu_image_path = "/icons8-menu-192.png";
+    String MENU_IMAGE_PATH = "/icons8-menu-192.png";
     String MAGNIFY_ICON_PATH = "/icons8-search-480.png";
     String TEXT_FIELD_PROMPT = "Type City Name";
     Pos MAGNIFY_ICON_ALIGNMENT_POSITION = Pos.CENTER;
@@ -62,11 +65,11 @@ public interface MenuFactory {
     Insets MENU_ICON_PADDING = new Insets(0.0);
     Insets MENU_PADDING = new Insets(0.0, 0.0, 0.0, 25.0);
     // Instantiate RGB Color for Menu HBox Background
-    Color menuRGB = Color.rgb(MENU_RED, MENU_GREEN, MENU_BLUE);
-    Color searchRGB = Color.rgb(SEARCH_RED, SEARCH_GREEN, SEARCH_BLUE);
-    Color textFieldRGB = Color.rgb(TEXT_FIELD_RED, TEXT_FIELD_GREEN, TEXT_FIELD_BLUE);
-    Color magnifyRGB = Color.rgb(MAGNIFY_RED, MAGNIFY_GREEN, MAGNIFY_BLUE);
-    Color cityFieldRGB = Color.rgb(CITY_LABEL_RED, CITY_LABEL_GREEN, CITY_LABEL_BLUE);
+    Color MENU_RGB = Color.rgb(MENU_RED, MENU_GREEN, MENU_BLUE);
+    Color SEARCH_RGB = Color.rgb(SEARCH_RED, SEARCH_GREEN, SEARCH_BLUE);
+    Color TEXT_FIELD_RGB = Color.rgb(TEXT_FIELD_RED, TEXT_FIELD_GREEN, TEXT_FIELD_BLUE);
+    Color MAGNIFY_RGB = Color.rgb(MAGNIFY_RED, MAGNIFY_GREEN, MAGNIFY_BLUE);
+    Color CITY_FIELD_RGB = Color.rgb(CITY_LABEL_RED, CITY_LABEL_GREEN, CITY_LABEL_BLUE);
 
     // Menu HBox Object Factory Method Signature
     HBox createMenuHBox(StackPane menuStackPane, ComboBox<Object> comboBox);
@@ -85,5 +88,11 @@ public interface MenuFactory {
 
     // City Search Label Object Factory Method Signature
     Label createCityLabel(String city);
+
+    // ObservableList Object Factory Method Signature
+    ObservableList<Object>  createObservableList(HBox searchHBox);
+
+    // ComboBox Object Factory Method Signature
+    ComboBox createComboBox(ObservableList<Object> observableList);
 
 }
