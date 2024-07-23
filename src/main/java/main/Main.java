@@ -1,18 +1,25 @@
 package main;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import factory.implementations.ForecastFactoryImplementation;
 import factory.implementations.CurrentForecastFactoryImplementation;
 import factory.implementations.WrapperFactoryImplementation;
 import factory.implementations.MenuFactoryImplementation;
 import model.ApiKeyReader;
+import model.GeocodingResponse;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -29,7 +36,7 @@ import view.View;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException, InterruptedException {
 
 
 ///////// REST API INTERACTION /////////////////////////////////////////////////////////////////////////////////////////
@@ -39,6 +46,45 @@ public class Main extends Application {
 
         // Instantiate HttpClient Node (used to send requests)
         HttpClient httpClient = HttpClient.newHttpClient();
+
+        // API End Points
+        String baseURL = "https://api.openweathermap.org/geo/1.0/direct";
+        String cityName = "Los Angeles";
+        String encodedCityName = URLEncoder.encode(cityName, StandardCharsets.UTF_8);         // Method encode() returns an encoded version of the input string, where special characters (including spaces) are replaced with their URL-encoded equivalents.
+        int response_limit = 1;
+        String geocodeEndPoint = String.format("%s?q=%s&limit=%s&appid=%s",baseURL, encodedCityName, response_limit,apiKey);
+
+        // Instantiate HTTPS Request Node
+        HttpRequest geocodeRequest = HttpRequest.newBuilder()
+                .uri(URI.create(geocodeEndPoint))
+                .GET()
+                .build();
+
+        // Instantiate Jackson ObjectMapper (Primary Jackson Class Node / Used to Serialize & Deserialize)
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());
+        String responseBody = response.body();
+
+        List<GeocodingResponse> geocodingResponses = objectMapper.readValue(responseBody,
+                objectMapper.getTypeFactory().constructCollectionType(List.class, GeocodingResponse.class));
+
+// If you expect a single result, you might want to get the first item from the list
+        if (!geocodingResponses.isEmpty()) {
+            GeocodingResponse responseObject = geocodingResponses.get(0);
+            System.out.println("Latitude: " + responseObject.getLatitude());
+            System.out.println("Longitude: " + responseObject.getLongitude());
+            System.out.println("Name: " + responseObject.getCity());
+            System.out.println("Country: " + responseObject.getCountry());
+        } else {
+            System.out.println("No results found.");
+        }
+
+
+
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
