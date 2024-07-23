@@ -99,7 +99,7 @@ public interface CurrentForecastFactory {
     // Pane Layout Wrapper Object Factory Method Signature
     Pane createCurrentImagePane(String current_image_path);
 
-    // Sunset StackPane Object Factory Method Signature
+    // Sunset StackPane Object Factory Method Signatures
     StackPane createSunsetStackPane(String sunset_image_path);
 
     // Sunrise StackPane Object Factory Method Signature

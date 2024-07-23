@@ -571,7 +571,7 @@ public class View {
     public void instantiateSunsetLabel(String sunset_time) {
         if(sunset_time == null) throw new NullPointerException("Sunset Time cannot be null");
         else if(sunset_time.isEmpty()) throw new IllegalArgumentException("Sunset Time cannot be empty");
-        this.sunset_label = this.current_factory.createSunriseLabel(sunset_time);
+        this.sunset_label = this.current_factory.createSunsetLabel(sunset_time);
     }
 
     // Instantiate Sunrise HBox Wrapper Method

@@ -1,10 +1,12 @@
 package main;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import factory.implementations.ForecastFactoryImplementation;
 import factory.implementations.CurrentForecastFactoryImplementation;
 import factory.implementations.WrapperFactoryImplementation;
 import factory.implementations.MenuFactoryImplementation;
 import model.ApiKeyReader;
+import model.GeocodingResponse;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -15,6 +17,9 @@ import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -31,7 +36,7 @@ import view.View;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException, InterruptedException {
 
 
 ///////// REST API INTERACTION /////////////////////////////////////////////////////////////////////////////////////////
@@ -55,25 +60,29 @@ public class Main extends Application {
                 .GET()
                 .build();
 
-        // Enclose in Try-Catch
-        try {
+        // Instantiate Jackson ObjectMapper (Primary Jackson Class Node / Used to Serialize & Deserialize)
+        ObjectMapper objectMapper = new ObjectMapper();
 
-            // Instantiate HTTPS Response Node (stores HTTPS REST API RESPONSE)
-            HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());
+        String responseBody = response.body();
 
-            if (response.statusCode() == 200 && !response.body().isEmpty()) {
-                String responseBody = response.body();
-                System.out.println("Response: " + responseBody);
-            } else if(response.statusCode() == 200 && response.body().isEmpty()) {
-                System.out.println("Empty Response Body");
-            }
-            else {
-                System.out.println("Error: " + response.statusCode());
-            }
+        List<GeocodingResponse> geocodingResponses = objectMapper.readValue(responseBody,
+                objectMapper.getTypeFactory().constructCollectionType(List.class, GeocodingResponse.class));
 
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+// If you expect a single result, you might want to get the first item from the list
+        if (!geocodingResponses.isEmpty()) {
+            GeocodingResponse responseObject = geocodingResponses.get(0);
+            System.out.println("Latitude: " + responseObject.getLatitude());
+            System.out.println("Longitude: " + responseObject.getLongitude());
+            System.out.println("Name: " + responseObject.getCity());
+            System.out.println("Country: " + responseObject.getCountry());
+        } else {
+            System.out.println("No results found.");
         }
+
+
+
+
 
 
 
