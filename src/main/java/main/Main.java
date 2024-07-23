@@ -7,11 +7,13 @@ import factory.implementations.MenuFactoryImplementation;
 import model.ApiKeyReader;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
 import java.io.IOException;
@@ -39,6 +41,41 @@ public class Main extends Application {
 
         // Instantiate HttpClient Node (used to send requests)
         HttpClient httpClient = HttpClient.newHttpClient();
+
+        // API End Points
+        String baseURL = "https://api.openweathermap.org/geo/1.0/direct";
+        String cityName = "Los Angeles";
+        String encodedCityName = URLEncoder.encode(cityName, StandardCharsets.UTF_8);         // Method encode() returns an encoded version of the input string, where special characters (including spaces) are replaced with their URL-encoded equivalents.
+        int response_limit = 1;
+        String geocodeEndPoint = String.format("%s?q=%s&limit=%s&appid=%s",baseURL, encodedCityName, response_limit,apiKey);
+
+        // Instantiate HTTPS Request Node
+        HttpRequest geocodeRequest = HttpRequest.newBuilder()
+                .uri(URI.create(geocodeEndPoint))
+                .GET()
+                .build();
+
+        // Enclose in Try-Catch
+        try {
+
+            // Instantiate HTTPS Response Node (stores HTTPS REST API RESPONSE)
+            HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200 && !response.body().isEmpty()) {
+                String responseBody = response.body();
+                System.out.println("Response: " + responseBody);
+            } else if(response.statusCode() == 200 && response.body().isEmpty()) {
+                System.out.println("Empty Response Body");
+            }
+            else {
+                System.out.println("Error: " + response.statusCode());
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
