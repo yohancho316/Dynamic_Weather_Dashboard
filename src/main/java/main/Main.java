@@ -5,6 +5,14 @@ import factory.implementations.CurrentForecastFactoryImplementation;
 import factory.implementations.WrapperFactoryImplementation;
 import factory.implementations.MenuFactoryImplementation;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.util.concurrent.CompletableFuture;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,29 +20,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 import view.View;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+        // Instantiate HttpClient Node (used to send requests)
+        HttpClient httpClient = HttpClient.newHttpClient();
+
+
+
+
 
         // Instantiate Current Forecast Factory Node
         CurrentForecastFactoryImplementation currentFactory = new CurrentForecastFactoryImplementation();
