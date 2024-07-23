@@ -31,6 +31,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
+
+///////// REST API INTERACTION /////////////////////////////////////////////////////////////////////////////////////////
+
         // Retrieve OpenWeatherMap API Key
         String apiKey = ApiKeyReader.getKey();
 
@@ -38,9 +41,7 @@ public class Main extends Application {
         HttpClient httpClient = HttpClient.newHttpClient();
 
 
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Instantiate Current Forecast Factory Node
         CurrentForecastFactoryImplementation currentFactory = new CurrentForecastFactoryImplementation();
 
