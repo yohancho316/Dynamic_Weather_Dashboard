@@ -16,7 +16,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     public Pane createCurrentImagePane(String current_image_path) {
 
         // Check if Current Image Path is Null or Empty
-        if(current_image_path.isEmpty() || current_image_path.equals(null)) throw new IllegalArgumentException("Current Image Path is null or empty");
+        if(current_image_path.isEmpty() || current_image_path == null) throw new IllegalArgumentException("Current Image Path is null or empty");
 
         // Instantiate Current Weather Icon Image Node
         Image current_weather_image = new Image(getClass().getResourceAsStream(current_image_path),
@@ -74,7 +74,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     public StackPane createSunsetStackPane(String sunset_image_path) {
 
         // Check if Sunset Image Path is Null or Empty
-        if(sunset_image_path.isEmpty() || sunset_image_path.equals(null)) throw new IllegalArgumentException("Sunset Image Path cannot be empty or Null");
+        if(sunset_image_path.isEmpty() ||  sunset_image_path == null) throw new IllegalArgumentException("Sunset Image Path cannot be empty or Null");
 
         // Instantiate Image Node w/ URL Loading
         Image sunsetIcon = new Image(getClass().getResourceAsStream(sunset_image_path),
@@ -112,7 +112,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     public StackPane createSunriseStackPane(String sunrise_image_path) {
 
         // Check if Sunrise Image Path is Null or Empty
-        if(sunrise_image_path.isEmpty() || sunrise_image_path.equals(null)) throw new IllegalArgumentException("Sunrise Image Path cannot be empty or Null");
+        if(sunrise_image_path.isEmpty() || sunrise_image_path == null) throw new IllegalArgumentException("Sunrise Image Path cannot be empty or Null");
 
         // Instantiate Image Node w/ URL Loading
         Image sunriseIcon = new Image(getClass().getResourceAsStream(sunrise_image_path),
@@ -148,7 +148,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     public HBox createSunsetHBox(StackPane sunsetPane, Label sunsetLabel) {
 
         // Check if Sunset Pane || Sunset Label is Null
-        if(sunsetPane.equals(null) || sunsetLabel.equals(null)) throw new NullPointerException("Sunset Pane & Sunset Label cannot be null");
+        if(sunsetPane.equals(null) || sunsetLabel == null) throw new NullPointerException("Sunset Pane & Sunset Label cannot be null");
 
         // Instantiate Sunrise & Sunshine VBox Background
         Color hboxRGB = Color.rgb(this.SUN_HBOX_RED, this.SUN_HBOX_GREEN, this.SUN_HBOX_BLUE);
@@ -195,7 +195,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     public HBox createSunriseHBox(StackPane sunrisePane, Label sunriseLabel) {
 
         // Check if Sunrise Pane || Sunrise Label is Null
-        if(sunrisePane.equals(null) || sunriseLabel.equals(null)) throw new NullPointerException("Sunrise Pane & Sunrise Label cannot be null");
+        if(sunrisePane.equals(null) || sunriseLabel == null) throw new NullPointerException("Sunrise Pane & Sunrise Label cannot be null");
 
         // Instantiate Sunrise VBox Background
         Color hboxRGB = Color.rgb(this.SUN_HBOX_RED, this.SUN_HBOX_GREEN, this.SUN_HBOX_BLUE);
@@ -243,7 +243,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     public HBox createCurrentUIHBox(Pane tempIconPane, VBox tempStatusVbox, VBox sunriseSunsetVbox) {
 
         // Check if Temperature Icon || Status || Sunrise/Sunset VBox is Null
-        if (tempIconPane.equals(null) || tempStatusVbox.equals(null) || sunriseSunsetVbox.equals(null))
+        if (tempIconPane == null || tempStatusVbox == null || sunriseSunsetVbox == null)
             throw new NullPointerException("Temperature Icon, Status, and Sunrise/Sunset VBox cannot be null");
 
         // Instantiate Sunrise VBox Background
@@ -284,7 +284,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     public VBox createCurrentWeatherVBox(Label temperatureLabel, Label statusLabel) {
 
         // Check if Temperature || Status Label is Null
-        if(temperatureLabel.equals(null) || statusLabel.equals(null)) throw new NullPointerException("Temperature & Status Label cannot be null");
+        if(temperatureLabel == null || statusLabel == null) throw new NullPointerException("Temperature & Status Label cannot be null");
 
         // Configure Wrapper Background
         Color tempRGB = Color.rgb(this.TEMP_VBOX_RED, this.TEMP_VBOX_GREEN, this.TEMP_VBOX_BLUE);
@@ -309,7 +309,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     public VBox createSunVBox(HBox sunsetHBox, HBox sunriseHBox) {
 
         // Check if Sunset HBox || Sunrise HBox is Null
-        if(sunsetHBox.equals(null) || sunriseHBox.equals(null)) throw new NullPointerException("Sunset HBox & Sunrise HBox cannot be null");
+        if(sunsetHBox == null || sunriseHBox == null) throw new NullPointerException("Sunset HBox & Sunrise HBox cannot be null");
 
         // Instantiate Sunrise & Sunset VBox Background
         Color sunRGB = Color.rgb(this.SUN_VBOX_RED, this.SUN_VBOX_GREEN, this.SUN_VBOX_BLUE);
@@ -413,7 +413,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         // Check if Sunrise String is Empty
         if(sunriseStr.isEmpty()) throw new IllegalArgumentException("Sunrise String cannot be empty");
         // Check if Sunrise String is Null
-        else if(sunriseStr.equals(null)) throw new NullPointerException("Sunrise String cannot be null");
+        else if(sunriseStr == null) throw new NullPointerException("Sunrise String cannot be null");
 
         // Instantiate Sunrise Label
         Label riseLabel = new Label(sunriseStr + this.RISE_NOTATION);
@@ -444,7 +444,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         // Check if Sunset String is Empty
         if(sunsetStr.isEmpty()) throw new IllegalArgumentException("Sunset String cannot be empty");
         // CHeck if Sunset String is Null
-        else if(sunsetStr.equals(null)) throw new NullPointerException("Sunset String cannot be null");
+        else if(sunsetStr == null) throw new NullPointerException("Sunset String cannot be null");
 
         // Instantiate Set Label Node
         Label sunsetLabel = new Label(sunsetStr + this.SET_NOTATION);

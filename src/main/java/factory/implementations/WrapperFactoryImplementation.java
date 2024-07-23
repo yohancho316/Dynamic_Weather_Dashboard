@@ -8,10 +8,10 @@ import javafx.scene.layout.VBox;
 public class WrapperFactoryImplementation implements WrapperFactory {
 
     @Override
-    public VBox createUIVBox(HBox forecast_hbox, HBox current_hbox) {
+    public VBox createUIVBox(HBox menu_hbox, HBox forecast_hbox, HBox current_hbox) {
 
         // Check if Forecast or Current HBox is Null
-        if(forecast_hbox.equals(null) || current_hbox.equals(null)) throw new NullPointerException("Forecast or Current HBox cannot be null");
+        if(menu_hbox == null || forecast_hbox == null || current_hbox == null) throw new NullPointerException("Menu & Forecast & Current HBox cannot be null");
 
         // Instantiate VBox UI Layout Wrapper Node
         VBox vbox = new VBox();
@@ -32,7 +32,7 @@ public class WrapperFactoryImplementation implements WrapperFactory {
         vbox.setPadding(this.UI_VBOX_PADDING);
 
         // Add Forecast & Current HBox within UI VBox Wrapper
-        vbox.getChildren().addAll(forecast_hbox, current_hbox);
+        vbox.getChildren().addAll(menu_hbox, forecast_hbox, current_hbox);
 
         // Return VBox Layout Wrapper Node
         return vbox;
