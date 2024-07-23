@@ -36,48 +36,56 @@ import view.View;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws IOException, InterruptedException {
+    public void start(Stage primaryStage) {
 
 
 ///////// REST API INTERACTION /////////////////////////////////////////////////////////////////////////////////////////
 
         // Retrieve OpenWeatherMap API Key
-        String apiKey = ApiKeyReader.getKey();
+        String apiKey = ApiKeyReader.getKey();  // Fetches the API key for authenticating requests to the OpenWeatherMap API.
 
         // Instantiate HttpClient Node (used to send requests)
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = HttpClient.newHttpClient();  // Creates an instance of HttpClient for sending HTTP requests.
 
         // API End Points
-        String baseURL = "https://api.openweathermap.org/geo/1.0/direct";
-        String cityName = "Los Angeles";
-        String encodedCityName = URLEncoder.encode(cityName, StandardCharsets.UTF_8);         // Method encode() returns an encoded version of the input string, where special characters (including spaces) are replaced with their URL-encoded equivalents.
-        int response_limit = 1;
-        String geocodeEndPoint = String.format("%s?q=%s&limit=%s&appid=%s",baseURL, encodedCityName, response_limit,apiKey);
+        String baseURL = "https://api.openweathermap.org/geo/1.0/direct";  // Base URL for the geocoding API endpoint.
+        String cityName = "Los Angeles";  // Name of the city to query.
+        String encodedCityName = URLEncoder.encode(cityName, StandardCharsets.UTF_8);  // Encodes the city name to ensure it is URL-safe (e.g., spaces are replaced with %20).
+        int response_limit = 1;  // Limit for the number of results to return from the API.
+        String geocodeEndPoint = String.format("%s?q=%s&limit=%s&appid=%s", baseURL, encodedCityName, response_limit, apiKey);  // Constructs the full URL for the API request by formatting the base URL with query parameters.
 
         // Instantiate HTTPS Request Node
         HttpRequest geocodeRequest = HttpRequest.newBuilder()
-                .uri(URI.create(geocodeEndPoint))
-                .GET()
-                .build();
+                .uri(URI.create(geocodeEndPoint))  // Creates a URI from the endpoint URL.
+                .GET()  // Specifies the HTTP method as GET.
+                .build();  // Builds the HttpRequest object.
 
         // Instantiate Jackson ObjectMapper (Primary Jackson Class Node / Used to Serialize & Deserialize)
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();  // Creates an ObjectMapper instance for converting JSON to Java objects and vice versa.
 
-        HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());
-        String responseBody = response.body();
+        List<GeocodingResponse> geocodingResponses = null;  // Initializes a list to hold the deserialized geocoding response objects.
 
-        List<GeocodingResponse> geocodingResponses = objectMapper.readValue(responseBody,
-                objectMapper.getTypeFactory().constructCollectionType(List.class, GeocodingResponse.class));
+        try {
+            HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());  // Sends the HTTP request and retrieves the response body as a String.
+            String responseBody = response.body();  // Extracts the response body from the HttpResponse.
 
-// If you expect a single result, you might want to get the first item from the list
+            // Deserialize the JSON response into a list of GeocodingResponse objects.
+            geocodingResponses = objectMapper.readValue(responseBody,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, GeocodingResponse.class));
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();  // Handles exceptions by printing the stack trace if an error occurs during the request or deserialization.
+        }
+
+        // Check if the response list is not empty and process the first result.
         if (!geocodingResponses.isEmpty()) {
-            GeocodingResponse responseObject = geocodingResponses.get(0);
-            System.out.println("Latitude: " + responseObject.getLatitude());
-            System.out.println("Longitude: " + responseObject.getLongitude());
-            System.out.println("Name: " + responseObject.getCity());
-            System.out.println("Country: " + responseObject.getCountry());
+            GeocodingResponse responseObject = geocodingResponses.get(0);  // Retrieves the first GeocodingResponse object from the list.
+            System.out.println("Latitude: " + responseObject.getLatitude());  // Prints the latitude of the city.
+            System.out.println("Longitude: " + responseObject.getLongitude());  // Prints the longitude of the city.
+            System.out.println("Name: " + responseObject.getCity());  // Prints the name of the city.
+            System.out.println("Country: " + responseObject.getCountry());  // Prints the country code of the city.
         } else {
-            System.out.println("No results found.");
+            System.out.println("No results found.");  // Prints a message if no results were returned from the API.
         }
 
 
