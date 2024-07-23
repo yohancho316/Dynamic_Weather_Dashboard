@@ -4,6 +4,7 @@ import factory.implementations.ForecastFactoryImplementation;
 import factory.implementations.CurrentForecastFactoryImplementation;
 import factory.implementations.WrapperFactoryImplementation;
 import factory.implementations.MenuFactoryImplementation;
+import model.ApiKeyReader;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -30,13 +31,17 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
+
+///////// REST API INTERACTION /////////////////////////////////////////////////////////////////////////////////////////
+
+        // Retrieve OpenWeatherMap API Key
+        String apiKey = ApiKeyReader.getKey();
+
         // Instantiate HttpClient Node (used to send requests)
         HttpClient httpClient = HttpClient.newHttpClient();
 
 
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Instantiate Current Forecast Factory Node
         CurrentForecastFactoryImplementation currentFactory = new CurrentForecastFactoryImplementation();
 
