@@ -2,13 +2,17 @@ package view;
 
 import factory.implementations.CurrentForecastFactoryImplementation;
 import factory.implementations.ForecastFactoryImplementation;
+import factory.implementations.MenuFactoryImplementation;
 import factory.implementations.WrapperFactoryImplementation;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -21,24 +25,32 @@ public class View {
     // View Class Members
     private static final String SUNRISE_IMAGE_PATH = "/icons8-sunrise-24.png";
     private static final String SUNSET_IMAGE_PATH = "/icons8-sunset-24.png";
-    private ForecastFactoryImplementation future_factory; //
-    private CurrentForecastFactoryImplementation current_factory; //
-    private WrapperFactoryImplementation wrapper_factory; //
-    private List<BorderPane> borderPaneList; //
-    private HBox pane_hbox; //
-    private Pane main_image_pane; //
-    private Label temperature_label; //
-    private Label status_label; //
-    private VBox main_temp_status_vbox; //
-    private StackPane sunrise_stackpane; //
-    private StackPane sunset_stackpane; //
-    private Label sunrise_label; //
-    private Label sunset_label; //
-    private HBox sunrise_hbox; //
-    private HBox sunset_hbox; //
-    private VBox sunrise_sunset_vbox;
+    private ForecastFactoryImplementation future_factory;
+    private CurrentForecastFactoryImplementation current_factory;
+    private WrapperFactoryImplementation wrapper_factory;
+    private MenuFactoryImplementation menu_factory;
+    private ComboBox<Object> search_combobox;
+    private HBox pane_hbox;
+    private HBox sunrise_hbox;
+    private HBox sunset_hbox;
+    private HBox menu_hbox;
+    private Label sunrise_label;
+    private Label sunset_label;
+    private Label temperature_label;
+    private Label status_label;
+    private List<BorderPane> borderPaneList;
+    private ObservableList<Object> observableList;
+    private Pane main_image_pane;
+    private StackPane menu_icon_stackpane;
+    private StackPane magnify_icon_stackpane;
+    private StackPane sunrise_stackpane;
+    private StackPane sunset_stackpane;
+    private TextField city_text_field;
     private HBox current_weather_hbox;
+    private VBox sunrise_sunset_vbox;
+    private HBox city_search_hbox;
     private VBox weather_ui_vbox;
+    private VBox main_temp_status_vbox;
 
     // Future Factory Getter Method
     public ForecastFactoryImplementation getFutureFactory() {
@@ -73,6 +85,17 @@ public class View {
         this.wrapper_factory = wrapper_factory;
     }
 
+    // Menu Factory Getter Method
+    public MenuFactoryImplementation getMenuFactory() {
+        return this.menu_factory;
+    }
+
+    // Menu Factory Setter Method
+    public void setMenuFactory(MenuFactoryImplementation menu_factory) {
+        if(menu_factory == null) throw new NullPointerException("Menu Factory cannot be null");
+        this.menu_factory = menu_factory;
+    }
+
     // BorderPane Collection Getter Method
     public List<BorderPane> getBorderPaneList() {
         return this.borderPaneList;
@@ -101,7 +124,7 @@ public class View {
         return this.main_image_pane;
     }
 
-    // Main IMage Pane Setter Method
+    // Main Image Pane Setter Method
     public void setMainImagePane(Pane main_image_pane) {
         if(main_image_pane == null) throw new NullPointerException("Main Image Pane cannot be null");
         this.main_image_pane = main_image_pane;
@@ -140,6 +163,17 @@ public class View {
     public void setTempStatusVBox(VBox main_temp_status_vbox) {
         if(main_temp_status_vbox == null) throw new NullPointerException("Main Temp Status VBox cannot be null");
         this.main_temp_status_vbox = main_temp_status_vbox;
+    }
+
+    // Menu Icon StackPane Getter Method
+    public StackPane getMenuIconStackPane() {
+        return this.menu_icon_stackpane;
+    }
+
+    // Menu Icon StackPane Setter Method
+    public void setMenuIconStackPane(StackPane menu_icon_stackpane) {
+        if(menu_icon_stackpane == null) throw new NullPointerException("Menu Icon Stackpane cannot be null");
+        this.menu_icon_stackpane = menu_icon_stackpane;
     }
 
     // Sunrise StackPane Getter Method
@@ -222,10 +256,76 @@ public class View {
         this.weather_ui_vbox = weather_ui_vbox;
     }
 
+    // City Text Field Getter Method
+    public TextField getCitySearchTextField() {
+        return this.city_text_field;
+    }
+
+    // City Text Field Setter Method
+    public void setCitySearchTextField(TextField city_text_field) {
+        if(city_text_field == null) throw new NullPointerException("TextField cannot be null");
+        this.city_text_field = city_text_field;
+    }
+
+    // Magnify Icon StackPane Getter Method
+    public StackPane getMagnifyIconStackPane() {
+        return this.magnify_icon_stackpane;
+    }
+
+    // Magnify Icon StackPane Setter Method
+    public void setMagnifyIconStackPane(StackPane magnify_icon_stackpane) {
+        if(magnify_icon_stackpane == null) throw new NullPointerException("Magnify Icon StackPane cannot be null");
+        this.magnify_icon_stackpane = magnify_icon_stackpane;
+    }
+
+    // Menu ObservableList Getter Method
+    public ObservableList<Object> getObservableList() {
+        return this.observableList;
+    }
+
+    // Menu ObservableList Setter Method
+    public void setObservableList(ObservableList<Object> observableList) {
+        if(observableList == null) throw new NullPointerException("Observable List cannot be null");
+        this.observableList = observableList;
+    }
+
+    // City Search HBox Getter Method
+    public HBox getCitySearchHBox() {
+        return this.city_search_hbox;
+    }
+
+    // City Search HBox Setter Method
+    public void setCitySearchHBox(HBox city_search_hbox) {
+        if(city_search_hbox == null) throw new NullPointerException("City Search HBox cannot be null");
+        this.city_search_hbox = city_search_hbox;
+    }
+
+    // Search ComboBox Getter Method
+    public ComboBox<Object> getSearchComboBox() {
+        return this.search_combobox;
+    }
+
+    // Search ComboBox Setter Method
+    public void setSearchComboBox(ComboBox<Object> search_combobox) {
+        if(search_combobox == null) throw new NullPointerException("Search ComboBox cannot be null");
+        this.search_combobox = search_combobox;
+    }
+
+    // Menu HBox Getter Method
+    public HBox getMenuHBox() {
+        return this.menu_hbox;
+    }
+
+    // Menu HBox Setter Method
+    public void setMenuHBox(HBox menu_hbox) {
+        if(menu_hbox == null) throw new NullPointerException("Menu HBox cannot be null");
+        this.menu_hbox = menu_hbox;
+    }
 
     public View(ForecastFactoryImplementation future_factory,
                 CurrentForecastFactoryImplementation current_factory,
                 WrapperFactoryImplementation wrapper_factory,
+                MenuFactoryImplementation menu_factory,
                 List<String> pane_image_collection,
                 List<LocalDateTime> pane_date_collection,
                 List<LocalTime> pane_time_collection,
@@ -243,6 +343,30 @@ public class View {
 
         // Instantiate Wrapper Factory Node
         this.instantiateWrapperFactory(wrapper_factory);
+
+        // Instantiate Menu Factory Node
+        this.instantiateMenuFactory(menu_factory);
+
+        // Instantiate Menu Icon StackPane Wrapper
+        this.instantiateMenuStackPane();
+
+        // Instantiate City Search TextField Control Node
+        this.instantiateCitySearchTextField();
+
+        // Instantiate Magnify Icon StackPane Wrapper
+        this.instantiateMagnifyIconStackPane();
+
+        // Instantiate City Search HBox Wrapper
+        this.instantiateCitySearchHBox();
+
+        // Instantiate Search ObservableList Collection
+        this.instantiateCityObservableList();
+
+        // Instantiate Search ComboBox Control Node-
+        this.instantiateSearchComboBox();
+
+        // Instantiate Menu HBox Wrapper
+        this.instantiateMenuHBox();
 
         // Instantiate BorderPane Collection
         this.instantiateBorderPaneList();
@@ -309,6 +433,17 @@ public class View {
     public void instantiateWrapperFactory(WrapperFactoryImplementation wrapper_factory) {
         if(wrapper_factory == null) throw new NullPointerException("Wrapper Factory cannot be null");
         this.wrapper_factory = wrapper_factory;
+    }
+
+    // Instantiate Menu Factory Method
+    public void instantiateMenuFactory(MenuFactoryImplementation menu_factory) {
+        if(menu_factory == null) throw new NullPointerException("Menu Factory cannot be null");
+        this.menu_factory = menu_factory;
+    }
+
+    // Instantiate Menu Icon StackPane Wrapper Method
+    public void instantiateMenuStackPane() {
+        this.menu_icon_stackpane = this.menu_factory.createMenuStackPane();
     }
 
     // Instantiate Border Pane List Method
@@ -469,7 +604,49 @@ public class View {
     public void instantiateWeatherVBox() {
         if(this.pane_hbox == null || this.current_weather_hbox == null) throw new NullPointerException("Pane & Current Weather HBox cannot be null");
         else if(this.wrapper_factory == null) throw new NullPointerException("Wrapper Factory cannot be null");
-        this.weather_ui_vbox = this.wrapper_factory.createUIVBox(this.current_weather_hbox, this.pane_hbox);
+        this.weather_ui_vbox = this.wrapper_factory.createUIVBox(this.menu_hbox, this.current_weather_hbox, this.pane_hbox);
+    }
+
+    // Instantiate City Search TextField Control Node
+    public void instantiateCitySearchTextField() {
+        this.city_text_field = this.menu_factory.createSearchTextField();
+    }
+
+    // Instantiate Magnify Icon StackPane Wrapper
+    public void instantiateMagnifyIconStackPane() {
+        this.magnify_icon_stackpane = this.menu_factory.createMagnifyStackPane();
+    }
+
+    // Instantiate City Search HBox Wrapper
+    public void instantiateCitySearchHBox() {
+        if(this.city_text_field == null || this.magnify_icon_stackpane == null) throw new NullPointerException("City TextField & Magnify Icon StackPane cannot be null");
+        this.city_search_hbox = this.menu_factory.createSearchHBox(this.city_text_field, this.magnify_icon_stackpane);
+    }
+
+    // Instantiate City Search ObservableList Collection
+    public void instantiateCityObservableList() {
+        if(this.city_search_hbox == null) throw new NullPointerException("City Search HBox cannot be null");
+        this.observableList = this.menu_factory.createObservableList(this.city_search_hbox);
+    }
+
+    // Instantiate City Search ComboBox Control Node
+    public void instantiateSearchComboBox() {
+        if(this.observableList == null) throw new NullPointerException("ObservableList cannot be null");
+        else if(this.observableList.isEmpty()) throw new IllegalArgumentException("ObservableList cannot be empty");
+        this.search_combobox = this.menu_factory.createComboBox(this.observableList);
+    }
+
+    // Instantiate Menu HBox Wrapper
+    public void instantiateMenuHBox() {
+        if(this.menu_icon_stackpane == null || this.search_combobox == null) throw new NullPointerException("Menu Icon StackPane & Search ComboBox cannnot be null");
+        this.menu_hbox = this.menu_factory.createMenuHBox(this.menu_icon_stackpane, this.search_combobox);
+    }
+
+    // Instantiate City Label
+    public Label instantiateCityLabel(String city) {
+        if(city == null) throw new NullPointerException("String object cannot be null");
+        else if(city.isEmpty()) throw new IllegalArgumentException("String object cannot be empty");
+        return this.menu_factory.createCityLabel(city);
     }
 
 }

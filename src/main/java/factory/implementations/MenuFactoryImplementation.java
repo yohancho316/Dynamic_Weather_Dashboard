@@ -45,6 +45,9 @@ public class MenuFactoryImplementation implements MenuFactory {
         Background menuBackground = new Background(menuBackgroundFill);
         menuHBox.setBackground(menuBackground);
 
+        // Add Menu Icon StackPane Wrapper & ComboBox Control Node within Menu HBox
+        menuHBox.getChildren().addAll(menuStackPane, comboBox);
+
         // Return Menu HBox Reference
         return menuHBox;
     }

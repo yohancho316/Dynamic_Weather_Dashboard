@@ -25,9 +25,9 @@ public interface MenuFactory {
     int SEARCH_RED = 255;
     int SEARCH_GREEN = 255;
     int SEARCH_BLUE = 255;
-    int MENU_RED = 66;
-    int MENU_GREEN = 114;
-    int MENU_BLUE = 119;
+    int MENU_RED = 44;
+    int MENU_GREEN = 103;
+    int MENU_BLUE = 108;
     double CITY_LABEL_WIDTH = 320.0;
     double CITY_LABEL_HEIGHT = 40.0;
     double MAGNIFY_ICON_WIDTH = 40.0;
@@ -90,7 +90,7 @@ public interface MenuFactory {
     Label createCityLabel(String city);
 
     // ObservableList Object Factory Method Signature
-    ObservableList<Object>  createObservableList(HBox searchHBox);
+    ObservableList<Object> createObservableList(HBox searchHBox);
 
     // ComboBox Object Factory Method Signature
     ComboBox createComboBox(ObservableList<Object> observableList);
