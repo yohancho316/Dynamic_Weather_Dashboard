@@ -13,15 +13,11 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.http.HttpRequest.BodyPublishers;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.CompletableFuture;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -47,16 +43,16 @@ public class Main extends Application {
         // Instantiate HttpClient Node (used to send requests)
         HttpClient httpClient = HttpClient.newHttpClient();  // Creates an instance of HttpClient for sending HTTP requests.
 
-        // API End Points
-        String baseURL = "https://api.openweathermap.org/geo/1.0/direct";  // Base URL for the geocoding API endpoint.
-        String cityName = "Los Angeles";  // Name of the city to query.
-        String encodedCityName = URLEncoder.encode(cityName, StandardCharsets.UTF_8);  // Encodes the city name to ensure it is URL-safe (e.g., spaces are replaced with %20).
-        int response_limit = 1;  // Limit for the number of results to return from the API.
-        String geocodeEndPoint = String.format("%s?q=%s&limit=%s&appid=%s", baseURL, encodedCityName, response_limit, apiKey);  // Constructs the full URL for the API request by formatting the base URL with query parameters.
+        // GeoCode API End Points
+        String geocode_baseURL = "https://api.openweathermap.org/geo/1.0/direct";  // Base URL for the geocoding API endpoint.
+        String geocode_cityName = "Los Angeles";  // Name of the city to query.
+        String geocode_encodedCityName = URLEncoder.encode(geocode_cityName, StandardCharsets.UTF_8);  // Encodes the city name to ensure it is URL-safe (e.g., spaces are replaced with %20).
+        int geocode_response_limit = 1;  // Limit for the number of results to return from the API.
+        String geocodeEndPointURL = String.format("%s?q=%s&limit=%s&appid=%s", geocode_baseURL, geocode_encodedCityName, geocode_response_limit, apiKey);  // Constructs the full URL for the API request by formatting the base URL with query parameters.
 
         // Instantiate HTTPS Request Node
         HttpRequest geocodeRequest = HttpRequest.newBuilder()
-                .uri(URI.create(geocodeEndPoint))  // Creates a URI from the endpoint URL.
+                .uri(URI.create(geocodeEndPointURL))  // Creates a URI from the endpoint URL.
                 .GET()  // Specifies the HTTP method as GET.
                 .build();  // Builds the HttpRequest object.
 
@@ -66,10 +62,12 @@ public class Main extends Application {
         List<GeocodingResponse> geocodingResponses = null;  // Initializes a list to hold the deserialized geocoding response objects.
 
         try {
+
             HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());  // Sends the HTTP request and retrieves the response body as a String.
             String responseBody = response.body();  // Extracts the response body from the HttpResponse.
 
             // Deserialize the JSON response into a list of GeocodingResponse objects.
+            // Throws IOException
             geocodingResponses = objectMapper.readValue(responseBody,
                     objectMapper.getTypeFactory().constructCollectionType(List.class, GeocodingResponse.class));
 
@@ -88,7 +86,43 @@ public class Main extends Application {
             System.out.println("No results found.");  // Prints a message if no results were returned from the API.
         }
 
+        // Current Weather API End Points
+        String current_baseURL = "https://api.openweathermap.org/data/2.5/weather";
+        String current_metric_system = "imperial";
 
+        // Latitude and Longitude from the geocoding response
+        String current_latitude = String.valueOf(geocodingResponses.get(0).getLatitude());
+        String current_longitude = String.valueOf(geocodingResponses.get(0).getLongitude());
+
+        // Encode individual parameters
+        String encoded_current_latitude = URLEncoder.encode(current_latitude, StandardCharsets.UTF_8);
+        String encoded_current_longitude = URLEncoder.encode(current_longitude, StandardCharsets.UTF_8);
+        String encoded_current_metric_system = URLEncoder.encode(current_metric_system, StandardCharsets.UTF_8);
+
+        // Constructs the full URL for the API request by formatting the base URL with query parameters
+        String currentEndPointURL = String.format("%s?lat=%s&lon=%s&appid=%s&units=%s", current_baseURL,
+                                                                             encoded_current_latitude,
+                                                                             encoded_current_longitude,
+                                                                             apiKey,
+                                                                             encoded_current_metric_system);
+
+        // Instantiate HTTPS Request Node
+        HttpRequest currentWeatherRequest = HttpRequest.newBuilder()
+                .uri(URI.create(currentEndPointURL))  // Creates a URI from the endpoint URL.
+                .GET()  // Specifies the HTTP method as GET.
+                .build();  // Builds the HttpRequest object.
+
+        try {
+
+            HttpResponse<String> response = httpClient.send(currentWeatherRequest, HttpResponse.BodyHandlers.ofString());  // Sends the HTTP request and retrieves the response body as a String.
+            String responseBody = response.body();  // Extracts the response body from the HttpResponse.
+
+            System.out.println("\n\nCurrent Weather Response Body:\n");
+            System.out.println(responseBody);
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();  // Handles exceptions by printing the stack trace if an error occurs during the request or deserialization.
+        }
 
 
 
