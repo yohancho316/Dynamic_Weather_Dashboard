@@ -6,6 +6,7 @@ import factory.implementations.CurrentForecastFactoryImplementation;
 import factory.implementations.WrapperFactoryImplementation;
 import factory.implementations.MenuFactoryImplementation;
 import model.ApiKeyReader;
+import model.CurrentWeatherResponse;
 import model.GeocodingResponse;
 
 import java.net.URI;
@@ -57,19 +58,69 @@ public class Main extends Application {
                 .build();  // Builds the HttpRequest object.
 
         // Instantiate Jackson ObjectMapper (Primary Jackson Class Node / Used to Serialize & Deserialize)
-        ObjectMapper objectMapper = new ObjectMapper();  // Creates an ObjectMapper instance for converting JSON to Java objects and vice versa.
+        // Creates an ObjectMapper instance for converting JSON to Java objects and vice versa.
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        List<GeocodingResponse> geocodingResponses = null;  // Initializes a list to hold the deserialized geocoding response objects.
+        // Initializes a list to hold the deserialized geocoding response objects.
+        List<GeocodingResponse> geocodingResponses = null;
 
         try {
 
-            HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());  // Sends the HTTP request and retrieves the response body as a String.
-            String responseBody = response.body();  // Extracts the response body from the HttpResponse.
+            // Sends the HTTP request and retrieves the response body as a String.
+            HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());
 
-            // Deserialize the JSON response into a list of GeocodingResponse objects.
-            // Throws IOException
-            geocodingResponses = objectMapper.readValue(responseBody,
-                    objectMapper.getTypeFactory().constructCollectionType(List.class, GeocodingResponse.class));
+            // HTTP Status Code
+            int statusCode = response.statusCode();
+
+            // Handle HTTP Success
+            if(statusCode >= 200 && statusCode < 300) {
+
+                // Extracts the response body from the HttpResponse
+                String responseBody = response.body();
+
+                // Deserialize the JSON response into a list of GeocodingResponse objects
+                // Throws IOException
+                geocodingResponses = objectMapper.readValue(responseBody,
+                        objectMapper.getTypeFactory().constructCollectionType(List.class, GeocodingResponse.class));
+
+            }
+
+            // Handle Client Error
+            else if(statusCode >= 400 && statusCode < 500) {
+                switch (statusCode) {
+                    case 400:
+                        System.out.println("Bad Request: Check the request parameters.");
+                        break;
+                    case 401:
+                        System.out.println("Unauthorized: Check your API key.");
+                        break;
+                    case 403:
+                        System.out.println("Forbidden: You do not have access to this resource.");
+                        break;
+                    case 404:
+                        System.out.println("Not Found: The requested resource was not found.");
+                        break;
+                    default:
+                        System.out.println("Client Error: " + statusCode);
+                }
+            }
+
+            // Handle Server Error
+            else if(statusCode >= 500) {
+                switch (statusCode) {
+                    case 500:
+                        System.out.println("Internal Server Error: Try again later.");
+                        break;
+                    case 502:
+                        System.out.println("Bad Gateway: The server is down or being upgraded.");
+                        break;
+                    case 503:
+                        System.out.println("Service Unavailable: The server is overloaded or under maintenance.");
+                        break;
+                    default:
+                        System.out.println("Server Error: " + statusCode);
+                }
+            }
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();  // Handles exceptions by printing the stack trace if an error occurs during the request or deserialization.
@@ -99,6 +150,10 @@ public class Main extends Application {
         String encoded_current_longitude = URLEncoder.encode(current_longitude, StandardCharsets.UTF_8);
         String encoded_current_metric_system = URLEncoder.encode(current_metric_system, StandardCharsets.UTF_8);
 
+        // Initializes a list to hold the deserialized geocoding response objects.
+        CurrentWeatherResponse currentWeatherResponse = new CurrentWeatherResponse();
+
+
         // Constructs the full URL for the API request by formatting the base URL with query parameters
         String currentEndPointURL = String.format("%s?lat=%s&lon=%s&appid=%s&units=%s", current_baseURL,
                                                                              encoded_current_latitude,
@@ -114,11 +169,62 @@ public class Main extends Application {
 
         try {
 
-            HttpResponse<String> response = httpClient.send(currentWeatherRequest, HttpResponse.BodyHandlers.ofString());  // Sends the HTTP request and retrieves the response body as a String.
-            String responseBody = response.body();  // Extracts the response body from the HttpResponse.
+            // Sends the HTTP request and retrieves the response body as a String.
+            HttpResponse<String> response = httpClient.send(currentWeatherRequest, HttpResponse.BodyHandlers.ofString());
 
-            System.out.println("\n\nCurrent Weather Response Body:\n");
-            System.out.println(responseBody);
+            // HTTP Status Code
+            int statusCode = response.statusCode();
+
+            // Handle HTTP Success
+            if(statusCode >= 200 && statusCode < 300) {
+
+                // Extracts the response body from the HttpResponse
+                String responseBody = response.body();
+
+                System.out.println("\n\nCurrent Weather Response Body:\n");
+                System.out.println(responseBody);
+
+                // Deserialize JSON to CurrentWeatherResponse Java Object
+                currentWeatherResponse = objectMapper.readValue(responseBody, CurrentWeatherResponse.class);
+
+            }
+
+            // Handle Client Error
+            else if(statusCode >= 400 && statusCode < 500) {
+                switch (statusCode) {
+                    case 400:
+                        System.out.println("Bad Request: Check the request parameters.");
+                        break;
+                    case 401:
+                        System.out.println("Unauthorized: Check your API key.");
+                        break;
+                    case 403:
+                        System.out.println("Forbidden: You do not have access to this resource.");
+                        break;
+                    case 404:
+                        System.out.println("Not Found: The requested resource was not found.");
+                        break;
+                    default:
+                        System.out.println("Client Error: " + statusCode);
+                }
+            }
+
+            // Handle Server Error
+            else if(statusCode >= 500) {
+                switch (statusCode) {
+                    case 500:
+                        System.out.println("Internal Server Error: Try again later.");
+                        break;
+                    case 502:
+                        System.out.println("Bad Gateway: The server is down or being upgraded.");
+                        break;
+                    case 503:
+                        System.out.println("Service Unavailable: The server is overloaded or under maintenance.");
+                        break;
+                    default:
+                        System.out.println("Server Error: " + statusCode);
+                }
+            }
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();  // Handles exceptions by printing the stack trace if an error occurs during the request or deserialization.
