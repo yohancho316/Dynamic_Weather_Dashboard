@@ -55,6 +55,11 @@ public class CurrentWeatherResponse {
         this.coordinates = coordintes;
     }
 
+    // Weather Getter Method
+    public List<Weather> getWeather() {
+        return this.weather;
+    }
+
     // Weather Setter Method
     public void setWeather(List<Weather> weather) {
         if (weather == null) throw new NullPointerException("Weather cannot be null");
