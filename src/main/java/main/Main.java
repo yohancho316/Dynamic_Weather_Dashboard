@@ -233,9 +233,8 @@ public class Main extends Application {
 
 
 
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         // Instantiate Current Forecast Factory Node
         CurrentForecastFactoryImplementation currentFactory = new CurrentForecastFactoryImplementation();
 
