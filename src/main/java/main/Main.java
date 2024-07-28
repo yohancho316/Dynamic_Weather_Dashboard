@@ -137,6 +137,8 @@ public class Main extends Application {
             System.out.println("No results found.");  // Prints a message if no results were returned from the API.
         }
 
+///////// Current Weather //////////////////////////////////////////////////////////////////////////////////////////////
+
         // Current Weather API End Points
         String current_baseURL = "https://api.openweathermap.org/data/2.5/weather";
         String current_metric_system = "imperial";
@@ -262,9 +264,22 @@ public class Main extends Application {
         }
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////// Future Weather Forecast //////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
 
         // Instantiate Current Forecast Factory Node
         CurrentForecastFactoryImplementation currentFactory = new CurrentForecastFactoryImplementation();
