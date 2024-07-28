@@ -26,6 +26,164 @@ public class CurrentWeatherResponse {
     @JsonProperty("clouds")
     private Clouds clouds;
 
+    @JsonProperty("dt")
+    private double timeOfDataCalculation;
+
+    @JsonProperty("sys")
+    private Sys sys;
+
+    @JsonProperty("timezone")
+    private int timezone;
+
+    @JsonProperty("id")
+    private int id;
+
+    @JsonProperty("name")
+    private String cityName;
+
+    @JsonProperty("cod")
+    private int cityCode;
+
+    // Coordinates Getter Method
+    public Coord getCoordinates() {
+        return this.coordinates;
+    }
+
+    // Coordinates Setter Method
+    public void setCoordinates(Coord coordintes) {
+        if(coordintes == null) throw new NullPointerException("Coordinates cannot be null");
+        this.coordinates = coordintes;
+    }
+
+    // Weather Getter Method
+    public List<Weather> getWeather() {
+        return this.weather;
+    }
+
+    // Weather Setter Method
+    public void setWeather(List<Weather> weather) {
+        if (weather == null) throw new NullPointerException("Weather cannot be null");
+        this.weather = weather;
+    }
+
+    // Base Getter Method
+    public String getBase() {
+        return this.base;
+    }
+
+    // Base Setter Method
+    public void setBase(String base) {
+        if (base == null) throw new NullPointerException("Base cannot be null");
+        if (base.isEmpty()) throw new IllegalArgumentException("Base cannot be empty");
+        this.base = base;
+    }
+
+    // Main Getter Method
+    public Main getMain() {
+        return this.main;
+    }
+
+    // Main Setter Method
+    public void setMain(Main main) {
+        if (main == null) throw new NullPointerException("Main cannot be null");
+        this.main = main;
+    }
+
+    // Visibility Getter Method
+    public double getVisibility() {
+        return this.visibility;
+    }
+
+    // Visibility Setter Method
+    public void setVisibility(double visibility) {
+        this.visibility = visibility;
+    }
+
+    // Wind Getter Method
+    public Wind getWind() {
+        return this.wind;
+    }
+
+    // Wind Setter Method
+    public void setWind(Wind wind) {
+        if (wind == null) throw new NullPointerException("Wind cannot be null");
+        this.wind = wind;
+    }
+
+    // Clouds Getter Method
+    public Clouds getClouds() {
+        return this.clouds;
+    }
+
+    // Clouds Setter Method
+    public void setClouds(Clouds clouds) {
+        if (clouds == null) throw new NullPointerException("Clouds cannot be null");
+        this.clouds = clouds;
+    }
+
+    // TimeOfDataCalculation Getter Method
+    public double getTimeOfDataCalculation() {
+        return this.timeOfDataCalculation;
+    }
+
+    // TimeOfDataCalculation Setter Method
+    public void setTimeOfDataCalculation(double timeOfDataCalculation) {
+        this.timeOfDataCalculation = timeOfDataCalculation;
+    }
+
+    // Sys Getter Method
+    public Sys getSys() {
+        return this.sys;
+    }
+
+    // Sys Setter Method
+    public void setSys(Sys sys) {
+        if (sys == null) throw new NullPointerException("Sys cannot be null");
+        this.sys = sys;
+    }
+
+    // Timezone Getter Method
+    public int getTimezone() {
+        return this.timezone;
+    }
+
+    // Timezone Setter Method
+    public void setTimezone(int timezone) {
+        this.timezone = timezone;
+    }
+
+    // Id Getter Method
+    public int getId() {
+        return this.id;
+    }
+
+    // Id Setter Method
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    // CityName Getter Method
+    public String getCityName() {
+        return this.cityName;
+    }
+
+    // CityName Setter Method
+    public void setCityName(String cityName) {
+        if (cityName == null) throw new NullPointerException("City name cannot be null");
+        if (cityName.isEmpty()) throw new IllegalArgumentException("City Name cannot be empty");
+        this.cityName = cityName;
+    }
+
+    // CityCode Getter Method
+    public int getCityCode() {
+        return this.cityCode;
+    }
+
+    // CityCode Setter Method
+    public void setCityCode(int cityCode) {
+        this.cityCode = cityCode;
+    }
+
     // Nested Static Coord Class
     public static class Coord {
 
@@ -281,5 +439,75 @@ public class CurrentWeatherResponse {
         }
     }
 
+    // Nested StaticSys Class
+    public static class Sys {
+
+        @JsonProperty("type")
+        private int type;
+
+        @JsonProperty("id")
+        private int id;
+
+        @JsonProperty("country")
+        private String country;
+
+        @JsonProperty("sunrise") // UTC Time
+        private int sunriseTime;
+
+        @JsonProperty("sunset") // UTC Time
+        private int sunsetTime;
+
+        // Type Getter Method
+        public int getType() {
+            return type;
+        }
+
+        // Type Setter Method
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        // ID Getter Method
+        public int getID() {
+            return this.id;
+        }
+
+        // ID Setter Method
+        public void setID(int id) {
+            this.id = id;
+        }
+
+        // Country Getter Method
+        public String getCountry() {
+            return this.country;
+        }
+
+        // Country Setter Method
+        public void setCountry(String country) {
+            this.country = country;
+        }
+
+        // Sunrise Time Getter Method
+        public int getSunriseTime() {
+            return this.sunriseTime;
+        }
+
+        // Sunrise Time Setter Method
+        public void setSunriseTime(int sunriseTime) {
+            this.sunriseTime = sunriseTime;
+        }
+
+        // Sunset Time Getter Method
+        public int getSunsetTime() {
+            return this.sunsetTime;
+        }
+
+        // SUnset Time Setter Method
+        // Sunrise Time Setter Method
+        public void setSunsetTime(int sunsetTime) {
+            this.sunsetTime = sunsetTime;
+        }
+
+    }
 
 }
