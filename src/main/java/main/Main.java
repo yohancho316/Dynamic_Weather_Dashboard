@@ -7,6 +7,7 @@ import factory.implementations.WrapperFactoryImplementation;
 import factory.implementations.MenuFactoryImplementation;
 import model.ApiKeyReader;
 import model.CurrentWeatherResponse;
+import model.FutureForecastResponse;
 import model.GeocodingResponse;
 
 import java.net.URI;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -268,6 +270,110 @@ public class Main extends Application {
 
 
 ///////// Future Weather Forecast //////////////////////////////////////////////////////////////////////////////////////
+
+        // Future Weather Forecast API End Points
+        String future_baseURL = "https://api.openweathermap.org/data/2.5/forecast";
+        String future_metric_system = "imperial";
+
+        // Latitude and Longitude from the geocoding response
+        String future_latitude = String.valueOf(geocodingResponses.get(0).getLatitude());
+        String future_longitude = String.valueOf(geocodingResponses.get(0).getLongitude());
+
+        // Encode individual parameters
+        String encoded_future_latitude = URLEncoder.encode(future_latitude, StandardCharsets.UTF_8);
+        String encoded_future_longitude = URLEncoder.encode(future_longitude, StandardCharsets.UTF_8);
+        String encoded_future_metric_system = URLEncoder.encode(future_metric_system, StandardCharsets.UTF_8);
+
+
+        // Instantiate Future Weather Forecast Response Object
+        FutureForecastResponse futureForecastResponse = new FutureForecastResponse();
+
+        // Constructs the full URL for the API request by formatting the base URL with query parameters
+        String futureForecastEndPointURL = String.format("%s?lat=%s&lon=%s&appid=%s&units=%s",
+                                            future_baseURL,
+                                            encoded_future_latitude,
+                                            encoded_future_longitude,
+                                            apiKey,
+                                            future_metric_system);
+
+        // Instantiate HTTPS Request Node
+        HttpRequest futureForecastWeatherRequest = HttpRequest.newBuilder()
+                .uri(URI.create(futureForecastEndPointURL))  // Creates a URI from the endpoint URL.
+                .GET()  // Specifies the HTTP method as GET.
+                .build();  // Builds the HttpRequest object.
+
+        try {
+
+            // Sends the HTTP request and retrieves the response body as a String.
+            HttpResponse<String> response = httpClient.send(futureForecastWeatherRequest, HttpResponse.BodyHandlers.ofString());
+
+            // HTTP Status Code
+            int statusCode = response.statusCode();
+
+            // Handle HTTP Success
+            if(statusCode >= 200 && statusCode < 300) {
+
+                // Extracts the response body from the HttpResponse
+                String responseBody = response.body();
+
+                System.out.println("\n\nFuture Weather Forecast Response Body:\n");
+                System.out.println(responseBody);
+
+                // Deserialize JSON to CurrentWeatherResponse Java Object
+                futureForecastResponse = objectMapper.readValue(responseBody, FutureForecastResponse.class);
+
+            }
+
+            // Handle Client Error
+            else if(statusCode >= 400 && statusCode < 500) {
+                switch (statusCode) {
+                    case 400:
+                        System.out.println("Bad Request: Check the request parameters.");
+                        break;
+                    case 401:
+                        System.out.println("Unauthorized: Check your API key.");
+                        break;
+                    case 403:
+                        System.out.println("Forbidden: You do not have access to this resource.");
+                        break;
+                    case 404:
+                        System.out.println("Not Found: The requested resource was not found.");
+                        break;
+                    default:
+                        System.out.println("Client Error: " + statusCode);
+                }
+            }
+
+            // Handle Server Error
+            else if(statusCode >= 500) {
+                switch (statusCode) {
+                    case 500:
+                        System.out.println("Internal Server Error: Try again later.");
+                        break;
+                    case 502:
+                        System.out.println("Bad Gateway: The server is down or being upgraded.");
+                        break;
+                    case 503:
+                        System.out.println("Service Unavailable: The server is overloaded or under maintenance.");
+                        break;
+                    default:
+                        System.out.println("Server Error: " + statusCode);
+                }
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();  // Handles exceptions by printing the stack trace if an error occurs during the request or deserialization.
+        }
+
+        if(futureForecastResponse != null) {
+            System.out.println("\n\n\nFuture Weather Forecast Data");
+            System.out.println("cod (internal parameter): " + futureForecastResponse.getCod());
+            System.out.println("Message (internal parameter): " + futureForecastResponse.getMessage());
+            System.out.println("# of Timestamps Returned in Response: " + futureForecastResponse.getTimestampReturnCount());
+            System.out.println("Total List Items: " + futureForecastResponse.getList().size());
+            System.out.println("ListItem # 1 Time of Data Forecasted in UTC: " + futureForecastResponse.getList().get(0).getTimeOfDataForecast());
+            System.out.println("ListItem # 1 Main Temperature: " + futureForecastResponse.getList().get(0).getMain().getCurrentTemperature());
+        }
 
 
 
