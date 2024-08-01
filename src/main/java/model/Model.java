@@ -56,6 +56,9 @@ public class Model {
     // Geocode Http Request Getter Method
     public HttpRequest getGeocodeRequest() { return this.geocodeRequest; }
 
+    // Gecode Http Response Getter Method
+    public HttpResponse getGeocodeResponse() { return this.geocodeResponse; }
+
     // API Key Setter Method
     public void setKey(String API_KEY) {
         if(API_KEY == null) throw new NullPointerException("API Key cannot be null");
@@ -76,10 +79,16 @@ public class Model {
         this.httpResponseFactory = httpResponseFactory;
     }
 
-    // Geocode HttpRequest  Setter Method
+    // Geocode HttpRequest Setter Method
     public void setGeocodeRequest(HttpRequest geocodeRequest) {
         if(geocodeRequest == null) throw new NullPointerException("Geocode HTTPS Request cannot be null");
         this.geocodeRequest = geocodeRequest;
+    }
+
+    // Geocode HttpResponse Setter Method
+    public void setGeocodeResponse(HttpResponse geocodeResponse) {
+        if(geocodeResponse == null) throw new NullPointerException("Geocode HttpResponse cannot be null");
+        this.geocodeResponse = geocodeResponse;
     }
 
     // GeocodeResponse Collection Setter Method
@@ -115,7 +124,7 @@ public class Model {
         // Print Geocode Http Response Body
         this.printGeocodeHttpResponseBody();
 
-        
+
 
     }
 

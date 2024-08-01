@@ -135,17 +135,7 @@ public class Main extends Application {
             e.printStackTrace();  // Handles exceptions by printing the stack trace if an error occurs during the request or deserialization.
         }
 
-//        // Check if the response list is not empty and process the first result.
-//        if (!geocodingResponses.isEmpty()) {
-//            GeocodingResponse responseObject = geocodingResponses.get(0);  // Retrieves the first GeocodingResponse object from the list.
-//            System.out.println("\n\nPRINTING GEOCODE GET RESPONSE PROPERTIES");
-//            System.out.println("Latitude: " + responseObject.getLatitude());  // Prints the latitude of the city.
-//            System.out.println("Longitude: " + responseObject.getLongitude());  // Prints the longitude of the city.
-//            System.out.println("Name: " + responseObject.getCity());  // Prints the name of the city.
-//            System.out.println("Country: " + responseObject.getCountry());  // Prints the country code of the city.
-//        } else {
-//            System.out.println("No results found.");  // Prints a message if no results were returned from the API.
-//        }
+
         Model model = new Model();
 
 ///////// Current Weather //////////////////////////////////////////////////////////////////////////////////////////////
