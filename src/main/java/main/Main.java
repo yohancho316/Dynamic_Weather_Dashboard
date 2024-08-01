@@ -1,14 +1,9 @@
 package main;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import factory.implementations.ForecastFactoryImplementation;
-import factory.implementations.CurrentForecastFactoryImplementation;
-import factory.implementations.WrapperFactoryImplementation;
-import factory.implementations.MenuFactoryImplementation;
-import model.ApiKeyReader;
-import model.CurrentWeatherResponse;
-import model.FutureForecastResponse;
-import model.GeocodingResponse;
+import factory.implementations.*;
+import factory.interfaces.HttpRequestFactory;
+import model.*;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -41,10 +36,12 @@ public class Main extends Application {
 ///////// REST API INTERACTION /////////////////////////////////////////////////////////////////////////////////////////
 
         // Retrieve OpenWeatherMap API Key
-        String apiKey = ApiKeyReader.getKey();  // Fetches the API key for authenticating requests to the OpenWeatherMap API.
+        // String apiKey = ApiKeyReader.getKey();  // Fetches the API key for authenticating requests to the OpenWeatherMap API.
+        String apiKey = HttpRequestFactory.API_KEY;
 
         // Instantiate HttpClient Node (used to send requests)
-        HttpClient httpClient = HttpClient.newHttpClient();  // Creates an instance of HttpClient for sending HTTP requests.
+        // HttpClient httpClient = HttpClient.newHttpClient();  // Creates an instance of HttpClient for sending HTTP requests.
+        HttpClient httpClient = HttpClientSingleton.getHttpClient();
 
         // GeoCode API End Points
         String geocode_baseURL = "https://api.openweathermap.org/geo/1.0/direct";  // Base URL for the geocoding API endpoint.
@@ -54,14 +51,23 @@ public class Main extends Application {
         String geocodeEndPointURL = String.format("%s?q=%s&limit=%s&appid=%s", geocode_baseURL, geocode_encodedCityName, geocode_response_limit, apiKey);  // Constructs the full URL for the API request by formatting the base URL with query parameters.
 
         // Instantiate HTTPS Request Node
-        HttpRequest geocodeRequest = HttpRequest.newBuilder()
-                .uri(URI.create(geocodeEndPointURL))  // Creates a URI from the endpoint URL.
-                .GET()  // Specifies the HTTP method as GET.
-                .build();  // Builds the HttpRequest object.
+//        HttpRequest geocodeRequest = HttpRequest.newBuilder()
+//                .uri(URI.create(geocodeEndPointURL))  // Creates a URI from the endpoint URL.
+//                .GET()  // Specifies the HTTP method as GET.
+//                .build();  // Builds the HttpRequest object.
+
+        HttpRequestFactoryImplementation httpRequestFactory = new HttpRequestFactoryImplementation();
+        HttpRequest geocodeRequest = httpRequestFactory.createGeocodeRequest("Los Angeles");
+
 
         // Instantiate Jackson ObjectMapper (Primary Jackson Class Node / Used to Serialize & Deserialize)
         // Creates an ObjectMapper instance for converting JSON to Java objects and vice versa.
-        ObjectMapper objectMapper = new ObjectMapper();
+        // ObjectMapper objectMapper = new ObjectMapper();
+
+        ObjectMapper objectMapper = ObjectMapperSingleton.getObjectMapper();
+
+
+
 
         // Initializes a list to hold the deserialized geocoding response objects.
         List<GeocodingResponse> geocodingResponses = null;
@@ -69,6 +75,7 @@ public class Main extends Application {
         try {
 
             // Sends the HTTP request and retrieves the response body as a String.
+            // HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());
             HttpResponse<String> response = httpClient.send(geocodeRequest, HttpResponse.BodyHandlers.ofString());
 
             // HTTP Status Code
@@ -128,16 +135,18 @@ public class Main extends Application {
             e.printStackTrace();  // Handles exceptions by printing the stack trace if an error occurs during the request or deserialization.
         }
 
-        // Check if the response list is not empty and process the first result.
-        if (!geocodingResponses.isEmpty()) {
-            GeocodingResponse responseObject = geocodingResponses.get(0);  // Retrieves the first GeocodingResponse object from the list.
-            System.out.println("Latitude: " + responseObject.getLatitude());  // Prints the latitude of the city.
-            System.out.println("Longitude: " + responseObject.getLongitude());  // Prints the longitude of the city.
-            System.out.println("Name: " + responseObject.getCity());  // Prints the name of the city.
-            System.out.println("Country: " + responseObject.getCountry());  // Prints the country code of the city.
-        } else {
-            System.out.println("No results found.");  // Prints a message if no results were returned from the API.
-        }
+//        // Check if the response list is not empty and process the first result.
+//        if (!geocodingResponses.isEmpty()) {
+//            GeocodingResponse responseObject = geocodingResponses.get(0);  // Retrieves the first GeocodingResponse object from the list.
+//            System.out.println("\n\nPRINTING GEOCODE GET RESPONSE PROPERTIES");
+//            System.out.println("Latitude: " + responseObject.getLatitude());  // Prints the latitude of the city.
+//            System.out.println("Longitude: " + responseObject.getLongitude());  // Prints the longitude of the city.
+//            System.out.println("Name: " + responseObject.getCity());  // Prints the name of the city.
+//            System.out.println("Country: " + responseObject.getCountry());  // Prints the country code of the city.
+//        } else {
+//            System.out.println("No results found.");  // Prints a message if no results were returned from the API.
+//        }
+        Model model = new Model();
 
 ///////// Current Weather //////////////////////////////////////////////////////////////////////////////////////////////
 
