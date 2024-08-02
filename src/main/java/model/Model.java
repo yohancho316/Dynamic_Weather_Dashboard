@@ -28,6 +28,7 @@ public class Model {
     private CurrentWeatherResponse currentResponseBody;
     private HttpRequest futureRequest;
     private HttpResponse futureResponse;
+    private FutureForecastResponse futureResponseBody;
 
     // API Key Getter Method
     public String getKey() {
@@ -79,6 +80,9 @@ public class Model {
 
     // Future Forecast Http Response Getter Method
     public HttpResponse getFutureResponse() { return this.futureResponse; }
+
+    // Future Forecast Http Response Body Getter Method
+    public FutureForecastResponse getFutureResponseBody() { return this.futureResponseBody; }
 
     // API Key Setter Method
     public void setKey(String API_KEY) {
@@ -148,6 +152,12 @@ public class Model {
         this.futureResponse = futureResponse;
     }
 
+    // Future Forecast Http Response Body Setter Method
+    public void setFutureResponseBody(FutureForecastResponse futureResponseBody) {
+        if(futureResponseBody == null) throw new NullPointerException("Future Forecast Http Response Body cannot be null");
+        this.futureResponseBody = futureResponseBody;
+    }
+
     // Model Class Constructor Method
     public Model() {
 
@@ -194,7 +204,11 @@ public class Model {
         this.futureResponse = this.createFutureHttpResponse();
 
         // Instantiate Future Forecast Http Response Body
-        
+        this.futureResponseBody = this.createFutureHttpResponseBody();
+
+        // Print Future Weather Forecast Http Response Body
+        this.printFutureHttpResponseBody();
+
 
     }
 
@@ -289,6 +303,19 @@ public class Model {
         return this.httpResponseFactory.createFutureResponse(this.futureRequest, this.httpClient);
     }
 
+    // Create Future Http Response Body
+    public FutureForecastResponse createFutureHttpResponseBody() {
+        FutureForecastResponse futureForecastResponse = null;
+        try {
+            futureForecastResponse = this.objectMapper.readValue(this.futureResponse.body().toString(), FutureForecastResponse.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return futureForecastResponse;
+    }
+
     // Print Geocode HttpResponse Body
     public void printGeocodeHttpResponseBody() {
         // Check if the response list is not empty and process the first result.
@@ -334,6 +361,19 @@ public class Model {
             System.out.println("Sunset Time (UTC): " + currentResponseBody.getSys().getSunriseTime());
             System.out.println("Timezone (UTC): " + currentResponseBody.getTimezone());
             System.out.println("City ID: " + currentResponseBody.getCityName());
+        }
+    }
+
+    // Print Future HttpResponseBody
+    public void printFutureHttpResponseBody() {
+        if(this.futureResponseBody != null) {
+            System.out.println("\n\n\nFUTURE WEATHER FORECAST DATA:");
+            System.out.println("cod (internal parameter): " + futureResponseBody.getCod());
+            System.out.println("Message (internal parameter): " + futureResponseBody.getMessage());
+            System.out.println("# of Timestamps Returned in Response: " + futureResponseBody.getTimestampReturnCount());
+            System.out.println("Total List Items: " + futureResponseBody.getList().size());
+            System.out.println("ListItem # 1 Time of Data Forecasted in UTC: " + futureResponseBody.getList().get(0).getTimeOfDataForecast());
+            System.out.println("ListItem # 1 Main Temperature: " + futureResponseBody.getList().get(0).getMain().getCurrentTemperature());
         }
     }
 

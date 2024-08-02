@@ -597,7 +597,7 @@ public class FutureForecastResponse {
         // Nested Static Rain Class
         public static class Rain {
 
-            @JsonProperty("1h")
+            @JsonProperty("3h")
             private double rain_volume;
 
             // Rain Volume Getter Method
