@@ -7,7 +7,7 @@ import java.util.List;
 public class FutureForecastResponse {
 
     @JsonProperty("cod")
-    private int cod;
+    private String cod;
 
     @JsonProperty("message")
     private int message;
@@ -16,18 +16,20 @@ public class FutureForecastResponse {
     private int timestamp_return_count;
 
     @JsonProperty("list")
-    private List<ListItem> list;
+    private List<ListItem> list = new ArrayList<ListItem>();
 
     @JsonProperty("city")
     private City city;
 
+    // Need to Include More
+
     // Cod Getter Method
-    public int getCod() {
+    public String getCod() {
         return this.cod;
     }
 
     // Cod Setter Method
-    public void setCod(int cod) {
+    public void setCod(String cod) {
         this.cod = cod;
     }
 
@@ -47,7 +49,7 @@ public class FutureForecastResponse {
     }
 
     // Timestamp Return Count Getter Method
-    public void getTimestampReturnCount(int timestamp_return_count) {
+    public void setTimestampReturnCount(int timestamp_return_count) {
         this.timestamp_return_count = timestamp_return_count;
     }
 
@@ -82,7 +84,7 @@ public class FutureForecastResponse {
         private String city_name;
 
         @JsonProperty("coord")
-        private Coord coordinates;
+        private Coord coordinates = new Coord();
 
         @JsonProperty("country")
         private String country_code;
@@ -187,6 +189,9 @@ public class FutureForecastResponse {
             @JsonProperty("lon")
             private double city_longitude;
 
+            // Default Constructor
+            public Coord() { }
+
             // City Latitude Getter Method
             public double getCityLatitude() {
                 return this.city_latitude;
@@ -221,7 +226,7 @@ public class FutureForecastResponse {
         public Main main;
 
         @JsonProperty("weather")
-        private ArrayList<Weather> weather;
+        private List<Weather> weather = new ArrayList<Weather>();
 
         @JsonProperty("clouds")
         private Clouds clouds;
@@ -265,12 +270,12 @@ public class FutureForecastResponse {
         }
 
         // Weather Collection Getter Method
-        public ArrayList<Weather> getWeather() {
+        public List<Weather> getWeather() {
             return weather;
         }
 
         // Weather Collection Setter Method
-        public void setWeather(ArrayList<Weather> weather) {
+        public void setWeather(List<Weather> weather) {
             this.weather = weather;
         }
 
@@ -555,6 +560,9 @@ public class FutureForecastResponse {
             @JsonProperty("deg")
             private double degree;
 
+            @JsonProperty("gust")
+            private double gust;
+
             // Speed Getter Method
             public double getSpeed() {
                 return this.speed;
@@ -574,12 +582,22 @@ public class FutureForecastResponse {
             public void setDegree(double degree) {
                 this.degree = degree;
             }
+
+            // Gust Getter Method
+            public double getGust() {
+                return this.gust;
+            }
+
+            // Gust Setter Method
+            public void setGust(double gust) {
+                this.gust = gust;
+            }
         }
 
         // Nested Static Rain Class
         public static class Rain {
 
-            @JsonProperty("1h")
+            @JsonProperty("3h")
             private double rain_volume;
 
             // Rain Volume Getter Method
