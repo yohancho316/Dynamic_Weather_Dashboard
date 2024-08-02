@@ -136,8 +136,6 @@ public class Main extends Application {
         }
 
 
-        Model model = new Model();
-
 ///////// Current Weather //////////////////////////////////////////////////////////////////////////////////////////////
 
         // Current Weather API End Points
@@ -233,36 +231,36 @@ public class Main extends Application {
             e.printStackTrace();  // Handles exceptions by printing the stack trace if an error occurs during the request or deserialization.
         }
 
-        if(currentWeatherResponse != null) {
-            System.out.println("\n\n\nCurrent Weather KVP's:\n");
-            System.out.println("Longitude: " + currentWeatherResponse.getCoordinates().getLongitude());
-            System.out.println("Latitude: " + currentWeatherResponse.getCoordinates().getLatitude());
-            System.out.println("Weather ID: " + currentWeatherResponse.getWeather().get(0).getID());
-            System.out.println("Main: " + currentWeatherResponse.getWeather().get(0).getMain());
-            System.out.println("Weather Description: " + currentWeatherResponse.getWeather().get(0).getCurrentWeatherDescription());
-            System.out.println("Icon: " + currentWeatherResponse.getWeather().get(0).getIcon());
-            System.out.println("Base: " + currentWeatherResponse.getBase());
-            System.out.println("Current Temp: " + currentWeatherResponse.getMain().getCurrentTemperature());
-            System.out.println("Temperature Feels Like: " + currentWeatherResponse.getMain().getFeelsLikeTemperature());
-            System.out.println("Max Temp: " + currentWeatherResponse.getMain().getMaxTemp());
-            System.out.println("Min Temp: " + currentWeatherResponse.getMain().getMinTemp());
-            System.out.println("Pressure: " + currentWeatherResponse.getMain().getPressure());
-            System.out.println("Humidity: " + currentWeatherResponse.getMain().getHumidity());
-            System.out.println("Sea Level: " + currentWeatherResponse.getMain().getSeaLevel());
-            System.out.println("Ground Level: " + currentWeatherResponse.getMain().getGroundLevel());
-            System.out.println("Visibility: " + currentWeatherResponse.getVisibility());
-            System.out.println("Wind Speed: " + currentWeatherResponse.getWind().getSpeed());
-            System.out.println("Wind Degree: " + currentWeatherResponse.getWind().getDegree());
-            System.out.println("Cloud Level: " + currentWeatherResponse.getClouds().getAll());
-            System.out.println("Time of Data Collection: " + currentWeatherResponse.getTimeOfDataCalculation());
-            System.out.println("Internal Type: " + currentWeatherResponse.getSys().getType());
-            System.out.println("Internal ID: " + currentWeatherResponse.getSys().getID());
-            System.out.println("Country Code: " + currentWeatherResponse.getSys().getCountry());
-            System.out.println("Sunrise Time (UTC): " + currentWeatherResponse.getSys().getSunriseTime());
-            System.out.println("Sunset Time (UTC): " + currentWeatherResponse.getSys().getSunriseTime());
-            System.out.println("Timezone (UTC): " + currentWeatherResponse.getTimezone());
-            System.out.println("City ID: " + currentWeatherResponse.getCityName());
-        }
+//        if(currentWeatherResponse != null) {
+//            System.out.println("\n\n\nCurrent Weather KVP's:\n");
+//            System.out.println("Longitude: " + currentWeatherResponse.getCoordinates().getLongitude());
+//            System.out.println("Latitude: " + currentWeatherResponse.getCoordinates().getLatitude());
+//            System.out.println("Weather ID: " + currentWeatherResponse.getWeather().get(0).getID());
+//            System.out.println("Main: " + currentWeatherResponse.getWeather().get(0).getMain());
+//            System.out.println("Weather Description: " + currentWeatherResponse.getWeather().get(0).getCurrentWeatherDescription());
+//            System.out.println("Icon: " + currentWeatherResponse.getWeather().get(0).getIcon());
+//            System.out.println("Base: " + currentWeatherResponse.getBase());
+//            System.out.println("Current Temp: " + currentWeatherResponse.getMain().getCurrentTemperature());
+//            System.out.println("Temperature Feels Like: " + currentWeatherResponse.getMain().getFeelsLikeTemperature());
+//            System.out.println("Max Temp: " + currentWeatherResponse.getMain().getMaxTemp());
+//            System.out.println("Min Temp: " + currentWeatherResponse.getMain().getMinTemp());
+//            System.out.println("Pressure: " + currentWeatherResponse.getMain().getPressure());
+//            System.out.println("Humidity: " + currentWeatherResponse.getMain().getHumidity());
+//            System.out.println("Sea Level: " + currentWeatherResponse.getMain().getSeaLevel());
+//            System.out.println("Ground Level: " + currentWeatherResponse.getMain().getGroundLevel());
+//            System.out.println("Visibility: " + currentWeatherResponse.getVisibility());
+//            System.out.println("Wind Speed: " + currentWeatherResponse.getWind().getSpeed());
+//            System.out.println("Wind Degree: " + currentWeatherResponse.getWind().getDegree());
+//            System.out.println("Cloud Level: " + currentWeatherResponse.getClouds().getAll());
+//            System.out.println("Time of Data Collection: " + currentWeatherResponse.getTimeOfDataCalculation());
+//            System.out.println("Internal Type: " + currentWeatherResponse.getSys().getType());
+//            System.out.println("Internal ID: " + currentWeatherResponse.getSys().getID());
+//            System.out.println("Country Code: " + currentWeatherResponse.getSys().getCountry());
+//            System.out.println("Sunrise Time (UTC): " + currentWeatherResponse.getSys().getSunriseTime());
+//            System.out.println("Sunset Time (UTC): " + currentWeatherResponse.getSys().getSunriseTime());
+//            System.out.println("Timezone (UTC): " + currentWeatherResponse.getTimezone());
+//            System.out.println("City ID: " + currentWeatherResponse.getCityName());
+//        }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -384,7 +382,7 @@ public class Main extends Application {
 
 
 
-
+        Model model = new Model();
 
         // Instantiate Current Forecast Factory Node
         CurrentForecastFactoryImplementation currentFactory = new CurrentForecastFactoryImplementation();
