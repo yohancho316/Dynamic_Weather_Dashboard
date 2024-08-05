@@ -401,6 +401,9 @@ public class CurrentWeatherResponse {
         @JsonProperty("deg")
         private double degree;
 
+        @JsonProperty("gust")
+        private double gust;
+
         // Speed Getter Method
         public double getSpeed() {
             return this.speed;
@@ -420,6 +423,15 @@ public class CurrentWeatherResponse {
         public void setDegree(double degree) {
             this.degree = degree;
         }
+
+        // Gust Getter Method
+        public double getGust() { return this.gust; }
+
+        // Gust Setter Method
+        public void setGust(double gust) {
+            this.gust = gust;
+        }
+
     }
 
     // Nested Static Cloud Class
