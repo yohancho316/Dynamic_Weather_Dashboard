@@ -377,7 +377,16 @@ public class Model {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
         String formattedDateTime = zonedDateTime.format(formatter);
 
-        return formattedDateTime;
+        int current_time = Integer.parseInt(formattedDateTime);
+
+        if(current_time < 12) {
+            if(current_time < 10) return formattedDateTime.substring(1) + " A.M";
+            else return formattedDateTime + " A.M";
+        }
+
+        int updatedTime = Integer.parseInt(formattedDateTime) - 12;
+
+        return updatedTime + " P.M";
     }
 
     // Generate Forecast Time List
