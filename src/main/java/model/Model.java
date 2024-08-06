@@ -237,7 +237,7 @@ public class Model {
             this.initializeApp();
             this.start_flag = false;
         }
-        
+
     }
 
     // First Start App Initialization
