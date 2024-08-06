@@ -40,10 +40,13 @@ public class Model {
     // View Data Fields
     private String currentTemp = "";
     private String currentStatus = "";
+    private String currentID = "";
     private String sunriseTime = "";
     private String sunsetTime = "";
     private List<String> forecastTimeList = new ArrayList<String>();
     private List<String> forecastTempList = new ArrayList<String>();
+    private List<String> forecastIDList = new ArrayList<String>();
+
 
     // API Key Getter Method
     public String getKey() {
@@ -105,6 +108,9 @@ public class Model {
     // Current Status Getter Method
     public String getCurrentStatus() { return this.currentStatus; }
 
+    // Current Weather Icon ID Getter Method
+    public String getCurrentID() { return this.currentID; }
+
     // Sunrise Time Getter Method
     public String getSunriseTime() { return this.sunriseTime; }
 
@@ -116,6 +122,9 @@ public class Model {
 
     // Forecast Temp List Getter Method
     public List<String> getForecastTempList() { return this.forecastTempList; }
+
+    // Forecast Status ID List Getter Method
+    public List<String> getForecastIDList() { return this.forecastIDList; }
 
     // API Key Setter Method
     public void setKey(String API_KEY) {
@@ -193,41 +202,52 @@ public class Model {
 
     // Current Temp Setter Method
     public void setCurrentTemp(String currentTemp) {
-        if(currentTemp == null) throw new NullPointerException(" cannot be null");
+        if(currentTemp == null) throw new NullPointerException("Current Weather Temp cannot be null");
         this.currentTemp = currentTemp;
     }
 
 
     // Current Status Setter Method
     public void setCurrentStatus(String currentStatus) {
-        if(currentStatus == null) throw new NullPointerException(" cannot be null");
+        if(currentStatus == null) throw new NullPointerException("Current Weather Status cannot be null");
         this.currentStatus = currentStatus;
     }
 
     // Sunrise Time Setter Method
     public void setSunriseTime(String sunriseTime) {
-        if(sunriseTime == null) throw new NullPointerException(" cannot be null");
+        if(sunriseTime == null) throw new NullPointerException("Sunrise Time cannot be null");
         this.sunriseTime = sunriseTime;
     }
 
     // Sunset Time Setter Method
     public void setSunsetTime(String sunsetTime) {
-        if(sunsetTime == null) throw new NullPointerException(" cannot be null");
+        if(sunsetTime == null) throw new NullPointerException("Sunset Time cannot be null");
         this.sunsetTime = sunsetTime;
     }
 
     // Forecast Time List Setter Method
     public void setForecastTimeList(List<String> forecastTimeList) {
-        if(forecastTimeList == null) throw new NullPointerException(" cannot be null");
+        if(forecastTimeList == null) throw new NullPointerException("Forecast Time List cannot be null");
         this.forecastTimeList = forecastTimeList;
     }
 
     // Forecast Temp List Setter Method
     public void setForecastTempList(List<String> forecastTempList) {
-        if(forecastTempList == null) throw new NullPointerException(" cannot be null");
+        if(forecastTempList == null) throw new NullPointerException("Forecast Temp List cannot be null");
         this.forecastTempList = forecastTempList;
     }
 
+    // Forecast Status ID List Setter Method
+    public void setForecastIDList(List<String> forecastIDList) {
+        if(forecastIDList == null) throw new NullPointerException("Forecast ID List cannot be null");
+        this.forecastIDList = forecastIDList;
+    }
+
+    // Current Weather Icon ID Getter Method
+    public void setCurrentID(String currentID) {
+        if(currentID == null) throw new NullPointerException("Current Weather Icon ID cannot be null");
+        this.currentID = currentID;
+    }
 
     // Model Class Constructor Method
     public Model() {
@@ -413,23 +433,29 @@ public class Model {
         if(this.currentResponseBody.getSys() == null) throw new NullPointerException("Current Response Body - SYS cannot be null");
 
 
-        // Calculate Current Temperature in Degrees
+        // Retrieve Current Temperature in Degrees
         this.currentTemp = String.valueOf(this.currentResponseBody.getMain().getCurrentTemperature());
 
-        // Calculate Current Weather Forecast Description
+        // Retrieve Current Weather Forecast Description
         this.currentStatus = String.valueOf(this.currentResponseBody.getWeather().get(0).getCurrentWeatherDescription());
 
-        // Calculate Sunrise Time in PST
+        // Retrieve Current Weather Icon ID
+        this.currentID = String.valueOf(this.currentResponseBody.getWeather().get(0).getIcon());
+
+        // Retrieve Sunrise Time in PST
         this.sunriseTime = String.valueOf(this.convertUTC(this.currentResponseBody.getSys().getSunriseTime()));
 
         // Calculate Sunset Time in PST
         this.sunsetTime = String.valueOf(this.convertUTC(this.currentResponseBody.getSys().getSunsetTime()));
 
-        // Calculate Future Forecast Time List
+        // Generate Future Forecast Time List
         this.generateForecastTimeList();
 
-        // Calculate Future Forecast Temp List
+        // Generate Future Forecast Temp List
         this.generateForecastTempList();
+
+        // Generate Forecast ID List
+        this.generateForecastIDList();
 
     }
 
@@ -462,7 +488,7 @@ public class Model {
         if(this.futureResponseBody.getList().isEmpty()) throw new IllegalArgumentException("Future Forecast Time List cannot be empty");
         if(this.futureResponseBody.getList().size() < 10) throw new IllegalArgumentException("Future Forecast Time List must be >= 10");
 
-        for(int i = 0; i <= 10; i++) {
+        for(int i = 0; i < 10; i++) {
             this.forecastTimeList.add(String.valueOf(this.convertUTC(this.futureResponseBody.getList().get(i).getTimeOfDataForecast())));
         }
     }
@@ -474,8 +500,20 @@ public class Model {
         if(this.futureResponseBody.getList().isEmpty()) throw new IllegalArgumentException("Future Forecast Time List cannot be empty");
         if(this.futureResponseBody.getList().size() < 10) throw new IllegalArgumentException("Future Forecast Time List must be >= 10");
 
-        for(int i = 0; i <= 10; i++) {
+        for(int i = 0; i < 10; i++) {
             this.forecastTempList.add(String.valueOf(this.futureResponseBody.getList().get(i).getMain().getCurrentTemperature()));
+        }
+    }
+
+    // Generate Forecast ID List
+    public void generateForecastIDList() {
+        if(this.futureResponseBody.getList() == null) throw new NullPointerException("Future Forecast Response Body cannot be null");
+        if(this.futureResponseBody.getList().get(0) == null) throw new NullPointerException("Future Forecast Response Body Element cannot be null");
+        if(this.futureResponseBody.getList().get(0).getWeather() == null) throw new NullPointerException("Future Forecast Response Body Weather Member cannot be null");
+        if(this.futureResponseBody.getList().get(0).getWeather().get(0) == null) throw new NullPointerException("Weather cannot be null");
+
+        for(int i = 0; i < 10; i++) {
+            this.forecastIDList.add(String.valueOf(this.futureResponseBody.getList().get(i).getWeather().get(0).getIcon()));
         }
     }
 
@@ -544,12 +582,15 @@ public class Model {
         System.out.println("\n\n\nView Data Fields:");
         System.out.println("Current Temp: " + this.currentTemp);
         System.out.println("Current Temp Status: " + this.currentStatus);
+        System.out.println("Current Weather Icon ID: " + this.currentID);
         System.out.println("Sunrise Time: " + this.sunriseTime);
         System.out.println("Sunset Time: " + this.sunsetTime);
         System.out.println("\nFuture Forecast Time Periods: ");
         for(String time : this.forecastTimeList) System.out.println(time);
         System.out.println("\nFuture Forecast Temps: ");
         for(String temp : this.forecastTempList) System.out.println(temp);
+        System.out.println("\nFuture Forecast Icon ID: ");
+        for(String id : this.forecastIDList) System.out.println(id);
     }
 
 
