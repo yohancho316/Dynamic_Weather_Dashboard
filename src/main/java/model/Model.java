@@ -375,18 +375,16 @@ public class Model {
 
         // Format the ZonedDateTime to a human-readable string
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
-        int current_time = Integer.valueOf(zonedDateTime.format(formatter));
 
-        // Handle PM
-        if(current_time >= 12) {
-            if(current_time - 12 < 10) return String.valueOf(current_time - 12)  + " P.M";
-            else return String.valueOf((current_time - 12)+ " P.M");
-        }
+        // Extract hour
+        int hour = zonedDateTime.getHour();
+        String period = (hour >= 12) ? "P.M" : "A.M";
 
-        // Handle AM
-        String string_time = zonedDateTime.format(formatter);
-        if(current_time < 10) return string_time.substring(1) + " A.M";
-        return string_time + " A.M";
+        // Convert to 12-hour format
+        hour = (hour > 12) ? hour - 12 : hour;
+        hour = (hour == 0) ? 12 : hour;
+
+        return hour + " " + period;
     }
 
     // Generate Forecast Time List
