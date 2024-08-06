@@ -8,6 +8,11 @@ import factory.implementations.HttpResponseFactoryImplementation;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,6 +34,15 @@ public class Model {
     private HttpRequest futureRequest;
     private HttpResponse futureResponse;
     private FutureForecastResponse futureResponseBody;
+
+
+    // View Data Fields
+    private String currentTemp = "";
+    private String currentStatus = "";
+    private String sunriseTime = "";
+    private String sunsetTime = "";
+    private List<String> forecastTimeList = new ArrayList<String>();
+    private List<String> forecastTempList = new ArrayList<String>();
 
     // API Key Getter Method
     public String getKey() {
@@ -83,6 +97,24 @@ public class Model {
 
     // Future Forecast Http Response Body Getter Method
     public FutureForecastResponse getFutureResponseBody() { return this.futureResponseBody; }
+
+    // Current Temp Getter Method
+    public String getCurrentTime() { return this.currentTemp; }
+
+    // Current Status Getter Method
+    public String getCurrentStatus() { return this.currentStatus; }
+
+    // Sunrise Time Getter Method
+    public String getSunriseTime() { return this.sunriseTime; }
+
+    // Sunset Time Getter Method
+    public String getSunsetTime() { return this.sunsetTime; }
+
+    // Forecast Time List Getter Method
+    public List<String> getForecastTimeList() { return this.forecastTimeList; }
+
+    // Forecast Temp List Getter Method
+    public List<String> getForecastTempList() { return this.forecastTempList; }
 
     // API Key Setter Method
     public void setKey(String API_KEY) {
@@ -158,6 +190,44 @@ public class Model {
         this.futureResponseBody = futureResponseBody;
     }
 
+    // Current Temp Setter Method
+    public void setCurrentTemp(String currentTemp) {
+        if(currentTemp == null) throw new NullPointerException(" cannot be null");
+        this.currentTemp = currentTemp;
+    }
+
+
+    // Current Status Setter Method
+    public void setCurrentStatus(String currentStatus) {
+        if(currentStatus == null) throw new NullPointerException(" cannot be null");
+        this.currentStatus = currentStatus;
+    }
+
+    // Sunrise Time Setter Method
+    public void setSunriseTime(String sunriseTime) {
+        if(sunriseTime == null) throw new NullPointerException(" cannot be null");
+        this.sunriseTime = sunriseTime;
+    }
+
+    // Sunset Time Setter Method
+    public void setSunsetTime(String sunsetTime) {
+        if(sunsetTime == null) throw new NullPointerException(" cannot be null");
+        this.sunsetTime = sunsetTime;
+    }
+
+    // Forecast Time List Setter Method
+    public void setForecastTimeList(List<String> forecastTimeList) {
+        if(forecastTimeList == null) throw new NullPointerException(" cannot be null");
+        this.forecastTimeList = forecastTimeList;
+    }
+
+    // Forecast Temp List Setter Method
+    public void setForecastTempList(List<String> forecastTempList) {
+        if(forecastTempList == null) throw new NullPointerException(" cannot be null");
+        this.forecastTempList = forecastTempList;
+    }
+
+
     // Model Class Constructor Method
     public Model() {
 
@@ -209,6 +279,11 @@ public class Model {
         // Print Future Weather Forecast Http Response Body
         this.printFutureHttpResponseBody();
 
+        // Load View Data Fields
+        this.generateViewFields();
+
+        // Print View Related Data
+        this.printViewDataFields();
 
     }
 
@@ -316,6 +391,82 @@ public class Model {
         return futureForecastResponse;
     }
 
+    // Generate View Data Fields
+    public void generateViewFields() {
+
+        // Check for Null Conditions
+        if(this.currentResponseBody == null) throw new NullPointerException("Current Response Body cannot be null");
+        if(this.currentResponseBody.getMain() == null) throw new NullPointerException("Current Response Body - Main cannot be null");
+        if(this.currentResponseBody.getWeather() == null) throw new NullPointerException("Current Response Body - Weather Cannot be null");
+        if(this.currentResponseBody.getSys() == null) throw new NullPointerException("Current Response Body - SYS cannot be null");
+
+
+        // Calculate Current Temperature in Degrees
+        this.currentTemp = String.valueOf(this.currentResponseBody.getMain().getCurrentTemperature());
+
+        // Calculate Current Weather Forecast Description
+        this.currentStatus = String.valueOf(this.currentResponseBody.getWeather().get(0).getCurrentWeatherDescription());
+
+        // Calculate Sunrise Time in PST
+        this.sunriseTime = String.valueOf(this.convertUTC(this.currentResponseBody.getSys().getSunriseTime()));
+
+        // Calculate Sunset Time in PST
+        this.sunsetTime = String.valueOf(this.convertUTC(this.currentResponseBody.getSys().getSunsetTime()));
+
+        // Calculate Future Forecast Time List
+        this.generateForecastTimeList();
+
+        // Calculate Future Forecast Temp List
+        this.generateForecastTempList();
+
+    }
+
+    // Convert UTC to PST
+    public String convertUTC(int utc) {
+
+        Instant utcInstant = Instant.ofEpochSecond(utc);
+
+        // Convert UTC to ZonedDateTime in the desired time zone (PST)
+        ZonedDateTime zonedDateTime = utcInstant.atZone(ZoneId.of("America/Los_Angeles"));
+
+        // Format the ZonedDateTime to a human-readable string
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
+
+        // Extract hour
+        int hour = zonedDateTime.getHour();
+        String period = (hour >= 12) ? "P.M" : "A.M";
+
+        // Convert to 12-hour format
+        hour = (hour > 12) ? hour - 12 : hour;
+        hour = (hour == 0) ? 12 : hour;
+
+        return hour + " " + period;
+    }
+
+    // Generate Forecast Time List
+    public void generateForecastTimeList() {
+
+        if(this.futureResponseBody.getList() == null) throw new NullPointerException("Future Forecast Time List cannot be null");
+        if(this.futureResponseBody.getList().isEmpty()) throw new IllegalArgumentException("Future Forecast Time List cannot be empty");
+        if(this.futureResponseBody.getList().size() < 10) throw new IllegalArgumentException("Future Forecast Time List must be >= 10");
+
+        for(int i = 0; i <= 10; i++) {
+            this.forecastTimeList.add(String.valueOf(this.convertUTC(this.futureResponseBody.getList().get(i).getTimeOfDataForecast())));
+        }
+    }
+
+    // Generate Forecast Temperature List
+    public void generateForecastTempList() {
+
+        if(this.futureResponseBody.getList() == null) throw new NullPointerException("Future Forecast Temp List cannot be null");
+        if(this.futureResponseBody.getList().isEmpty()) throw new IllegalArgumentException("Future Forecast Time List cannot be empty");
+        if(this.futureResponseBody.getList().size() < 10) throw new IllegalArgumentException("Future Forecast Time List must be >= 10");
+
+        for(int i = 0; i <= 10; i++) {
+            this.forecastTempList.add(String.valueOf(this.futureResponseBody.getList().get(i).getMain().getCurrentTemperature()));
+        }
+    }
+
     // Print Geocode HttpResponse Body
     public void printGeocodeHttpResponseBody() {
         // Check if the response list is not empty and process the first result.
@@ -335,32 +486,32 @@ public class Model {
         if(this.currentResponseBody != null) {
             System.out.println("\n\n\nCurrent Weather KVP's:");
             System.out.println("Longitude: " + this.currentResponseBody.getCoordinates().getLongitude());
-            System.out.println("Latitude: " + currentResponseBody.getCoordinates().getLatitude());
-            System.out.println("Weather ID: " + currentResponseBody.getWeather().get(0).getID());
-            System.out.println("Main: " + currentResponseBody.getWeather().get(0).getMain());
-            System.out.println("Weather Description: " + currentResponseBody.getWeather().get(0).getCurrentWeatherDescription());
-            System.out.println("Icon: " + currentResponseBody.getWeather().get(0).getIcon());
-            System.out.println("Base: " + currentResponseBody.getBase());
-            System.out.println("Current Temp: " + currentResponseBody.getMain().getCurrentTemperature());
-            System.out.println("Temperature Feels Like: " + currentResponseBody.getMain().getFeelsLikeTemperature());
-            System.out.println("Max Temp: " + currentResponseBody.getMain().getMaxTemp());
-            System.out.println("Min Temp: " + currentResponseBody.getMain().getMinTemp());
-            System.out.println("Pressure: " + currentResponseBody.getMain().getPressure());
-            System.out.println("Humidity: " + currentResponseBody.getMain().getHumidity());
-            System.out.println("Sea Level: " + currentResponseBody.getMain().getSeaLevel());
-            System.out.println("Ground Level: " + currentResponseBody.getMain().getGroundLevel());
-            System.out.println("Visibility: " + currentResponseBody.getVisibility());
-            System.out.println("Wind Speed: " + currentResponseBody.getWind().getSpeed());
-            System.out.println("Wind Degree: " + currentResponseBody.getWind().getDegree());
-            System.out.println("Cloud Level: " + currentResponseBody.getClouds().getAll());
-            System.out.println("Time of Data Collection: " + currentResponseBody.getTimeOfDataCalculation());
-            System.out.println("Internal Type: " + currentResponseBody.getSys().getType());
-            System.out.println("Internal ID: " + currentResponseBody.getSys().getID());
-            System.out.println("Country Code: " + currentResponseBody.getSys().getCountry());
-            System.out.println("Sunrise Time (UTC): " + currentResponseBody.getSys().getSunriseTime());
-            System.out.println("Sunset Time (UTC): " + currentResponseBody.getSys().getSunriseTime());
-            System.out.println("Timezone (UTC): " + currentResponseBody.getTimezone());
-            System.out.println("City ID: " + currentResponseBody.getCityName());
+            System.out.println("Latitude: " + this.currentResponseBody.getCoordinates().getLatitude());
+            System.out.println("Weather ID: " + this.currentResponseBody.getWeather().get(0).getID());
+            System.out.println("Main: " + this.currentResponseBody.getWeather().get(0).getMain());
+            System.out.println("Weather Description: " + this.currentResponseBody.getWeather().get(0).getCurrentWeatherDescription());
+            System.out.println("Icon: " + this.currentResponseBody.getWeather().get(0).getIcon());
+            System.out.println("Base: " + this.currentResponseBody.getBase());
+            System.out.println("Current Temp: " + this.currentResponseBody.getMain().getCurrentTemperature());
+            System.out.println("Temperature Feels Like: " + this.currentResponseBody.getMain().getFeelsLikeTemperature());
+            System.out.println("Max Temp: " + this.currentResponseBody.getMain().getMaxTemp());
+            System.out.println("Min Temp: " + this.currentResponseBody.getMain().getMinTemp());
+            System.out.println("Pressure: " + this.currentResponseBody.getMain().getPressure());
+            System.out.println("Humidity: " + this.currentResponseBody.getMain().getHumidity());
+            System.out.println("Sea Level: " + this.currentResponseBody.getMain().getSeaLevel());
+            System.out.println("Ground Level: " + this.currentResponseBody.getMain().getGroundLevel());
+            System.out.println("Visibility: " + this.currentResponseBody.getVisibility());
+            System.out.println("Wind Speed: " + this.currentResponseBody.getWind().getSpeed());
+            System.out.println("Wind Degree: " + this.currentResponseBody.getWind().getDegree());
+            System.out.println("Cloud Level: " + this.currentResponseBody.getClouds().getAll());
+            System.out.println("Time of Data Collection: " + this.currentResponseBody.getTimeOfDataCalculation());
+            System.out.println("Internal Type: " + this.currentResponseBody.getSys().getType());
+            System.out.println("Internal ID: " + this.currentResponseBody.getSys().getID());
+            System.out.println("Country Code: " + this.currentResponseBody.getSys().getCountry());
+            System.out.println("Sunrise Time (UTC): " + this.currentResponseBody.getSys().getSunriseTime());
+            System.out.println("Sunset Time (UTC): " + this.currentResponseBody.getSys().getSunriseTime());
+            System.out.println("Timezone (UTC): " + this.currentResponseBody.getTimezone());
+            System.out.println("City ID: " + this.currentResponseBody.getCityName());
         }
     }
 
@@ -375,6 +526,18 @@ public class Model {
             System.out.println("ListItem # 1 Time of Data Forecasted in UTC: " + futureResponseBody.getList().get(0).getTimeOfDataForecast());
             System.out.println("ListItem # 1 Main Temperature: " + futureResponseBody.getList().get(0).getMain().getCurrentTemperature());
         }
+    }
+
+    public void printViewDataFields() {
+        System.out.println("\n\n\nView Data Fields:");
+        System.out.println("Current Temp: " + this.currentTemp);
+        System.out.println("Current Temp Status: " + this.currentStatus);
+        System.out.println("Sunrise Time: " + this.sunriseTime);
+        System.out.println("Sunset Time: " + this.sunsetTime);
+        System.out.println("\nFuture Forecast Time Periods: ");
+        for(String time : this.forecastTimeList) System.out.println(time);
+        System.out.println("\nFuture Forecast Temps: ");
+        for(String temp : this.forecastTempList) System.out.println(temp);
     }
 
 
