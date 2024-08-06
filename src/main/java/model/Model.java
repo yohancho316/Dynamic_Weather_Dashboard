@@ -98,6 +98,24 @@ public class Model {
     // Future Forecast Http Response Body Getter Method
     public FutureForecastResponse getFutureResponseBody() { return this.futureResponseBody; }
 
+    // Current Temp Getter Method
+    public String getCurrentTime() { return this.currentTemp; }
+
+    // Current Status Getter Method
+    public String getCurrentStatus() { return this.currentStatus; }
+
+    // Sunrise Time Getter Method
+    public String getSunriseTime() { return this.sunriseTime; }
+
+    // Sunset Time Getter Method
+    public String getSunsetTime() { return this.sunsetTime; }
+
+    // Forecast Time List Getter Method
+    public List<String> getForecastTimeList() { return this.forecastTimeList; }
+
+    // Forecast Temp List Getter Method
+    public List<String> getForecastTempList() { return this.forecastTempList; }
+
     // API Key Setter Method
     public void setKey(String API_KEY) {
         if(API_KEY == null) throw new NullPointerException("API Key cannot be null");
@@ -171,6 +189,44 @@ public class Model {
         if(futureResponseBody == null) throw new NullPointerException("Future Forecast Http Response Body cannot be null");
         this.futureResponseBody = futureResponseBody;
     }
+
+    // Current Temp Setter Method
+    public void setCurrentTemp(String currentTemp) {
+        if(currentTemp == null) throw new NullPointerException(" cannot be null");
+        this.currentTemp = currentTemp;
+    }
+
+
+    // Current Status Setter Method
+    public void setCurrentStatus(String currentStatus) {
+        if(currentStatus == null) throw new NullPointerException(" cannot be null");
+        this.currentStatus = currentStatus;
+    }
+
+    // Sunrise Time Setter Method
+    public void setSunriseTime(String sunriseTime) {
+        if(sunriseTime == null) throw new NullPointerException(" cannot be null");
+        this.sunriseTime = sunriseTime;
+    }
+
+    // Sunset Time Setter Method
+    public void setSunsetTime(String sunsetTime) {
+        if(sunsetTime == null) throw new NullPointerException(" cannot be null");
+        this.sunsetTime = sunsetTime;
+    }
+
+    // Forecast Time List Setter Method
+    public void setForecastTimeList(List<String> forecastTimeList) {
+        if(forecastTimeList == null) throw new NullPointerException(" cannot be null");
+        this.forecastTimeList = forecastTimeList;
+    }
+
+    // Forecast Temp List Setter Method
+    public void setForecastTempList(List<String> forecastTempList) {
+        if(forecastTempList == null) throw new NullPointerException(" cannot be null");
+        this.forecastTempList = forecastTempList;
+    }
+
 
     // Model Class Constructor Method
     public Model() {
@@ -394,7 +450,7 @@ public class Model {
         if(this.futureResponseBody.getList().isEmpty()) throw new IllegalArgumentException("Future Forecast Time List cannot be empty");
         if(this.futureResponseBody.getList().size() < 10) throw new IllegalArgumentException("Future Forecast Time List must be >= 10");
 
-        for(int i = 1; i <= 10; i++) {
+        for(int i = 0; i <= 10; i++) {
             this.forecastTimeList.add(String.valueOf(this.convertUTC(this.futureResponseBody.getList().get(i).getTimeOfDataForecast())));
         }
     }
@@ -406,7 +462,7 @@ public class Model {
         if(this.futureResponseBody.getList().isEmpty()) throw new IllegalArgumentException("Future Forecast Time List cannot be empty");
         if(this.futureResponseBody.getList().size() < 10) throw new IllegalArgumentException("Future Forecast Time List must be >= 10");
 
-        for(int i = 1; i <= 10; i++) {
+        for(int i = 0; i <= 10; i++) {
             this.forecastTempList.add(String.valueOf(this.futureResponseBody.getList().get(i).getMain().getCurrentTemperature()));
         }
     }
