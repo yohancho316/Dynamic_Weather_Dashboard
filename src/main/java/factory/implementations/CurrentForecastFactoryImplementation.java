@@ -416,7 +416,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         else if(sunriseStr == null) throw new NullPointerException("Sunrise String cannot be null");
 
         // Instantiate Sunrise Label
-        Label riseLabel = new Label(sunriseStr + this.RISE_NOTATION);
+        Label riseLabel = new Label(sunriseStr);
 
         // Configure Sunrise Label Node
         riseLabel.setFont(this.SUNRISE_FONT);
@@ -447,7 +447,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         else if(sunsetStr == null) throw new NullPointerException("Sunset String cannot be null");
 
         // Instantiate Set Label Node
-        Label sunsetLabel = new Label(sunsetStr + this.SET_NOTATION);
+        Label sunsetLabel = new Label(sunsetStr);
 
         // Configure Set Label Node
         sunsetLabel.setFont(this.SUNSET_FONT);
