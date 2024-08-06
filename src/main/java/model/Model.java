@@ -21,6 +21,7 @@ public class Model {
     // Model Class Fields
     private static String DEFAULT_CITY = "Los Angeles";
     private static String API_KEY = ApiKeyReader.getKey();
+    private boolean start_flag = true;
     private HttpClient httpClient;
     private ObjectMapper objectMapper;
     private HttpRequestFactoryImplementation httpRequestFactory;
@@ -230,6 +231,19 @@ public class Model {
 
     // Model Class Constructor Method
     public Model() {
+
+        // Execute upon First Start
+        if(this.start_flag) {
+            this.initializeApp();
+            this.start_flag = false;
+        }
+
+
+
+    }
+
+    // First Start App Initialization
+    public void initializeApp() {
 
         // Instantiate HTTP Client Singleton Object
         this.httpClient = this.createHttpClient();
