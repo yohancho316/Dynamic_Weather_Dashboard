@@ -64,8 +64,6 @@ public interface CurrentForecastFactory {
     boolean RISE_IMAGE_ORIGINAL_RATIO = false;
     boolean RISE_IMAGE_SMOOTHING_ALGORITHM = true;
     String TEMP_NOTATION = " °F";
-    String RISE_NOTATION = " am";
-    String SET_NOTATION = " pm";
     Font TEMP_FONT = Font.font("Arial", 15.0);
     Font STATUS_FONT = Font.font("Arial", 15.0);
     Font SUNRISE_FONT = Font.font("Arial", 15.0);

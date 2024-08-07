@@ -54,11 +54,11 @@ public class Main extends Application {
         List<LocalDateTime> pane_date_collection = new ArrayList<LocalDateTime>();
         List<LocalTime> pane_time_collection = new ArrayList<LocalTime>();
 
-        String image_path = "/hurricane_weather_tornado_storm.png";
+        String image_path = "/clouds_sun_sunny_weather.png";
         String main_temp = "58";
         String main_status = "overcast clouds";
-        String sunrise_time = "6:12 AM";
-        String sunset_time = "8:00 PM";
+        String sunrise_time = "6:12";
+        String sunset_time = "8:00";
 
         for(int i = 0; i < 10; i++) {
             pane_image_collection.add(image_path);
