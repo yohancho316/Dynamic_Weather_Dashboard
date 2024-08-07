@@ -46,6 +46,7 @@ public class Model {
     private List<String> forecastTimeList = new ArrayList<String>();
     private List<String> forecastTempList = new ArrayList<String>();
     private List<String> forecastIDList = new ArrayList<String>();
+    private List<String> forecastIconPathList = new ArrayList<String>();
 
 
     // API Key Getter Method
@@ -125,6 +126,9 @@ public class Model {
 
     // Forecast Status ID List Getter Method
     public List<String> getForecastIDList() { return this.forecastIDList; }
+
+    // Forecast Icon Path List Getter Method
+    public List<String> getForecastIconPathList() { return this.forecastIconPathList; }
 
     // API Key Setter Method
     public void setKey(String API_KEY) {
@@ -243,10 +247,16 @@ public class Model {
         this.forecastIDList = forecastIDList;
     }
 
-    // Current Weather Icon ID Getter Method
+    // Current Weather Icon ID Setter Method
     public void setCurrentID(String currentID) {
         if(currentID == null) throw new NullPointerException("Current Weather Icon ID cannot be null");
         this.currentID = currentID;
+    }
+
+    // Forecast Icon Path List Setter Method
+    public void setForecastIconPathList(List<String> forecastIconPathList) {
+        if(forecastIconPathList == null) throw new NullPointerException("Forecast Icon Path List cannot be null");
+        this.forecastIconPathList = forecastIconPathList;
     }
 
     // Model Class Constructor Method
@@ -432,7 +442,6 @@ public class Model {
         if(this.currentResponseBody.getWeather() == null) throw new NullPointerException("Current Response Body - Weather Cannot be null");
         if(this.currentResponseBody.getSys() == null) throw new NullPointerException("Current Response Body - SYS cannot be null");
 
-
         // Retrieve Current Temperature in Degrees
         this.currentTemp = String.valueOf(this.currentResponseBody.getMain().getCurrentTemperature());
 
@@ -456,6 +465,9 @@ public class Model {
 
         // Generate Forecast ID List
         this.generateForecastIDList();
+
+        // Generate Forecast Icon Path List
+        this.generateForecastIconPathList();
 
     }
 
@@ -514,6 +526,18 @@ public class Model {
 
         for(int i = 0; i < 10; i++) {
             this.forecastIDList.add(String.valueOf(this.futureResponseBody.getList().get(i).getWeather().get(0).getIcon()));
+        }
+    }
+
+    // Generate Forecast Icon Path List
+    public void generateForecastIconPathList() {
+        if(this.futureResponseBody.getList() == null) throw new NullPointerException("Future Forecast Response Body cannot be null");
+        if(this.futureResponseBody.getList().get(0) == null) throw new NullPointerException("Future Forecast Response Body Element cannot be null");
+        if(this.futureResponseBody.getList().get(0).getWeather() == null) throw new NullPointerException("Future Forecast Response Body Weather Member cannot be null");
+        if(this.futureResponseBody.getList().get(0).getWeather().get(0) == null) throw new NullPointerException("Weather cannot be null");
+
+        for(int i = 0; i < 10; i++) {
+            this.forecastIconPathList.add(WeatherIconMapper.getIcon(this.forecastIDList.get(i)));
         }
     }
 
@@ -591,6 +615,8 @@ public class Model {
         for(String temp : this.forecastTempList) System.out.println(temp);
         System.out.println("\nFuture Forecast Icon ID: ");
         for(String id : this.forecastIDList) System.out.println(id);
+        System.out.println("\nFuture Forecast Icon Path: ");
+        for(String path : this.forecastIconPathList) System.out.println(path);
     }
 
 
