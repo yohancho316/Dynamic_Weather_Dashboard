@@ -34,6 +34,7 @@ public class Main extends Application {
         LocalDateTime current_date = LocalDateTime.now();
         LocalTime current_time = LocalTime.now();
 
+        // Instantiate View Node
         View view = new View(futureFactory,
                              currentFactory,
                              wrapperFactory,
@@ -49,8 +50,10 @@ public class Main extends Application {
                              current_date,
                              current_time);
 
-
+        // Instantiate Scene
         Scene scene = new Scene(view.getWeatherUIVBox());
+
+        // Set Scene on Primary Stage & Show Stage
         primaryStage.setScene(scene);
         primaryStage.show();
     }
