@@ -360,7 +360,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         if(temperature_str.isEmpty()) throw new IllegalArgumentException("Temperature String cannot be empty");
 
         // Instantiate Temperature Label Node
-        Label temperatureLabel = new Label(temperature_str + this.TEMP_NOTATION);
+        Label temperatureLabel = new Label("Current Temperature:\t" + temperature_str + this.TEMP_NOTATION);
 
         // Configure Temperature Label Style
         temperatureLabel.setFont(this.TEMP_FONT);
@@ -391,7 +391,7 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
         if(status_str.isEmpty()) throw new IllegalArgumentException("Status string cannot be empty");
 
         // Instantiate Status Label Node
-        Label statusLabel = new Label(status_str);
+        Label statusLabel = new Label("Current Condition:\t\t" + status_str);
 
         // Configure Temperature Status Label
         statusLabel.setFont(this.STATUS_FONT);
