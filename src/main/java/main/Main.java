@@ -47,6 +47,9 @@ public class Main extends Application {
         // Instantiate Menu Factory Node
         MenuFactoryImplementation menuFactory = new MenuFactoryImplementation();
 
+
+
+
         LocalDateTime current_date = LocalDateTime.now();
         LocalTime current_time = LocalTime.now();
 
@@ -59,6 +62,7 @@ public class Main extends Application {
         String main_status = "overcast clouds";
         String sunrise_time = "6:12";
         String sunset_time = "8:00";
+
 
         for(int i = 0; i < 10; i++) {
             pane_image_collection.add(image_path);
