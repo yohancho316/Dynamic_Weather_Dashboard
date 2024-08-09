@@ -44,6 +44,7 @@ public class Model {
     private String sunriseTime = "";
     private String sunsetTime = "";
     private List<String> forecastTimeList = new ArrayList<String>();
+    private List<String> forecastDateList = new ArrayList<String>();
     private List<String> forecastTempList = new ArrayList<String>();
     private List<String> forecastIDList = new ArrayList<String>();
     private List<String> forecastIconPathList = new ArrayList<String>();
@@ -104,7 +105,7 @@ public class Model {
     public FutureForecastResponse getFutureResponseBody() { return this.futureResponseBody; }
 
     // Current Temp Getter Method
-    public String getCurrentTime() { return this.currentTemp; }
+    public String getCurrentTemp() { return this.currentTemp; }
 
     // Current Status Getter Method
     public String getCurrentStatus() { return this.currentStatus; }
@@ -120,6 +121,9 @@ public class Model {
 
     // Forecast Time List Getter Method
     public List<String> getForecastTimeList() { return this.forecastTimeList; }
+
+    // Forecast Date List Getter Method
+    public List<String> getForecastDateList() { return this.forecastDateList; }
 
     // Forecast Temp List Getter Method
     public List<String> getForecastTempList() { return this.forecastTempList; }
@@ -233,6 +237,12 @@ public class Model {
     public void setForecastTimeList(List<String> forecastTimeList) {
         if(forecastTimeList == null) throw new NullPointerException("Forecast Time List cannot be null");
         this.forecastTimeList = forecastTimeList;
+    }
+
+    // Forecast Date List Setter Method
+    public void setForecastDateList(List<String> forecastDateList) {
+        if(forecastDateList == null) throw new NullPointerException("Forecast Date List cannot be null");
+        this.forecastDateList = forecastDateList;
     }
 
     // Forecast Temp List Setter Method
@@ -452,13 +462,16 @@ public class Model {
         this.currentID = String.valueOf(this.currentResponseBody.getWeather().get(0).getIcon());
 
         // Retrieve Sunrise Time in PST
-        this.sunriseTime = String.valueOf(this.convertUTC(this.currentResponseBody.getSys().getSunriseTime()));
+        this.sunriseTime = String.valueOf(this.convertUTCHourMin(this.currentResponseBody.getSys().getSunriseTime()));
 
         // Calculate Sunset Time in PST
-        this.sunsetTime = String.valueOf(this.convertUTC(this.currentResponseBody.getSys().getSunsetTime()));
+        this.sunsetTime = String.valueOf(this.convertUTCHourMin(this.currentResponseBody.getSys().getSunsetTime()));
 
         // Generate Future Forecast Time List
         this.generateForecastTimeList();
+
+        // Generate Future Forecast Date List
+        this.generateForecastDateList();
 
         // Generate Future Forecast Temp List
         this.generateForecastTempList();
@@ -472,7 +485,7 @@ public class Model {
     }
 
     // Convert UTC to PST
-    public String convertUTC(int utc) {
+    public String convertUTCTime(int utc) {
 
         Instant utcInstant = Instant.ofEpochSecond(utc);
 
@@ -493,6 +506,35 @@ public class Model {
         return hour + " " + period;
     }
 
+    // Convert UTC to PST
+    public String convertUTCHourMin(int utc) {
+
+        Instant utcInstant = Instant.ofEpochSecond(utc);
+
+        // Convert UTC to ZonedDateTime in the desired time zone (PST)
+        ZonedDateTime zonedDateTime = utcInstant.atZone(ZoneId.of("America/Los_Angeles"));
+
+        // Format the ZonedDateTime to a human-readable string in 12-hour format with AM/PM
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+        return zonedDateTime.format(formatter);
+    }
+
+    // Convert UTC to Date
+    public String convertUTCDate(int utc) {
+
+        Instant utcInstant = Instant.ofEpochSecond(utc);
+
+        // Convert UTC to ZonedDateTime in the desired time zone (PST)
+        ZonedDateTime zonedDateTime = utcInstant.atZone(ZoneId.of("America/Los_Angeles"));
+
+        // Format the ZonedDateTime to a human-readable string
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+
+        // Return the formatted date string
+        return zonedDateTime.format(formatter);
+    }
+
     // Generate Forecast Time List
     public void generateForecastTimeList() {
 
@@ -501,7 +543,19 @@ public class Model {
         if(this.futureResponseBody.getList().size() < 10) throw new IllegalArgumentException("Future Forecast Time List must be >= 10");
 
         for(int i = 0; i < 10; i++) {
-            this.forecastTimeList.add(String.valueOf(this.convertUTC(this.futureResponseBody.getList().get(i).getTimeOfDataForecast())));
+            this.forecastTimeList.add(String.valueOf(this.convertUTCTime(this.futureResponseBody.getList().get(i).getTimeOfDataForecast())));
+        }
+    }
+
+    // Generate Forecast Date List
+    public void generateForecastDateList() {
+
+        if(this.futureResponseBody.getList() == null) throw new NullPointerException("Future Forecast Time List cannot be null");
+        if(this.futureResponseBody.getList().isEmpty()) throw new IllegalArgumentException("Future Forecast Time List cannot be empty");
+        if(this.futureResponseBody.getList().size() < 10) throw new IllegalArgumentException("Future Forecast Time List must be >= 10");
+
+        for(int i = 0; i < 10; i++) {
+            this.forecastDateList.add(String.valueOf(this.convertUTCDate(this.futureResponseBody.getList().get(i).getTimeOfDataForecast())));
         }
     }
 
@@ -611,6 +665,8 @@ public class Model {
         System.out.println("Sunset Time: " + this.sunsetTime);
         System.out.println("\nFuture Forecast Time Periods: ");
         for(String time : this.forecastTimeList) System.out.println(time);
+        System.out.println("\nFuture Forecast Date Periods: ");
+        for(String date : this.forecastDateList) System.out.println(date);
         System.out.println("\nFuture Forecast Temps: ");
         for(String temp : this.forecastTempList) System.out.println(temp);
         System.out.println("\nFuture Forecast Icon ID: ");

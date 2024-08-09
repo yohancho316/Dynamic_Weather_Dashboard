@@ -109,6 +109,13 @@ public class ForecastFactoryImplementation implements ForecastFactory {
     @Override
     public Pane createImagePane(String weather_icon_path) {
 
+        String toAppend = "/";
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(toAppend).append(weather_icon_path);
+
+        weather_icon_path = builder.toString();
+
         // Check if Weather Icon URL is Null or Empty
         if(weather_icon_path.isEmpty() || weather_icon_path.equals(null)) throw new IllegalArgumentException("Weather Icon Path cannot be null or empty");
 
@@ -149,16 +156,13 @@ public class ForecastFactoryImplementation implements ForecastFactory {
     }
 
     @Override
-    public Label createTimeLabel(LocalTime currentTime) {
+    public Label createTimeLabel(String currentTime) {
 
         // Check if Current Time is Null
         if(currentTime.equals(null)) throw new NullPointerException("Current Time cannot be null");
 
-        // Get Current Hour as String
-        String time = new String(String.valueOf(currentTime.getHour()));
-
         // Instantiate Time Label Node
-        Label timeLabel = new Label(time);
+        Label timeLabel = new Label(currentTime);
 
         // Configure Time Label Font Style
         timeLabel.setFont(this.TIME_FONT);
@@ -174,16 +178,16 @@ public class ForecastFactoryImplementation implements ForecastFactory {
     }
 
     @Override
-    public Label createDateLabel(LocalDateTime currentDateTime) {
+    public Label createDateLabel(String currentDateTime) {
 
         // Check if Current Time is Null
         if(currentDateTime.equals(null)) throw new NullPointerException("Current Date cannot be null");
 
-        // Get Current Date as String
-        String dateTime = new String(String.valueOf(currentDateTime.getDayOfMonth()));
+        // Check if Current Time is Empty
+        if(currentDateTime.isEmpty()) throw new IllegalArgumentException("Current Date cannot be empty");
 
         // Instantiate Date Label Node
-        Label dateLabel = new Label(dateTime);
+        Label dateLabel = new Label(currentDateTime);
 
         // Configure Date Label Font Style
         dateLabel.setFont(this.DATE_FONT);
