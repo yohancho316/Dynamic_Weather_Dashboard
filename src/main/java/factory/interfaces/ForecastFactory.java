@@ -77,10 +77,10 @@ public interface ForecastFactory {
     Pane createImagePane(String weather_icon_url);
 
     // Time Label Object Factory Method Signature
-    Label createTimeLabel(LocalTime currentTime);
+    Label createTimeLabel(String currentTime);
 
     // Date Label Object Factory Method Signature
-    Label createDateLabel(LocalDateTime currentDate);
+    Label createDateLabel(String currentDate);
 
     // VBox Layout Wrapper Object Factory Method Signature
     VBox createVBoxLayout(Label timeLabel, Label dateLabel);

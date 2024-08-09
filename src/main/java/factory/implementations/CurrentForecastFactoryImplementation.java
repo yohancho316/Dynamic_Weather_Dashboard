@@ -15,6 +15,14 @@ public class CurrentForecastFactoryImplementation implements CurrentForecastFact
     @Override
     public Pane createCurrentImagePane(String current_image_path) {
 
+        String toAppend = "/";
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(toAppend).append(current_image_path);
+
+        current_image_path = builder.toString();
+        System.out.println("Weather Icon Path = " + current_image_path);
+
         // Check if Current Image Path is Null or Empty
         if(current_image_path.isEmpty() || current_image_path == null) throw new IllegalArgumentException("Current Image Path is null or empty");
 

@@ -327,13 +327,15 @@ public class View {
                 WrapperFactoryImplementation wrapper_factory,
                 MenuFactoryImplementation menu_factory,
                 List<String> pane_image_collection,
-                List<LocalDateTime> pane_date_collection,
-                List<LocalTime> pane_time_collection,
+                List<String> pane_date_collection,
+                List<String> pane_time_collection,
                 String main_image,
                 String main_temp,
                 String main_status,
                 String sunrise_time,
-                String sunset_time) {
+                String sunset_time,
+                LocalDateTime currentDate,
+                LocalTime currentTime) {
 
         // Instantiate Forecast Factory Node
         this.instantiateForecastFactory(future_factory);
@@ -372,7 +374,7 @@ public class View {
         this.instantiateBorderPaneList();
 
         // Populate BorderPane Collection
-        this.populateBorderPaneList(pane_image_collection, pane_date_collection, pane_time_collection);
+        this.populateBorderPaneList(pane_image_collection, pane_date_collection, pane_time_collection, currentDate, currentTime);
 
         // Instantiate Pane HBox Wrapper
         this.instantiatePaneHBox();
@@ -452,7 +454,7 @@ public class View {
     }
 
     // Populate Border Pane List Method
-    public void populateBorderPaneList(List<String> pane_image_collection, List<LocalDateTime> pane_date_collection, List<LocalTime> pane_time_collection) {
+    public void populateBorderPaneList(List<String> pane_image_collection, List<String> pane_date_collection, List<String> pane_time_collection, LocalDateTime currentDate, LocalTime currentTime) {
 
         // Check For Null Parameters
         if(pane_image_collection == null || pane_date_collection == null || pane_time_collection == null) {
@@ -461,7 +463,7 @@ public class View {
 
         // Check for Empty Collections
         if(pane_image_collection.isEmpty() || pane_date_collection.isEmpty() || pane_time_collection.isEmpty()) {
-            throw new IllegalArgumentException("Populate BOrder Pane List Parameter Collections cannot be empty");
+            throw new IllegalArgumentException("Populate Border Pane List Parameter Collections cannot be empty");
         }
 
         for(int i = 0; i < 10; i++) {
@@ -470,10 +472,10 @@ public class View {
             Pane image_pane = this.instantiatePaneImage(pane_image_collection.get(i));
 
             // Instantiate Future Time Label
-            Label date_label = this.instantiateDateLabel(pane_date_collection.get(i));
+            Label date_label = this.instantiateDateLabel(currentDate, pane_date_collection.get(i));
 
             // Instantiate Future Date Label
-            Label time_label = this.instantiateTimeLabel(pane_time_collection.get(i));
+            Label time_label = this.instantiateTimeLabel(currentTime, pane_time_collection.get(i));
 
             // Instantiate Date/Time VBox Wrapper
             VBox date_time_vbox = this.instantiate_date_time_vbox(date_label, time_label);
@@ -494,16 +496,18 @@ public class View {
     }
 
     // Instantiate Date Label Method
-    public Label instantiateDateLabel(LocalDateTime currentDateTime) {
+    public Label instantiateDateLabel(LocalDateTime currentDateTime, String date) {
         if(currentDateTime == null) throw new NullPointerException("Current Date Time cannot be null");
         else if(currentDateTime.isBefore(currentDateTime.minusDays(1))) throw new IllegalArgumentException("Current Date Time must be current day");
-        return this.future_factory.createDateLabel(currentDateTime);
+        return this.future_factory.createDateLabel(date);
     }
 
     // Instantiate Time Label Method
-    public Label instantiateTimeLabel(LocalTime currentTime) {
+    public Label instantiateTimeLabel(LocalTime currentTime, String time) {
         if(currentTime == null) throw new NullPointerException("Current Time cannot be null");
-        return this.future_factory.createTimeLabel(currentTime);
+        if(time == null) throw new NullPointerException("Time cannot be null");
+        if(time.isEmpty()) throw new IllegalArgumentException("Time cannot be empty");
+        return this.future_factory.createTimeLabel(time);
     }
 
     // Instantiate Date/Time VBox Wrapper Method

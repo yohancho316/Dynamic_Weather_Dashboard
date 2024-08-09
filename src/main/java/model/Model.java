@@ -105,7 +105,7 @@ public class Model {
     public FutureForecastResponse getFutureResponseBody() { return this.futureResponseBody; }
 
     // Current Temp Getter Method
-    public String getCurrentTime() { return this.currentTemp; }
+    public String getCurrentTemp() { return this.currentTemp; }
 
     // Current Status Getter Method
     public String getCurrentStatus() { return this.currentStatus; }
@@ -462,10 +462,10 @@ public class Model {
         this.currentID = String.valueOf(this.currentResponseBody.getWeather().get(0).getIcon());
 
         // Retrieve Sunrise Time in PST
-        this.sunriseTime = String.valueOf(this.convertUTCTime(this.currentResponseBody.getSys().getSunriseTime()));
+        this.sunriseTime = String.valueOf(this.convertUTCHourMin(this.currentResponseBody.getSys().getSunriseTime()));
 
         // Calculate Sunset Time in PST
-        this.sunsetTime = String.valueOf(this.convertUTCTime(this.currentResponseBody.getSys().getSunsetTime()));
+        this.sunsetTime = String.valueOf(this.convertUTCHourMin(this.currentResponseBody.getSys().getSunsetTime()));
 
         // Generate Future Forecast Time List
         this.generateForecastTimeList();
@@ -506,6 +506,20 @@ public class Model {
         return hour + " " + period;
     }
 
+    // Convert UTC to PST
+    public String convertUTCHourMin(int utc) {
+
+        Instant utcInstant = Instant.ofEpochSecond(utc);
+
+        // Convert UTC to ZonedDateTime in the desired time zone (PST)
+        ZonedDateTime zonedDateTime = utcInstant.atZone(ZoneId.of("America/Los_Angeles"));
+
+        // Format the ZonedDateTime to a human-readable string in 12-hour format with AM/PM
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+        return zonedDateTime.format(formatter);
+    }
+
     // Convert UTC to Date
     public String convertUTCDate(int utc) {
 
@@ -533,7 +547,7 @@ public class Model {
         }
     }
 
-    // Generate Forecast Date List *************************************
+    // Generate Forecast Date List
     public void generateForecastDateList() {
 
         if(this.futureResponseBody.getList() == null) throw new NullPointerException("Future Forecast Time List cannot be null");
