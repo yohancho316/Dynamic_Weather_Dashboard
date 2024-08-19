@@ -20,6 +20,8 @@ public interface ForecastFactory {
     int green = 50;
     int blue = 50;
 
+    String TEMP_NOTATION = " °F";
+
     double HBOX_NODE_SPACING = 0.0;
     double HBOX_MIN_WIDTH = 1200.0;
     double HBOX_MAX_WIDTH = 1200.0;
