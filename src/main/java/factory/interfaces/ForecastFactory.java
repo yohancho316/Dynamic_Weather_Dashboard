@@ -53,6 +53,7 @@ public interface ForecastFactory {
 
     Pos HBOX_ALIGNMENT = Pos.CENTER_LEFT;
     Pos VBOX_ALIGNMENT = Pos.CENTER;
+    Pos TEMP_LABEL_ALIGNMENT = Pos.CENTER;
     Pos TIME_LABEL_ALIGNMENT = Pos.CENTER;
     Pos DATE_LABEL_ALIGNMENT = Pos.CENTER;
 
@@ -61,10 +62,12 @@ public interface ForecastFactory {
     boolean IMAGE_ORIGINAL_RATIO = false;
     boolean IMAGE_SMOOTHING_ALGORITHM = true;
 
+    Font TEMP_FONT = Font.font("Arial", 15.0);
     Font TIME_FONT = Font.font("Arial", 15.0);
     Font DATE_FONT = Font.font("Arial", 15.0);
 
     Color DATE_TIME_FONT_COLOR = Color.WHITE;
+    Color TEMP_FONT_COLOR = Color.WHITE;
     Color rgb = Color.rgb(red, green, blue);
 
     // HBox Layout Wrapper Object Factory Method Signature
@@ -76,6 +79,9 @@ public interface ForecastFactory {
     // Image Pane Object Factory Method Signature
     Pane createImagePane(String weather_icon_url);
 
+    // Temperature Label Object Factory Method Signature
+    Label createTempLabel(String currentTemp);
+
     // Time Label Object Factory Method Signature
     Label createTimeLabel(String currentTime);
 
@@ -83,6 +89,6 @@ public interface ForecastFactory {
     Label createDateLabel(String currentDate);
 
     // VBox Layout Wrapper Object Factory Method Signature
-    VBox createVBoxLayout(Label timeLabel, Label dateLabel);
+    VBox createVBoxLayout(Label timeLabel, Label tempLabel, Label dateLabel);
 
 }

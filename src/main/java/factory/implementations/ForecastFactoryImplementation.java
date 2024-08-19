@@ -156,6 +156,28 @@ public class ForecastFactoryImplementation implements ForecastFactory {
     }
 
     @Override
+    public Label createTempLabel(String currentTemp) {
+
+        // Check if Current Temp is Null
+        if(currentTemp == null) throw new NullPointerException("Current Temp cannot be null");
+
+        // Instantiate Temp Label Node
+        Label tempLabel = new Label(currentTemp);
+
+        // Configure Temp Label Font Style
+        tempLabel.setFont(this.TEMP_FONT);
+
+        // Configure Temp Label Font Color
+        tempLabel.setTextFill(this.TEMP_FONT_COLOR);
+
+        // Configure Temp Label Alignment
+        tempLabel.setAlignment(this.TEMP_LABEL_ALIGNMENT);
+
+        // Return Temp Lable Node
+        return tempLabel;
+    }
+
+    @Override
     public Label createTimeLabel(String currentTime) {
 
         // Check if Current Time is Null
@@ -203,10 +225,10 @@ public class ForecastFactoryImplementation implements ForecastFactory {
     }
 
     @Override
-    public VBox createVBoxLayout(Label timeLabel, Label dateLabel) {
+    public VBox createVBoxLayout(Label timeLabel, Label tempLabel, Label dateLabel) {
 
         // Check if Time || Date Label is Null
-        if(timeLabel.equals(null) || dateLabel.equals(null)) throw new NullPointerException("Time & Date Label cannot be null");
+        if(tempLabel == null || timeLabel == null || dateLabel == null) throw new NullPointerException("Temp & Time & Date Label cannot be null");
 
         // Instantiate VBox Layout Wrapper Node
         VBox vbox = new VBox();
@@ -231,7 +253,7 @@ public class ForecastFactoryImplementation implements ForecastFactory {
         vbox.setPadding(this.VBOX_PADDING);
 
         // Add Time Label to VBox
-        vbox.getChildren().addAll(timeLabel, dateLabel);
+        vbox.getChildren().addAll(tempLabel, dateLabel, timeLabel);
 
         // Return VBox Layout Wrapper Node
         return vbox;

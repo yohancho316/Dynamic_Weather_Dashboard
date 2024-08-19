@@ -40,6 +40,7 @@ public class Main extends Application {
                              wrapperFactory,
                              menuFactory,
                              model.getForecastIconPathList(),
+                             model.getForecastTempList(),
                              model.getForecastDateList(),
                              model.getForecastTimeList(),
                              WeatherIconMapper.getIcon(model.getCurrentID()),
