@@ -62,9 +62,9 @@ public interface ForecastFactory {
     boolean IMAGE_ORIGINAL_RATIO = false;
     boolean IMAGE_SMOOTHING_ALGORITHM = true;
 
-    Font TEMP_FONT = Font.font("Arial", 15.0);
-    Font TIME_FONT = Font.font("Arial", 15.0);
-    Font DATE_FONT = Font.font("Arial", 15.0);
+    Font TEMP_FONT = Font.font("SansSerif", 15.0);
+    Font TIME_FONT = Font.font("SansSerif", 15.0);
+    Font DATE_FONT = Font.font("SansSerif", 15.0);
 
     Color DATE_TIME_FONT_COLOR = Color.WHITE;
     Color TEMP_FONT_COLOR = Color.WHITE;

@@ -64,10 +64,10 @@ public interface CurrentForecastFactory {
     boolean RISE_IMAGE_ORIGINAL_RATIO = false;
     boolean RISE_IMAGE_SMOOTHING_ALGORITHM = true;
     String TEMP_NOTATION = " °F";
-    Font TEMP_FONT = Font.font("Arial", 15.0);
-    Font STATUS_FONT = Font.font("Arial", 15.0);
-    Font SUNRISE_FONT = Font.font("Arial", 15.0);
-    Font SUNSET_FONT = Font.font("Arial", 15.0);
+    Font TEMP_FONT = Font.font("SansSerif", 15.0);
+    Font STATUS_FONT = Font.font("SansSerif", 15.0);
+    Font SUNRISE_FONT = Font.font("SansSerif", 15.0);
+    Font SUNSET_FONT = Font.font("SansSerif", 15.0);
     Color TEMP_FONT_COLOR = Color.WHITE;
     Color STATUS_FONT_COLOR = Color.WHITE;
     Color SUNRISE_FONT_COLOR = Color.WHITE;
