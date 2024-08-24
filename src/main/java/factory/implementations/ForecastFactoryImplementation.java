@@ -161,8 +161,11 @@ public class ForecastFactoryImplementation implements ForecastFactory {
         // Check if Current Temp is Null
         if(currentTemp == null) throw new NullPointerException("Current Temp cannot be null");
 
+        int decimalPoint = currentTemp.indexOf(".");
+        currentTemp =currentTemp.substring(0, decimalPoint);
+
         // Instantiate Temp Label Node
-        Label tempLabel = new Label(currentTemp);
+        Label tempLabel = new Label(currentTemp + this.TEMP_NOTATION);
 
         // Configure Temp Label Font Style
         tempLabel.setFont(this.TEMP_FONT);

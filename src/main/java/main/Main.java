@@ -1,5 +1,6 @@
 package main;
 
+import controller.Controller;
 import factory.implementations.*;
 import model.*;
 import java.time.LocalDateTime;
@@ -53,6 +54,9 @@ public class Main extends Application {
 
         // Instantiate Scene
         Scene scene = new Scene(view.getWeatherUIVBox());
+
+        // Instantiate Controller
+        Controller controller = new Controller(model, view);
 
         // Set Scene on Primary Stage & Show Stage
         primaryStage.setScene(scene);
