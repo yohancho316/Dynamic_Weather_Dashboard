@@ -165,7 +165,7 @@ public class ForecastFactoryImplementation implements ForecastFactory {
         currentTemp =currentTemp.substring(0, decimalPoint);
 
         // Instantiate Temp Label Node
-        Label tempLabel = new Label(currentTemp + " °F");
+        Label tempLabel = new Label(currentTemp + this.TEMP_NOTATION);
 
         // Configure Temp Label Font Style
         tempLabel.setFont(this.TEMP_FONT);
