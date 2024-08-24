@@ -1,11 +1,14 @@
 package controller;
+import factory.implementations.EventHandlerFactoryImplementation;
 import model.Model;
 import view.View;
 
 public class Controller {
 
+    // Class Fields
     private Model model;
     private View view;
+    EventHandlerFactoryImplementation eventHandlerFactory;
 
     // Model Getter Method
     public Model getModel() {
@@ -29,10 +32,23 @@ public class Controller {
         this.view = view;
     }
 
+    // EventHandler Factory Getter Method
+    public EventHandlerFactoryImplementation getEventHandlerFactory() {
+        return this.eventHandlerFactory;
+    }
+
+    // EventHandler Factory Setter Method
+    public void setEventHandlerFactory(EventHandlerFactoryImplementation eventHandlerFactory) {
+        if(eventHandlerFactory == null) throw new NullPointerException("Event Handler Factory cannot be null");
+        this.eventHandlerFactory = eventHandlerFactory;
+    }
+
+    // Controller Constructor Method
     public Controller(Model model, View view) {
         if(model == null || view == null) throw new NullPointerException("Model and View cannot be null");
         this.model = model;
         this.view = view;
+        this.eventHandlerFactory = new EventHandlerFactoryImplementation(model, view);
     }
 
 
